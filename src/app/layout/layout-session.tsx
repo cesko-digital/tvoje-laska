@@ -2,12 +2,13 @@
 
 import { SessionProvider } from "next-auth/react"
 import LayoutProfile from "./layout-profile"
+import { ReactNode } from 'react'
 
-const LayoutSession = () => {
-    
+const LayoutSession = ({ children }: { children: ReactNode }) => {
+
     return (
        <SessionProvider>
-            <LayoutProfile></LayoutProfile>
+            <LayoutProfile>{children}</LayoutProfile>
        </SessionProvider>
     )
 }

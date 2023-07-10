@@ -21,8 +21,9 @@ export const metadata = {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LayoutSession/>
-        {props.children}
+        <LayoutSession>
+          {props.children}
+        </LayoutSession>
       </body>
     </html>
   )
