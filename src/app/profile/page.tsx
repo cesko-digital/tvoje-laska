@@ -2,10 +2,13 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]/route"
 
 const getProfileData = async () => {
-  // TODO: correctly type session
   const session  = await getServerSession(authOptions)
-  const me = await fetch('https://mingly.cz/wp-json/buddypress/v1/members/me', { headers: { Authorization: session?.wpJwtToken } })
 
+  if(!session) {
+    return;
+  }
+
+  const me = await fetch('https://mingly.cz/wp-json/buddypress/v1/members/me', { headers: { Authorization: session.wpJwtToken } })
   return me.json();
 }
 

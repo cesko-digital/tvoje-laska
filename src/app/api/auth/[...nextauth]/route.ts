@@ -8,8 +8,10 @@ import { autologinOrRegisterUser } from "./nextauth.functions";
 
 declare module "next-auth" {
     interface Session {
-        user: User
-        jwtToken: string
+        wpJwtToken: string;
+        email: string;
+        id: number;
+        username: string;
     }
 }
 
