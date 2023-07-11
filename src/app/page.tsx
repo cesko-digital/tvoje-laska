@@ -5,7 +5,7 @@ export default function Home() {
     <main className="w-full p-5">
       <div className="text-2xl">mingly</div>
       <ul className="list-disc p-2">
-        <li><Link href="/example">Nextjs link</Link></li>
+        <li><Link href="/profile">My Profile</Link></li>
         <li><Link href="/kontakt">Wordpress link</Link></li>
       </ul>
     </main>

@@ -4,9 +4,6 @@ import { authOptions } from "../api/auth/[...nextauth]/route"
 const getProfileData = async () => {
   // TODO: correctly type session
   const session  = await getServerSession(authOptions)
-
-  // TODO: redirect to login if session is null
-
   const me = await fetch('https://mingly.cz/wp-json/buddypress/v1/members/me', { headers: { Authorization: session?.wpJwtToken } })
 
   return me.json();
