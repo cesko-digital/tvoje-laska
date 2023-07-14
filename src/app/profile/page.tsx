@@ -18,8 +18,8 @@ export default async function Profile () {
   return (
     <main className="w-full p-5">
       <img src={profile.avatar_urls.thumb}/>
-      <p className="text-white text-lg">{profile.name}</p>
-      <p className="text-white">{profile.user_login}</p>
+      <p className="text-lg">{profile.name}</p>
+      <p>{profile.user_login}</p>
     </main>
   )
 }

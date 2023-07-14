@@ -1,10 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import LayoutProfile from './layout/layout-profile';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
-import { GetServerSideProps } from 'next';
 import LayoutSession from './layout/layout-session';
+import { Suspense } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,9 +18,11 @@ export const metadata = {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LayoutSession>
-          {props.children}
-        </LayoutSession>
+      <Suspense fallback={<div>loading...</div>}>
+          <LayoutSession>
+            {props.children}
+          </LayoutSession>
+        </Suspense>
       </body>
     </html>
   )

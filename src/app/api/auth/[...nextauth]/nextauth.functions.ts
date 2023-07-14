@@ -1,4 +1,4 @@
-import { register, autologin, getUserInfoFromToken, User, } from "@/services/wordpress-auth-service";
+import { register, getUserInfoFromToken, User, } from "@/services/wordpress-auth-service";
 import { SignOptions, sign } from "jsonwebtoken";
 
 export const createToken = (email: string, username: string): string => {
@@ -42,4 +42,4 @@ export const autologinOrRegisterUser = async (profile: any): Promise<User> => {
     }
 
     throw registerResult;
-} 
+}

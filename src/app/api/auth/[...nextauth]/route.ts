@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
             }
         })
     ],
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, user }: any) {
             if (user as User) {
@@ -83,7 +84,10 @@ export const authOptions: NextAuthOptions = {
 
             return true // Do different verification for other providers that don't have `email_verified`
           },
-    }
+    },
+    pages: {
+        signIn: "/sign-in",
+    },
 }
 
 const handler = NextAuth(authOptions);

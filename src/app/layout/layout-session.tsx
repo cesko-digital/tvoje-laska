@@ -1,14 +1,13 @@
 'use client'
 
 import { SessionProvider } from "next-auth/react"
-import LayoutProfile from "./layout-profile"
 import { ReactNode } from 'react'
+import LayoutNavigation from '@/app/layout/layout-navigation'
 
 const LayoutSession = ({ children }: { children: ReactNode }) => {
-
     return (
        <SessionProvider>
-            <LayoutProfile>{children}</LayoutProfile>
+            <LayoutNavigation>{children}</LayoutNavigation>
        </SessionProvider>
     )
 }
