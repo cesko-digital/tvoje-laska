@@ -1,21 +1,12 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { Metadata } from "next";
 
-const getProfileData = async () => {
-  const session = await getServerSession(authOptions);
+import { getUserData } from "app/api/api";
 
-  if (!session) {
-    return;
-  }
-
-  const me = await fetch("https://mingly.cz/wp-json/buddypress/v1/members/me", {
-    headers: { Authorization: session.wpJwtToken },
-  });
-  return me.json();
+export const metadata: Metadata = {
+  title: "Můj profil",
 };
-
 export default async function Profile() {
-  const profile = await getProfileData();
+  const profile = await getUserData("https://mingly.cz/wp-json/buddypress/v1/members/me");
 
   return (
     <main className="w-full p-5">
