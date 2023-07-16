@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
                 username: { label: "E-mail", type: "text", placeholder: "Zadejte e-mail"},
                 password: { label: "Heslo", type: "password", placeholder: "Zadejte heslo" }
             },
-            async authorize(credentials, req): Promise<any> {
+            async authorize(credentials, _req): Promise<any> {
 
                 if (credentials === undefined){
                     return null;
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID ?? '',
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-            async profile(profile, tokens): Promise<any>  {
+            async profile(profile, _tokens): Promise<any>  {
                 const user = await autologinOrRegisterUser(profile);
 
                 return user;

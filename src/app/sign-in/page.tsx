@@ -1,7 +1,7 @@
 "use client"
 
 import { signIn, getProviders, getCsrfToken } from 'next-auth/react'
-import React, { FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { FormValues, LoginForm } from '@/components/login-form'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler } from 'react-hook-form'
