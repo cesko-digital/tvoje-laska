@@ -5,6 +5,7 @@ TODO: Add a project description. What is it all about?
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
 TODO: Add some links. Slack (jira?)
 
 ### Install dependencies
@@ -36,5 +37,3 @@ npm run start
 - [Next.js](https://nextjs.org/) - a React framework that enables server-side rendering and static web applications for projects build with React
 - [TypeScript](https://www.typescriptlang.org/) - high-level programming language that adds static typing to JavaScript
 - [Tailwind](https://tailwindcss.com/) - CSS framework providing single-purpose utility classes
-
-
