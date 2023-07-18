@@ -43,9 +43,11 @@ export const authOptions: NextAuthOptions = {
                 return user;
             },
             authorization: {
-                prompt: "consent",
-                access_type: "offline",
-                response_type: "code",
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
             }
         })
     ],
