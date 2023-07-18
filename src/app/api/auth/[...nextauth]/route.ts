@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import {btoa} from "buffer";
 import type { NextAuthOptions } from 'next-auth'
-import { authorize, User } from "@/services/wordpress-auth-service";
+import { authorize, User } from "services/wordpress-auth-service";
 import GoogleProvider from "next-auth/providers/google";
 import { autologinOrRegisterUser } from "./nextauth.functions";
 

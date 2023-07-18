@@ -1,4 +1,4 @@
-import { register, getUserInfoFromToken, User, } from "@/services/wordpress-auth-service";
+import { register, getUserInfoFromToken, User, } from "services/wordpress-auth-service";
 import { SignOptions, sign } from "jsonwebtoken";
 
 export const createToken = (email: string, username: string): string => {

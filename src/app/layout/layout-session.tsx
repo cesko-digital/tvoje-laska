@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react"
 import { ReactNode } from 'react'
-import LayoutNavigation from '@/app/layout/layout-navigation'
+import LayoutNavigation from 'app/layout/layout-navigation'
 
 const LayoutSession = ({ children }: { children: ReactNode }) => {
     return (
