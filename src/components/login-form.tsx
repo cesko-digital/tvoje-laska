@@ -1,15 +1,15 @@
-import * as z from "zod"
+import * as z from "zod";
 
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from "@hookform/resolvers/zod"
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-  username: z.string().nonempty('Username is required'),
-  password: z.string().nonempty('Password is required'),
-})
+  username: z.string().nonempty("Username is required"),
+  password: z.string().nonempty("Password is required"),
+});
 
 export type FormValues = z.infer<typeof formSchema>;
-type Props = { onSubmit: SubmitHandler<FormValues> }
+type Props = { onSubmit: SubmitHandler<FormValues> };
 
 export const LoginForm = ({ onSubmit }: Props) => {
   const form = useForm<FormValues>({
@@ -18,7 +18,7 @@ export const LoginForm = ({ onSubmit }: Props) => {
       username: "",
       password: "",
     },
-  })
+  });
 
   const errors = form.formState.errors;
 
@@ -36,7 +36,9 @@ export const LoginForm = ({ onSubmit }: Props) => {
         {errors.password?.message && <p>{errors.password.message}</p>}
       </div>
 
-      <button className="bg-gray-200 p-1 ml-2" type="submit">submit</button>
+      <button className="bg-gray-200 p-1 ml-2" type="submit">
+        submit
+      </button>
     </form>
-  )
-}
+  );
+};
