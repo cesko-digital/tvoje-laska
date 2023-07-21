@@ -37,3 +37,15 @@ npm run start
 - [Next.js](https://nextjs.org/) - a React framework that enables server-side rendering and static web applications for projects build with React
 - [TypeScript](https://www.typescriptlang.org/) - high-level programming language that adds static typing to JavaScript
 - [Tailwind](https://tailwindcss.com/) - CSS framework providing single-purpose utility classes
+
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## Wordpress notes
+
+Simple JWT plugin is currently hacked in PHP file so that autologin is working. We had to comment signature check. If autologin is not working, check plugin files
