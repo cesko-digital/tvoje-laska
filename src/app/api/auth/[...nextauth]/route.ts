@@ -2,9 +2,9 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import {btoa} from "buffer";
 import type { NextAuthOptions } from 'next-auth'
-import { authorize, User } from "@/services/wordpress-auth-service";
+import { authorize, getUserInfoFromToken, NotRegisteredUser, SimplifiedUser, User } from "@/services/wordpress-auth-service";
 import GoogleProvider from "next-auth/providers/google";
-import { autologinOrRegisterUser } from "./nextauth.functions";
+import { createToken } from "./nextauth.functions";
 
 declare module "next-auth" {
     interface Session {
@@ -31,21 +31,45 @@ export const authOptions: NextAuthOptions = {
 
                 const password = btoa(credentials.password);
 
-                return await authorize({passwordBase64: password, username: credentials.username})
+                const result = await authorize({passwordBase64: password, email: credentials.username});
+
+                if(typeof result === 'string') {
+                    throw new Error(result);
+                }
+
+                if(result?.wpJwtToken) {
+                    return await getUserInfoFromToken(result.wpJwtToken);
+                }
+                return result;
                 },
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID ?? '',
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
             async profile(profile, tokens): Promise<any>  {
-                const user = await autologinOrRegisterUser(profile);
+                const token = createToken(profile.email, profile.email);
 
-                return user;
+                const result = await getUserInfoFromToken(token);
+
+                if(typeof result === 'string') {
+                    return { 
+                        ...profile,
+                        id: profile.email,
+                        email: profile.email, 
+                        error: result 
+                    } as NotRegisteredUser;
+                }
+
+                return result;
             },
-            authorization: {
+            authorization: { 
+                
+                params: {
+
                 prompt: "consent",
                 access_type: "offline",
                 response_type: "code",
+            }
             }
         })
     ],
@@ -58,6 +82,9 @@ export const authOptions: NextAuthOptions = {
                 token.email = user.email;
                 token.username = user.username;
                 token.id = user.id;
+                token.roles = user.roles;
+                token.nickname = user.nickname;
+                token.displayName = user.displayName;
             }
             return token
         },
@@ -68,6 +95,9 @@ export const authOptions: NextAuthOptions = {
                 session.email = token.email;
                 session.id = token.id;
                 session.username = token.username;
+                session.roles = token.roles;
+                session.nickname = token.nickname;
+                session.displayName = token.displayName;
             }
             return session
         },
@@ -77,8 +107,16 @@ export const authOptions: NextAuthOptions = {
             if(account === null) {
                 return false;
             }
-
+            
             if (account.provider === "google") {
+                const token = createToken(profile?.email, profile?.email);
+
+                const result = await getUserInfoFromToken(token);
+
+                if(typeof result === 'string') {
+                    return `/auth/sign-in?errorCode=${result}`;
+                }
+
               return true;
             }
 
@@ -86,7 +124,7 @@ export const authOptions: NextAuthOptions = {
           },
     },
     pages: {
-        signIn: "/sign-in",
+        signIn: "/auth/sign-in",
     },
 }
 
