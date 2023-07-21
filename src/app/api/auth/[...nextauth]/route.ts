@@ -2,34 +2,42 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import {btoa} from "buffer";
 import type { NextAuthOptions } from 'next-auth'
-import { authorize, getUserInfoFromToken, NotRegisteredUser, SimplifiedUser, User } from "@/services/wordpress-auth-service";
+import { authorize, getUserInfoFromToken } from "services/wordpress-auth-service";
 import GoogleProvider from "next-auth/providers/google";
 import { createToken } from "./nextauth.functions";
+import { LoggedUser, NotRegisteredUser } from "models/user-models";
 
 declare module "next-auth" {
-    interface Session {
-        wpJwtToken: string;
-        email: string;
-        id: number;
-        username: string;
-    }
+  interface Session {
+    wpJwtToken: string;
+    email: string;
+    id: number;
+    username: string;
+  }
 }
 
 export const authOptions: NextAuthOptions = {
-    providers: [
-        CredentialsProvider({
-            name: 'Credentials',
-            credentials: {
-                username: { label: "E-mail", type: "text", placeholder: "Zadejte e-mail"},
-                password: { label: "Heslo", type: "password", placeholder: "Zadejte heslo" }
-            },
-            async authorize(credentials, req): Promise<any> {
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "E-mail",
+          type: "text",
+          placeholder: "Zadejte e-mail",
+        },
+        password: {
+          label: "Heslo",
+          type: "password",
+          placeholder: "Zadejte heslo",
+        },
+      },
+      async authorize(credentials, _req): Promise<any> {
+        if (credentials === undefined) {
+          return null;
+        }
 
-                if (credentials === undefined){
-                    return null;
-                }
-
-                const password = btoa(credentials.password);
+        const password = btoa(credentials.password);
 
                 const result = await authorize({passwordBase64: password, email: credentials.username});
 
@@ -76,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, user }: any) {
-            if (user as User) {
+            if (user as LoggedUser) {
 
                 token.wpJwtToken = user.wpJwtToken;
                 token.email = user.email;
@@ -109,7 +117,7 @@ export const authOptions: NextAuthOptions = {
             }
             
             if (account.provider === "google") {
-                const token = createToken(profile?.email, profile?.email);
+                const token = createToken(profile?.email ?? '', profile?.email ?? '');
 
                 const result = await getUserInfoFromToken(token);
 

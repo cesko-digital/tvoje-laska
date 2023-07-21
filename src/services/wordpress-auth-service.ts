@@ -1,12 +1,13 @@
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { LoggedUser, SimplifiedUser } from "models/user-models";
 
 const http = axios.create({
-    baseURL: process.env.WP_URL,
-    headers: {
-        "Content-type": "application/json"
-    },
-    validateStatus: status => status >= 200 && status < 500 
+  baseURL: process.env.WP_URL,
+  headers: {
+    "Content-type": "application/json",
+  },
+  validateStatus: status => status >= 200 && status < 500,
 });
 
 export async function register(args: RegisterArgs): Promise<SimplifiedUser | RegistrationFailureType> {
@@ -18,28 +19,27 @@ export async function register(args: RegisterArgs): Promise<SimplifiedUser | Reg
         `display_name=${args.firstName}%20${args.lastName}`
     ];
 
-    const body = requestParameters.join('&');
-    const response = await http.post(`/?rest_route=/simple-jwt-login/v1/users&${body}`);
-    
-    if(response.status != 200) {
-        const errorCode = response?.data?.data?.errorCode;
+  const body = requestParameters.join("&");
+  const response = await http.post(`/?rest_route=/simple-jwt-login/v1/users&${body}`);
 
-        if(errorCode === 38)
-        {
-            return RegistrationFailureType.UserAlreadyExists;
-        }
-        
-        console.log(response.data.data);
+  if (response.status != 200) {
+    const errorCode = response?.data?.data?.errorCode;
 
-        return  RegistrationFailureType.Other;
+    if (errorCode === 38) {
+      return RegistrationFailureType.UserAlreadyExists;
     }
 
-    return {
-        wpJwtToken: response.data.jwt as string,
-        id: response.data.id,
-        email: response.data.user.user_email,
-        username: response.data.user_user_login
-    };
+    console.log(response.data.data);
+
+    return RegistrationFailureType.Other;
+  }
+
+  return {
+    wpJwtToken: response.data.jwt as string,
+    id: response.data.id,
+    email: response.data.user.user_email,
+    username: response.data.user_user_login,
+  };
 }
 
 export async function authorize(credentials: Credentials): Promise<SimplifiedUser | UserAuthError> {
@@ -62,7 +62,7 @@ export async function authorize(credentials: Credentials): Promise<SimplifiedUse
     } as SimplifiedUser;
 }
 
-export async function getUserInfoFromToken(jwtToken: string): Promise<User | UserAuthError |null> {
+export async function getUserInfoFromToken(jwtToken: string): Promise<LoggedUser | UserAuthError |null> {
     const response = await http.post(`?rest_route=/simple-jwt-login/v1/auth/validate&JWT=${jwtToken}`);
     
     if (!response.data.success) {
@@ -87,37 +87,24 @@ export async function getUserInfoFromToken(jwtToken: string): Promise<User | Use
 }
 
 export async function refresh(token: string): Promise<string | null> {
-    if (!token) return null;
+  if (!token) return null;
 
-    const response = await http.get(`/?rest_route=/simple-jwt-login/v1/auth/refresh&JWT=${token}`);
+  const response = await http.get(`/?rest_route=/simple-jwt-login/v1/auth/refresh&JWT=${token}`);
 
-    if (!response.data.success || !response.data.data) {
-        console.log(response.data);
-        return null;
-    }
+  if (!response.data.success || !response.data.data) {
+    console.log(response.data);
+    return null;
+  }
 
-    return response.data.data.jwt;
+  return response.data.data.jwt;
 }
 
 export async function revoke(token: string): Promise<boolean> {
-    if (!token) return false;
+  if (!token) return false;
 
-    const response = await http.post(`/?rest_route=/simple-jwt-login/v1/auth/revoke&JWT=${token}`);
+  const response = await http.post(`/?rest_route=/simple-jwt-login/v1/auth/revoke&JWT=${token}`);
 
-    return response.data.success;
-}
-
-export type SimplifiedUser = {
-    id: string;
-    email: string;
-    username: string;
-    wpJwtToken: string;
-}
-
-export type User = SimplifiedUser & {
-    roles: string[],
-    nickname: string,
-    displayName: string
+  return response.data.success;
 }
 
 export type Credentials = {
@@ -126,20 +113,14 @@ export type Credentials = {
 }
 
 export type RegisterArgs = {
-    email: string;
-    firstName: string;
-    lastName: string;
-}
-  
-export enum RegistrationFailureType 
-{
-    UserAlreadyExists,
-    Other
-}
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
-export type NotRegisteredUser = {
-    email: string,
-    error: string
+export enum RegistrationFailureType {
+  UserAlreadyExists,
+  Other,
 }
 
 export type UserAuthError = 'UserNotFound' | 'WrongUserCredentials' | 'Unknown';
