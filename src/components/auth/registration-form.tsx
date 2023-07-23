@@ -4,64 +4,32 @@ import * as z from "zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
-import { BuiltInProviderType } from "next-auth/providers";
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { UserAuthError } from "services/wordpress-auth-service";
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
   password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+  repeatPassword: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
 });
 
-type Props = {
-  providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
-  token: string | undefined;
-};
 
 export type FormValues = z.infer<typeof formSchema>;
 
-const getMessageFromErrorCode = (errorCode: UserAuthError | null): string => {
-  if (!errorCode) {
-    return "";
-  }
-  switch (errorCode) {
-    case "UserNotFound":
-      return "Uživatel nebyl nalezen";
-    case "WrongUserCredentials":
-      return "Nesprávné přihlašovací údaje";
-    default:
-      return "Během přihlašování nastala neočekávaná chyba";
-  }
-};
-
-export const LoginForm = ({ providers, token }: Props) => {
-  const searchParams = useSearchParams();
-  const errorCode = searchParams.get("errorCode") as UserAuthError | null;
-
-  const [error, setError] = useState(getMessageFromErrorCode(errorCode));
-  const router = useRouter();
-
+export const RegistrationForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",
+      repeatPassword: "",
     },
   });
 
   const handleSubmit: SubmitHandler<FormValues> = async ({ username, password }, event) => {
     event?.preventDefault();
-    const r = await signIn("credentials", { username, password, token, redirect: false });
-
-    if (r?.error) {
-      return setError(getMessageFromErrorCode(r.error as UserAuthError | null));
-    }
-
-    await router.push("/");
+    console.log({ username, password })
   };
 
   const errors = form.formState.errors;
@@ -76,7 +44,7 @@ export const LoginForm = ({ providers, token }: Props) => {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Pro lásku bez nálepek
+            Registrovat se
           </h2>
         </div>
 
@@ -103,11 +71,6 @@ export const LoginForm = ({ providers, token }: Props) => {
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                 Heslo
               </label>
-              <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Zapomněl/a jsem heslo
-                </a>
-              </div>
             </div>
             <div className="mt-2 mb-2">
               <input
@@ -120,36 +83,40 @@ export const LoginForm = ({ providers, token }: Props) => {
               />
               {errors.password?.message && <p className="text-red-400">{errors.password.message}</p>}
             </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="repeatPassword" className="block text-sm font-medium leading-6 text-gray-900">
+                Zopakovat heslo
+              </label>
+            </div>
+            <div className="mt-2 mb-2">
+              <input
+                id="repeatPassword"
+                type="repeatPassword"
+                {...form.register("repeatPassword")}
+                autoComplete="current-password"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              {errors.repeatPassword?.message && <p className="text-red-400">{errors.repeatPassword.message}</p>}
+            </div>
           </div>
 
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Přihlásit se
+              Registrovat emailem
             </button>
           </div>
 
-          {Object.entries(providers ?? {})
-            .filter(([key]) => key !== "credentials")
-            .map(([, provider]) => (
-              <div key={provider.name}>
-                <button
-                  type="button"
-                  className="block w-full rounded-md border-0 py-1.5 mt-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onClick={() => signIn(provider.id)}
-                >
-                  Pokračovat s {provider.name}
-                </button>
-              </div>
-            ))}
+          <div className="uppercase p-3 text-center">Nebo</div>
 
-          {error && <div className="p-2 text-red-400 font-bold">{error}</div>}
+          <button className="w-full rounded-md border-2 border-primary hover:border-primary-400 text-primary hover:text-primary-400 px-3 py-1.5 text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="button" onClick={() => signIn("google")}>Pokračovat s Google</button>
 
           <p className="mt-5 text-center text-sm text-gray-500">
-            <Link href="/auth/registration" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Nemám účet. Chci se registrovat.
+            <Link href="/auth/sign-in" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              Již mám vytvořený účet.
             </Link>
           </p>
         </div>
