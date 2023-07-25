@@ -8,11 +8,15 @@ import React from "react";
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
-const formSchema = z.object({
-  username: z.string().nonempty("E-mail je povinný").email(),
-  password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
-  repeatPassword: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
-});
+const formSchema =
+  z.object({
+    email: z.string().nonempty("E-mail je povinný").email('Neplatný email'),
+    password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+    repeatPassword: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+  }).refine((data) => data.password === data.repeatPassword, {
+    path: ["repeatPassword"],
+    message: "Hesla se neshodují"
+  });
 
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -21,15 +25,15 @@ export const RegistrationForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
       repeatPassword: "",
     },
   });
 
-  const handleSubmit: SubmitHandler<FormValues> = async ({ username, password }, event) => {
+  const handleSubmit: SubmitHandler<FormValues> = async ({ email, password }, event) => {
     event?.preventDefault();
-    console.log({ username, password })
+    console.log({ email, password })
   };
 
   const errors = form.formState.errors;
@@ -56,13 +60,12 @@ export const RegistrationForm = () => {
             <div className="mt-2">
               <input
                 id="email"
-                type="email"
-                {...form.register("username")}
+                type="text"
+                {...form.register("email")}
                 autoComplete="email"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              {errors.username?.message && <p className="text-red-400">{errors.username.message}</p>}
+              {errors.email?.message && <p className="text-red-400">{errors.email.message}</p>}
             </div>
           </div>
 
@@ -78,8 +81,7 @@ export const RegistrationForm = () => {
                 type="password"
                 {...form.register("password")}
                 autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.password?.message && <p className="text-red-400">{errors.password.message}</p>}
             </div>
@@ -91,11 +93,10 @@ export const RegistrationForm = () => {
             <div className="mt-2 mb-2">
               <input
                 id="repeatPassword"
-                type="repeatPassword"
+                type="password"
                 {...form.register("repeatPassword")}
                 autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.repeatPassword?.message && <p className="text-red-400">{errors.repeatPassword.message}</p>}
             </div>
