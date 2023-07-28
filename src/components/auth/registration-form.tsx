@@ -1,10 +1,8 @@
-"use client";
-
 import * as z from "zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
@@ -21,7 +19,11 @@ const formSchema =
 
 export type FormValues = z.infer<typeof formSchema>;
 
-export const RegistrationForm = () => {
+type Props = {
+  onSuccess: (props: { jwt: string }) => void;
+}
+
+export const RegistrationForm = ({ onSuccess }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,8 +35,18 @@ export const RegistrationForm = () => {
 
   const handleSubmit: SubmitHandler<FormValues> = async ({ email, password }, event) => {
     event?.preventDefault();
-    console.log({ email, password })
+
+    // TODO: auth key in env
+    const response = await fetch(`https://mingly.cz/?rest_route=/simple-jwt-login/v1/users&email=${email}&password=${password}&AUTH_KEY=LUBeg4t6mkBV3GW7D0NK`, { method: "POST" });
+    const responseJson =  await response.json();
+
+    if(responseJson.success) {
+       return onSuccess(responseJson);
+    }
+
+    console.log('user', response.status)
   };
+
 
   const errors = form.formState.errors;
 

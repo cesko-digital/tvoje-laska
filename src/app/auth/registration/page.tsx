@@ -2,7 +2,7 @@ import React from "react";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { RegistrationForm } from 'components/auth/registration-form'
+import { Registration } from 'modules/Registration'
 
 export default async function RegistrationPage() {
   const session = await getServerSession(authOptions);
@@ -12,6 +12,6 @@ export default async function RegistrationPage() {
   }
 
   return (
-    <RegistrationForm />
+    <Registration />
   );
 }
