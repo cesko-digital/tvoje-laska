@@ -92,7 +92,7 @@ export const getCurrentMember = async (
   try {
     const headers = { ...(options && options.headers ? options.headers : {}), Authorization: session.wpJwtToken };
 
-    const me = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/members/me`, {
+    const me = await fetch(`${process.env.WP_API_URL}/members/me`, {
       ...options,
       headers,
     });
