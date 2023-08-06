@@ -3,9 +3,34 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import Button from "library/atoms/Button";
+import ModalList, { Item } from "library/atoms/ModalList";
+import { CheckMarkSvg } from "library/icons/symbols";
 
-const Modal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+type Props = {
+  title?: string;
+};
+
+const data: Item[] = [
+  {
+    id: 1,
+    title: "Pravidlo první",
+    description: "Dbej na vysokou kvalitu snímku. Fotka by neměla být rozmazaná. Vyfoť se raději za denního světla.",
+  },
+  {
+    id: 2,
+    title: "Pravidlo druhé",
+    description: "Dbej na vysokou kvalitu snímku. Fotka by neměla být rozmazaná. Vyfoť se raději za denního světla.",
+  },
+  {
+    id: 3,
+    title: "Pravidlo třetí",
+    description: "Dbej na vysokou kvalitu snímku. Fotka by neměla být rozmazaná. Vyfoť se raději za denního světla.",
+  },
+];
+
+const Modal = ({ title }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -17,16 +42,7 @@ const Modal = () => {
 
   return (
     <>
-      <div className=" inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          Otevřít modal
-        </button>
-      </div>
-
+      <Button buttonText="Otevřít modal" color="primary" onClick={openModal} />
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -41,8 +57,9 @@ const Modal = () => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
+          {/* Nechat inset a min-h-full ? */}
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -52,23 +69,18 @@ const Modal = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium"
-                    onClick={closeModal}
-                  >
-                    <XMarkIcon width={20} />
-                  </button>
-                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent you an email with all of the details of
-                      your order.
-                    </p>
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-t-[40px] bg-white py-6 px-4 text-left align-middle shadow-2xl transition-all">
+                  <div className="absolute right-0 top-0 pr-6 pt-6 text-gray-70">
+                    <button type="button" onClick={closeModal}>
+                      <XMarkIcon width={30} strokeWidth={3} />
+                    </button>
                   </div>
+
+                  <Dialog.Title as="h2" className="mt-16">
+                    {title}
+                  </Dialog.Title>
+
+                  <ModalList data={data} icon={<CheckMarkSvg width={23} />} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

@@ -4,8 +4,9 @@ import { Suspense } from "react";
 import Header from "components/layout/header";
 import "./globals.css";
 import React from "react";
+import NavbarMobile from "library/molecules/MobileMenu";
 
-const inter = Inter({ subsets: ["latin"] });
+//const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +16,7 @@ export const metadata = {
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <Suspense fallback={<div>loading...</div>}>
           <Header />
           {children}

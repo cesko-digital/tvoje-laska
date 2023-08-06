@@ -14,11 +14,14 @@ module.exports = {
       },
       fontFamily: {
         body: ["Lato", "sans-serif"],
-        heading: ["Lato", "sans-serif"], //upravit na Roc Grotesk
+        heading: ["RocGrotesk", "sans-serif"],
       },
     },
     colors: {
       transparent: "transparent",
+      white: "#fff",
+      black: "#000",
+      // TODO: Odstranit primary barvy
       primary: {
         400: "#818cf8",
         500: "#6366f1",
@@ -35,9 +38,6 @@ module.exports = {
         green_forest: "#0A9473",
         white: "#FFFFFF",
       },
-      white: "#fff",
-      black: "#000",
-
       gray: {
         10: "#F4F4F4",
         20: "#E0E0E0",

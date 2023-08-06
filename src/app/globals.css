@@ -4,9 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "RocGrotesk";
+  src: url("/RocGrotesk.ttf") format("truetype");
+}
+
 @layer base {
   body {
-    @apply font-body;
+    @apply font-body text-base;
   }
 
   h1,
@@ -16,6 +21,31 @@
   h5,
   h6,
   button {
-    @apply font-heading;
+    @apply font-heading font-normal;
+  }
+
+  /* TODO: upravit breakpoint pro desktop - md vs. lg? */
+  h1 {
+    @apply text-4xl lg:text-[61px];
+  }
+
+  h2 {
+    @apply text-3xl lg:text-[49px];
+  }
+
+  h3 {
+    @apply text-[26px] lg:text-[39px];
+  }
+
+  h4 {
+    @apply text-2xl lg:text-[31px];
+  }
+
+  h5 {
+    @apply text-[22px] lg:text-[25px];
+  }
+
+  h6 {
+    @apply text-xl;
   }
 }

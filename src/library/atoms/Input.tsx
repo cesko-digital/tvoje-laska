@@ -2,10 +2,7 @@
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import classNames from "helpers/classNames";
 
 type Props = {
   type?: "text" | "email" | "password" | "number" | "search" | "tel" | "url";
@@ -14,6 +11,8 @@ type Props = {
   ariaDescribedBy?: string;
   description?: string;
   disabled?: boolean;
+  required?: boolean;
+  autoComplete?: string;
 };
 
 const isEmailValid = (email: string) => {
@@ -22,7 +21,16 @@ const isEmailValid = (email: string) => {
 };
 const isNotEmpty = (value: string) => value.trim() !== "";
 
-const Input = ({ type, label = "Titulek", id, ariaDescribedBy, description = "Popisek", disabled = false }: Props) => {
+const Input = ({
+  type,
+  label = "Titulek",
+  id,
+  ariaDescribedBy,
+  description = "Popisek",
+  disabled = false,
+  required = false,
+  autoComplete,
+}: Props) => {
   const [enteredValue, setEnteredValue] = useState<string>("");
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
@@ -97,6 +105,8 @@ const Input = ({ type, label = "Titulek", id, ariaDescribedBy, description = "Po
             onFocus={handleOnFocus}
             onChange={e => setEnteredValue(e.target.value)}
             value={enteredValue}
+            required={required}
+            autoComplete={autoComplete}
           />
         </div>
         {error ? (

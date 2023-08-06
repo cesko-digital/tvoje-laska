@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import classNames from "helpers/classNames";
 
 const Toggle = () => {
   const [enabled, setEnabled] = useState(false);
