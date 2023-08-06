@@ -118,7 +118,7 @@ const LoginForm = ({ providers, token }: Props) => {
           {error && <div className="p-2 text-red-70 font-bold">{error}</div>}
 
           <p className="mt-5 text-center text-sm text-gray-500">
-            Nemáš účet? <Link href="/auth/registration">Registrovat se.</Link>
+            Nemáš účet? <Link href="/registration">Registrovat se.</Link>
           </p>
         </div>
       </form>
