@@ -13,7 +13,7 @@ import { BuiltInProviderType } from "next-auth/providers";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { UserAuthError } from "services/wordpress-auth-service";
+import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
