@@ -2,16 +2,20 @@
 
 import { RegistrationForm } from '../components/auth/registration-form'
 import React, { ComponentProps } from 'react'
-import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
-export const Registration = () => {
+type Props = {
+  token?: string;
+}
+
+export const Registration = ({ token }: Props) => {
   const router = useRouter()
 
-  const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = async ({ jwt }) => {
-    toast.success('Registrace proběhla úspěšně, můžete se přihlásit.')
-    router.push('/auth/sign-in')
+  const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = async () => {
+    return router.push('/registration/location')
   }
 
-  return <RegistrationForm onSuccess={handleRegistrationSuccess} />
+  return (
+    <RegistrationForm onSuccess={handleRegistrationSuccess} csrf={token} />
+  )
 }
