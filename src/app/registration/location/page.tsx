@@ -7,9 +7,9 @@ export default async function RegistrationPage() {
 
   return (
     <div>
-      {regions?.map(r => <span> {r} </span>)}
+      {regions?.map(r => <span key={r}> {r} </span>)}
       <br/>
-      {municipalities?.map(r => <span> {r.hezkyNazev}<br></br> </span>)}
+      {municipalities?.map(r => <span key={r.eDeskyID}> {r.hezkyNazev}<br></br> </span>)}
     </div>
   );
 }
