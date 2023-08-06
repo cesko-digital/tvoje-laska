@@ -22,7 +22,7 @@ const RadioGroup = ({ title, description, options, disabled = false }: Props) =>
         <legend className="sr-only">{title}</legend>
         {options.map(option => {
           return (
-            <div className="inline-flex items-center gap-2">
+            <div key={option.id} className="inline-flex items-center gap-2">
               <label className="relative flex items-center" htmlFor={option.id}>
                 <input
                   id={option.id}

@@ -59,7 +59,11 @@ const Carousel = ({ testimonials, variant }: Props) => {
             {testimonials.map((testimonial, index) => {
               if (index === currentIndex) {
                 return (
-                  <Card className="max-w-[258px] flex flex-col justify-center items-center gap-2.5" variant="default">
+                  <Card
+                    key={index}
+                    className="max-w-[258px] flex flex-col justify-center items-center gap-2.5"
+                    variant="default"
+                  >
                     {variant === "with-image" && (
                       <Image src={testimonial.image} width={145} height={180} alt="Carousel image" />
                     )}
