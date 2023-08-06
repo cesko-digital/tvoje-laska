@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { Spinner } from '../Spinner'
 
 const formSchema =
   z.object({
@@ -20,10 +22,11 @@ const formSchema =
 export type FormValues = z.infer<typeof formSchema>;
 
 type Props = {
-  onSuccess: (props: { jwt: string }) => void;
+  csrf?: string;
+  onSuccess: () => void;
 }
 
-export const RegistrationForm = ({ onSuccess }: Props) => {
+export const RegistrationForm = ({ onSuccess, csrf }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,10 +44,15 @@ export const RegistrationForm = ({ onSuccess }: Props) => {
     const responseJson =  await response.json();
 
     if(responseJson.success) {
-       return onSuccess(responseJson);
-    }
+      const signInResponse = await signIn("credentials", { username: email, password, token: csrf, redirect: false });
 
-    console.log('user', response.status)
+      if(signInResponse?.ok) {
+        return onSuccess();
+      }
+
+      // TODO: show what happened
+      toast.error('Během registrace nastala chyba.')
+    }
   };
 
 
@@ -74,6 +82,7 @@ export const RegistrationForm = ({ onSuccess }: Props) => {
                 id="email"
                 type="text"
                 {...form.register("email")}
+                disabled={form.formState.isSubmitting}
                 autoComplete="email"
                 className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -92,6 +101,7 @@ export const RegistrationForm = ({ onSuccess }: Props) => {
                 id="password"
                 type="password"
                 {...form.register("password")}
+                disabled={form.formState.isSubmitting}
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -107,6 +117,7 @@ export const RegistrationForm = ({ onSuccess }: Props) => {
                 id="repeatPassword"
                 type="password"
                 {...form.register("repeatPassword")}
+                disabled={form.formState.isSubmitting}
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -117,9 +128,10 @@ export const RegistrationForm = ({ onSuccess }: Props) => {
           <div>
             <button
               type="submit"
-              className="w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              disabled={form.formState.isSubmitting}
+              className="flex items-center justify-center gap-3 w-full rounded-md h-10 bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Registrovat emailem
+              {form.formState.isSubmitting && <Spinner />}Registrovat emailem
             </button>
           </div>
 
