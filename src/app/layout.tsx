@@ -4,7 +4,11 @@ import { Suspense } from "react";
 import Header from "components/layout/header";
 import "./globals.css";
 import React from "react";
+
 import NavbarMobile from "library/molecules/MobileMenu";
+
+import { Toaster } from 'react-hot-toast'
+
 
 //const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,9 @@ export const metadata = {
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
+        <Toaster />
+
         <Suspense fallback={<div>loading...</div>}>
           <Header />
           {children}

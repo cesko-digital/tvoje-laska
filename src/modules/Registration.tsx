@@ -1,27 +1,21 @@
 "use client"
 
 import { RegistrationForm } from '../components/auth/registration-form'
-import { ComponentProps, useState } from 'react'
+import React, { ComponentProps } from 'react'
+import { useRouter } from 'next/navigation'
 
-type Step = 'REGISTER' | 'NAME'
+type Props = {
+  token?: string;
+}
 
+export const Registration = ({ token }: Props) => {
+  const router = useRouter()
 
-export const Registration = () => {
-  const [step, setStep] = useState<Step>("REGISTER")
-  // todo: could be local storage
-  const [jwt, setJWT] = useState<string>();
-
-  const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = ({ jwt }) => {
-    setJWT(jwt);
-    setStep('NAME');
+  const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = async () => {
+    return router.push('/registration/location')
   }
 
-
-  if(jwt) {
-    if(step === 'NAME') {
-      return <div>enter your name</div>
-    }
-  }
-
-  return <RegistrationForm onSuccess={handleRegistrationSuccess} />
+  return (
+    <RegistrationForm onSuccess={handleRegistrationSuccess} csrf={token} />
+  )
 }

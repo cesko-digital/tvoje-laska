@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { btoa } from "buffer";
 import type { NextAuthOptions } from "next-auth";
-import { authorize, getUserInfoFromToken } from "services/wordpress-auth-service";
+import { authorize, getUserInfoFromToken } from "app/api/auth/wordpress/wordpress-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { createToken, getProfileFromExternalProvider } from "./nextauth.functions";
 import { LoggedUser } from "models/user-models";

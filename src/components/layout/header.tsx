@@ -24,7 +24,7 @@ const HeaderWithSession = () => {
     <div className="bg-black py-4 px-8 text-white flex justify-between">
       <div className="flex gap-x-4">
         <Link href="/">Home</Link>
-        {nickname && !isLoading && <Link href="/profile">My Profile</Link>}
+        {nickname && !isLoading && <Link href="/profil">My Profile</Link>}
         <Link href="/kontakt">Kontakt</Link>
       </div>
 

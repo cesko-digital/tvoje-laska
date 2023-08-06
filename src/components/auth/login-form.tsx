@@ -9,8 +9,10 @@ import { BuiltInProviderType } from "next-auth/providers";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { UserAuthError } from "services/wordpress-auth-service";
-import Link from "next/link";
+
+import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
+import Link from 'next/link'
+
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
@@ -148,7 +150,7 @@ export const LoginForm = ({ providers, token }: Props) => {
           {error && <div className="p-2 text-red-400 font-bold">{error}</div>}
 
           <p className="mt-5 text-center text-sm text-gray-500">
-            <Link href="/auth/registration" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link href="/registration" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Nemám účet. Chci se registrovat.
             </Link>
           </p>
