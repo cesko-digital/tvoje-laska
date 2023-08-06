@@ -104,7 +104,7 @@ export const LoginForm = ({ providers, token }: Props) => {
                 Heslo
               </label>
               <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <a href="/auth/zapomenute-heslo" className="font-semibold text-indigo-600 hover:text-indigo-500">
                   Zapomněl/a jsem heslo
                 </a>
               </div>
