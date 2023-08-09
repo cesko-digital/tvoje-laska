@@ -1,12 +1,9 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import Header from "components/layout/header";
 import "./globals.css";
 import React from "react";
-import { Toaster } from 'react-hot-toast'
-
-const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +13,7 @@ export const metadata = {
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <Toaster />
         <Suspense fallback={<div>loading...</div>}>
           <Header />

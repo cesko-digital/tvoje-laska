@@ -1,9 +1,10 @@
 import React from "react";
-import { LoginForm } from "components/auth/login-form";
+// import { LoginForm } from "components/auth/login-form";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { getCsrfToken, getProviders } from "next-auth/react";
+import LoginForm from "components/auth/LoginForm";
 
 export default async function SignInPage() {
   const session = await getServerSession(authOptions);
