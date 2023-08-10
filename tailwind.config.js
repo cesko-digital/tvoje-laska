@@ -34,7 +34,7 @@ module.exports = {
         magenta_light: "#F0ABFC",
         red_salmon: "#FF4467",
         orange_beige: "FFE4D9",
-        mustard_money: "#FEC845",
+        mustard_honey: "#FEC845",
         green_forest: "#0A9473",
         white: "#FFFFFF",
       },

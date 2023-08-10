@@ -7,7 +7,7 @@ import Tag from "library/atoms/Tag";
 import Checkbox from "library/atoms/Checkbox";
 import Modal from "library/molecules/Modal";
 import Footer from "library/molecules/Footer";
-import MobileLayout from "library/molecules/MobileLayout";
+import HeaderNew from "library/molecules/Header";
 import StepperMenu, { StepperStep } from "library/molecules/ProgressStepper";
 import Carousel from "library/molecules/Carousel";
 import { ShoppingBagSvg } from "library/icons/symbols";
@@ -102,7 +102,7 @@ const options = [
 export default async function ComponentsPreview() {
   return (
     <div className="w-fit flex flex-col gap-8 justify-start m-5">
-      <MobileLayout title="Page header 1" />
+      <HeaderNew />
       <Toggle />
       <TextLink
         title="Zobrazit můj profil"
@@ -121,7 +121,13 @@ export default async function ComponentsPreview() {
         userIsActive={false}
       />
       <Tabs />
-      <Button color="primary" buttonText="Tlačítko" startIcon={<ShoppingBagSvg width={21} />} className="text-xl" />
+      <Button
+        // disabled
+        color="secondary"
+        buttonText="Tlačítko"
+        startIcon={<ShoppingBagSvg width={21} />}
+        className="text-xl"
+      />
       <Input id="title" type="tel" />
       <Tag title="Tag" />
       <Checkbox id="comments" title="Checkbox" />

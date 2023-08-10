@@ -1,6 +1,6 @@
 "use client";
 import Input from "library/atoms/Input";
-import MobileLayout from "../../library/molecules/MobileLayout";
+import MobileLayout from "../../library/molecules/Header";
 import Link from "next/link";
 import Button from "library/atoms/Button";
 
@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
+import Content from "library/atoms/Content";
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
@@ -73,7 +74,7 @@ const LoginForm = ({ providers, token }: Props) => {
   console.log(providers);
 
   return (
-    <MobileLayout title="Přihlásit se">
+    <Content title="Přihlásit se">
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <div className="flex flex-col justify-center mt-4">
           <Input
@@ -122,7 +123,7 @@ const LoginForm = ({ providers, token }: Props) => {
           </p>
         </div>
       </form>
-    </MobileLayout>
+    </Content>
   );
 };
 export default LoginForm;
