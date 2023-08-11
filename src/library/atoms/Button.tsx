@@ -15,6 +15,7 @@ type Props = {
   endIcon?: ReactNode | SvgIconElement;
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
 const Button = ({
@@ -26,6 +27,7 @@ const Button = ({
   endIcon = false,
   onClick,
   className,
+  disabled
 }: Props) => {
   return (
     <button
@@ -39,6 +41,7 @@ const Button = ({
         className!,
       )}
       onClick={onClick}
+      disabled={disabled}
     >
       <div className="flex justify-center items-center gap-4 px-5">
         {startIcon && startIcon}

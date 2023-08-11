@@ -108,25 +108,6 @@ export async function revoke(token: string): Promise<boolean> {
   return response.data.success;
 }
 
-export async function sendForgottenPasswordEmail(email: string): Promise<ForgottenPasswordResult> {
-  try {
-    const response = await http.post("/wp-json/bdpwr/v1/reset-password", {
-      email: email,
-    });
-
-    if (response.status === 200) {
-      return "Success";
-    } 
-
-    return "Unknown";
-  } catch (error) {
-    if(error?.response?.data?.code === 'bad_email') {
-      return 'UserNotFound';
-    }
-    return "Unknown";
-  }
-}
-
 export type Credentials = {
   email: string;
   passwordBase64: string;
@@ -143,5 +124,4 @@ export enum RegistrationFailureType {
   Other,
 }
 
-export type ForgottenPasswordResult = "Success" | "UserNotFound" | "Unknown";
 export type UserAuthError = "UserNotFound" | "WrongUserCredentials" | "Unknown";

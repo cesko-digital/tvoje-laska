@@ -177,7 +177,7 @@ function bdpwr_send_password_reset_code_email( $email = false , $code = false , 
   
   ob_start(); ?>
 
-  Pro vaší e-mailovou adresu byl zažádán reset hesla. Reset hesla provedete kliknutím na tento odkaz https://mingly.cz/reset-hesla?code=<?php echo $code; ?>.
+  Pro vaší e-mailovou adresu byl zažádán reset hesla. Reset hesla provedete kliknutím na tento odkaz https://mingly.cz/auth/reset-hesla?code=<?php echo $code; ?>&email=<?php echo $email; ?>.
 
   <?php if( $expiry !== 0 ) { ?>
     Tento odkaz je platný do: <?php echo bdpwr_get_formatted_date( $expiry ); ?>.

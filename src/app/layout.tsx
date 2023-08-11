@@ -14,7 +14,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <Toaster />
+        <Toaster toastOptions={{ duration: 5000 }} />
         <Suspense fallback={<div>loading...</div>}>
           <Header />
           {children}
