@@ -11,13 +11,13 @@ const http = axios.create({
 });
 
 export async function register(args: RegisterArgs): Promise<SimplifiedUser | RegistrationFailureType> {
-    const requestParameters = [
-        `email=${args.email}`,
-        `AUTH_KEY=${process.env.AUTH_KEY}`,
-        `first_name=${args.firstName}`,
-        `last_name=${args.lastName}`,
-        `display_name=${args.firstName}%20${args.lastName}`
-    ];
+  const requestParameters = [
+    `email=${args.email}`,
+    `AUTH_KEY=${process.env.AUTH_KEY}`,
+    `first_name=${args.firstName}`,
+    `last_name=${args.lastName}`,
+    `display_name=${args.firstName}%20${args.lastName}`,
+  ];
 
   const body = requestParameters.join("&");
   const response = await http.post(`/?rest_route=/simple-jwt-login/v1/users&${body}`);
@@ -43,47 +43,48 @@ export async function register(args: RegisterArgs): Promise<SimplifiedUser | Reg
 }
 
 export async function authorize(credentials: Credentials): Promise<SimplifiedUser | UserAuthError> {
-    if (!credentials) 
-        return 'Unknown';
-   
-    const response = await http.post(`/?rest_route=/simple-jwt-login/v1/auth&email=${credentials.email}&password=${credentials.passwordBase64}`);
-    
-    if (!response.data.success || !response.data.data) {
-        if(response.data?.data.errorCode === 48) {
-            return 'WrongUserCredentials';
-        } else {
-            return 'Unknown';
-        }
+  if (!credentials) return "Unknown";
+
+  const response = await http.post(
+    `/?rest_route=/simple-jwt-login/v1/auth&email=${credentials.email}&password=${credentials.passwordBase64}`,
+  );
+
+  if (!response.data.success || !response.data.data) {
+    if (response.data?.data.errorCode === 48) {
+      return "WrongUserCredentials";
+    } else {
+      return "Unknown";
     }
-    
-    return { 
-        ...jwt_decode(response.data.data.jwt),
-        wpJwtToken: response.data.data.jwt
-    } as SimplifiedUser;
+  }
+
+  return {
+    ...jwt_decode(response.data.data.jwt),
+    wpJwtToken: response.data.data.jwt,
+  } as SimplifiedUser;
 }
 
-export async function getUserInfoFromToken(jwtToken: string): Promise<LoggedUser | UserAuthError |null> {
-    const response = await http.post(`?rest_route=/simple-jwt-login/v1/auth/validate&JWT=${jwtToken}`);
-    
-    if (!response.data.success) {
-        if (response.data?.data?.errorCode === 24) {
-            return 'UserNotFound'; 
-        } else {
-            return 'Unknown';
-        }
-    }
+export async function getUserInfoFromToken(jwtToken: string): Promise<LoggedUser | UserAuthError | null> {
+  const response = await http.post(`?rest_route=/simple-jwt-login/v1/auth/validate&JWT=${jwtToken}`);
 
-    const data = response.data.data;
-    
-    return { 
-        email: data.user.user_email,
-        wpJwtToken: response.data.data.jwt[0].token,
-        id: data.user.ID,
-        username: data.user.user_login,
-        roles: data.roles,
-        nickname: data.user.user_nicename,
-        displayName: data.user.display_name,
-    };
+  if (!response.data.success) {
+    if (response.data?.data?.errorCode === 24) {
+      return "UserNotFound";
+    } else {
+      return "Unknown";
+    }
+  }
+
+  const data = response.data.data;
+
+  return {
+    email: data.user.user_email,
+    wpJwtToken: response.data.data.jwt[0].token,
+    id: data.user.ID,
+    username: data.user.user_login,
+    roles: data.roles,
+    nickname: data.user.user_nicename,
+    displayName: data.user.display_name,
+  };
 }
 
 export async function refresh(token: string): Promise<string | null> {
@@ -108,9 +109,9 @@ export async function revoke(token: string): Promise<boolean> {
 }
 
 export type Credentials = {
-    email: string;
-    passwordBase64: string;
-}
+  email: string;
+  passwordBase64: string;
+};
 
 export type RegisterArgs = {
   email: string;
@@ -123,4 +124,4 @@ export enum RegistrationFailureType {
   Other,
 }
 
-export type UserAuthError = 'UserNotFound' | 'WrongUserCredentials' | 'Unknown';
+export type UserAuthError = "UserNotFound" | "WrongUserCredentials" | "Unknown";

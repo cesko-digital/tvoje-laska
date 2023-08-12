@@ -18,6 +18,10 @@ import UserCard from "library/molecules/cards/UserCard";
 import NavbarMobile from "library/molecules/MobileMenu";
 import ImageUploader from "library/molecules/ImageUploader";
 import RadioGroup from "library/atoms/RadioGroup";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import PhoneInput from "library/atoms/PhoneInput";
 
 const steps: StepperStep[] = [
   {
@@ -99,7 +103,24 @@ const options = [
   },
 ];
 
+const formSchema = z.object({
+  email: z.string().nonempty("E-mail je povinný").email(),
+  phone: z.string().nonempty("Telefon je povinný").min(9, 'Minimální délka je 9 znaků')
+});
+
+export type FormValues = z.infer<typeof formSchema>;
+
 export default async function ComponentsPreview() {
+
+  
+    const form = useForm<FormValues>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        email: "",
+        phone: ""
+      },
+    });
+
   return (
     <div className="w-fit flex flex-col gap-8 justify-start m-5">
       <HeaderNew />
@@ -128,7 +149,8 @@ export default async function ComponentsPreview() {
         startIcon={<ShoppingBagSvg width={21} />}
         className="text-xl"
       />
-      <Input id="title" type="tel" />
+      <Input label="E-mail" error={form.formState.errors["email"]} register={form.register("email")} />
+      <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")}/>
       <Tag title="Tag" />
       <Checkbox id="comments" title="Checkbox" />
       <RadioGroup title="Možnosti" options={options} />

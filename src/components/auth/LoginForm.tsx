@@ -71,45 +71,44 @@ const LoginForm = ({ providers, token }: Props) => {
 
   const errors = form.formState.errors;
 
-  console.log(providers);
-
   return (
     <Content title="Přihlásit se">
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <div className="flex flex-col justify-center mt-4">
           <Input
             type="email"
-            id="email"
-            required
+            label="Zadejte e-mail"
+            register={form.register("username")}
+            error={errors["username"]}
             autoComplete="email"
-            // {...form.register("username")} //TODO: Zkontrolovat, jestli je tohle správně
           />
-
-          {/* TODO: Vyřešit errory */}
-          {errors.username?.message && <p className="text-red-400">{errors.username.message}</p>}
 
           <div className="mt-2 mb-2">
             <Input
+              label="Heslo"
               type="password"
-              id="password"
-              required
               autoComplete="current-password"
-              // {...form.register("password")} //TODO: Zkontrolovat, jestli je tohle správně
+              placeholder="Zadejte heslo"
+              error={errors["password"]}
+              register={form.register("password")}
             />
 
-            {/* TODO: Vyřešit errory */}
-            {errors.password?.message && <p className="text-red-70">{errors.password.message}</p>}
+            <div className="text-sm">
+              <a href="/auth/zapomenute-heslo" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                Zapomněl/a jsem heslo
+              </a>
+            </div>
           </div>
 
-          <Button buttonText="Přihlásit se" color="primary" type="submit" />
+          <Button buttonText="Přihlásit se" color="primary" type="submit" disabled={form.formState.isSubmitting} />
 
-          {/* TODO: Co s providers? */}
           {Object.entries(providers ?? {})
             .filter(([key]) => key !== "credentials")
             .map(([, provider]) => (
               <div key={provider.name}>
                 <Button
                   buttonText={`Přihlásit přes ${provider.name}`}
+                  type="button"
                   color="secondary"
                   onClick={() => signIn(provider.id)}
                 />
