@@ -42,8 +42,8 @@ const Carousel = ({ testimonials, variant }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="relative flex justify-center text-gray-100 italic">
+    <div className="flex flex-col items-center gap-10">
+      <div className="relative flex justify-center text-gray-100 italic min-w-[350px]">
         <button onClick={prevSlide} className="text-violet-70 absolute left-0 top-1/2 transform -translate-y-1/2">
           <ArrowLeftSvg width={20} />
         </button>
