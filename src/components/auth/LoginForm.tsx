@@ -100,7 +100,7 @@ const LoginForm = ({ providers, token }: Props) => {
             </div>
           </div>
 
-          <Button buttonText="Přihlásit se" color="primary" type="submit" disabled={form.formState.isSubmitting} />
+          <Button buttonText="Přihlásit se" className="w-full" color="primary" type="submit" disabled={form.formState.isSubmitting} />
 
           {Object.entries(providers ?? {})
             .filter(([key]) => key !== "credentials")
@@ -108,6 +108,7 @@ const LoginForm = ({ providers, token }: Props) => {
               <div key={provider.name}>
                 <Button
                   buttonText={`Přihlásit přes ${provider.name}`}
+                  className="w-full"
                   type="button"
                   color="secondary"
                   onClick={() => signIn(provider.id)}

@@ -6,6 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
+import TextLink from "library/atoms/TextLink";
+import { ForgottenPasswordResult } from "./ForgottenPasswordResult";
+import Content from "library/atoms/Content";
+import Header from "components/layout/header";
+import HeaderNew from "library/molecules/Header";
 
 const formSchema = z.object({
   email: z.string().nonempty("E-mail je povinný").email(),
@@ -20,10 +25,11 @@ export const ForgottenPasswordForm = () => {
       email: "",
     },
   });
+  const { email } = form.watch();
 
   const [isSend, setIsSend] = useState(false);
 
-  const handleSubmit: SubmitHandler<FormValues> = async ({ email }, event) => {
+  const handleSubmit: SubmitHandler<FormValues> = async ({}, event) => {
     event?.preventDefault();
 
     const response = await fetch("/api/auth/forgotten-password", {
@@ -51,37 +57,37 @@ export const ForgottenPasswordForm = () => {
   const errors = form.formState.errors;
 
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Zapomenuté heslo
-          </h2>
-        </div>
-        {isSend ? (
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            E-mail s pokyny pro reset hesla byl odeslán na zadané údaje
-          </div>
-        ) : (
-          <>
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <div className="mt-2 mb-2">
-                <Input
-                  label="E-mail"
-                  autoComplete="email"
-                  type="email"
-                  error={errors["email"]}
-                  register={form.register("email", {
-                    required: true,
-                  })}
-                />
-              </div>
+    <Content title="Obnova hesla">
+      {isSend ? (
+        <ForgottenPasswordResult email={email} />
+      ) : (
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+          <p>Zadej níže svůj e-mail a my ti pošleme odkaz pro obnovení hesla ke tvému účtu.</p>
 
-              <Button type="submit" buttonText="Odeslat" color="primary" disabled={form.formState.isSubmitting} />
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="mb-2">
+              <Input
+                label="E-mail"
+                autoComplete="email"
+                type="email"
+                error={errors["email"]}
+                register={form.register("email", {
+                  required: true,
+                })}
+              />
             </div>
-          </>
-        )}
-      </div>
-    </form>
+
+            <Button
+              type="submit"
+              className="w-full"
+              size="base"
+              buttonText="Odeslat"
+              color="primary"
+              disabled={form.formState.isSubmitting}
+            />
+          </div>
+        </form>
+      )}
+    </Content>
   );
 };

@@ -33,7 +33,7 @@ const TextLink = ({
   const commonClasses = classNames("flex items-center gap-3 underline underline-offset-4 w-fit", getColorClass(color));
 
   return as === "link" ? (
-    <Link href={path!} className={commonClasses}>
+    <Link href={path!} onClick={onClick} className={commonClasses}>
       {startIcon && startIcon}
       {title}
       {endIcon && endIcon}

@@ -8,6 +8,7 @@ import { ResetPasswordRequest } from "app/api/auth/reset-password/route";
 import toast from "react-hot-toast";
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
+import Content from "library/atoms/Content";
 
 const formSchema = z
   .object({
@@ -65,38 +66,43 @@ export const ResetPasswordForm = ({ code, email }: { code: string; email: string
 
   const errors = form.formState.errors;
   return (
+    <Content title="Vytvořit nové heslo">
+      <p>
+        Zvol si nové heslo ke svému účtu. Zadej nové heslo do políčka níže. Ujisti se, že jsi heslo zadal/a správně a potvrď jej tlačítkem. 
+      </p>
     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <Input
             type="password"
-            label="Heslo"
-            placeholder="Zadejte heslo"
+            label="Nové heslo"
+            description="Heslo musí být alespoň 8 znaků dlouhé"
             register={form.register("password", {
               required: true,
             })}
             error={errors["password"]}
-          />
+            />
 
           <Input
             type="password"
-            label="Heslo znovu"
-            placeholder="Zadejte heslo znovu"
+            label="Nové heslo znovu"
             register={form.register("passwordRepeat", {
               required: true,
             })}
             error={errors["passwordRepeat"]}
-          />
+            />
 
           <Button
-            buttonText="Odeslat"
+            buttonText="Změnit heslo a přihlásit se"
             color="primary"
+            className="w-full"
             size="base"
             type="submit"
             disabled={form.formState.isSubmitting}
-          />
+            />
         </div>
       </div>
     </form>
+            </Content>
   );
 };

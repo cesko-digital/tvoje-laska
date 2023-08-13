@@ -11,6 +11,7 @@ type Props = {
   id?: string;
   ariaDescribedBy?: string;
   description?: string;
+  informationText?: string;
   autoComplete?: string;
   register: UseFormRegisterReturn<string>;
   error?: FieldError | undefined;
@@ -23,6 +24,7 @@ const Input = ({
   id,
   ariaDescribedBy,
   description = "",
+  informationText,
   register,
   autoComplete,
   error,
@@ -39,9 +41,11 @@ const Input = ({
           >
             {label}
           </label>
-          <span className={classNames(register.disabled ? "text-gray-40" : "text-violet-70")}>
-            <InformationCircleIcon width={20} />
-          </span>
+          {informationText ? <>
+            <span className={classNames(register.disabled ? "text-gray-40" : "text-violet-70")}>
+              <InformationCircleIcon width={20} />
+            </span>
+          </> : <></>}
         </div>
         <div>
           <input
