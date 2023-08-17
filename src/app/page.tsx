@@ -37,8 +37,8 @@ export default async function Home() {
         </p>
 
         <div className="flex flex-col gap-5 w-full py-4">
-          <Button as="link" path="/registration" color="primary" buttonText="Registrovat se" />
-          <Button as="link" path="/auth/sign-in" color="secondary" buttonText="Přihlásit se" />
+          <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
+          <Button as="link" path="/prihlaseni" color="secondary" buttonText="Přihlásit se" />
         </div>
       </div>
       <div className="flex flex-col gap-3">
@@ -63,7 +63,7 @@ export default async function Home() {
       </div>
       <div className="flex flex-col gap-3 py-8">
         <h2>Jdi za svým štěstím i ty, zkus to na Mingly</h2>
-        <Button as="link" path="/registration" color="primary" buttonText="Registrovat se" />
+        <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
       </div>
     </Content>
   );

@@ -21,7 +21,7 @@ export const ForgottenPasswordResult = ({ email }: Props) => {
       <br></br>
       Zadal jsi špatný email? <TextLink as="link" path="#" color="primary" onClick={reload} title="Zkusit znovu." />
       <br></br>
-      Nemáš účet? <TextLink path="/registration" color="primary" title="Registrovat se" as="link"></TextLink>
+      Nemáš účet? <TextLink path="/registrace" color="primary" title="Registrovat se" as="link"></TextLink>
 
     </div>
   );

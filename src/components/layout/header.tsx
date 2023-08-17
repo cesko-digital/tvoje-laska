@@ -37,7 +37,7 @@ const HeaderWithSession = () => {
             </a>
           </>
         ) : (
-          <Link href="/auth/sign-in">Přihlásit</Link>
+          <Link href="/prihlaseni">Přihlásit</Link>
         ))}
     </div>
   );

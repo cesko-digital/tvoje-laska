@@ -94,7 +94,7 @@ const LoginForm = ({ providers, token }: Props) => {
             />
 
             <div className="text-sm">
-              <a href="/auth/zapomenute-heslo" className="font-semibold text-indigo-600 hover:text-indigo-500">
+              <a href="/zapomenute-heslo" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Zapomněl/a jsem heslo
               </a>
             </div>
@@ -119,7 +119,7 @@ const LoginForm = ({ providers, token }: Props) => {
           {error && <div className="p-2 text-red-70 font-bold">{error}</div>}
 
           <p className="mt-5 text-center text-sm text-gray-500">
-            Nemáš účet? <Link href="/registration">Registrovat se.</Link>
+            Nemáš účet? <Link href="/registrace">Registrovat se.</Link>
           </p>
         </div>
       </form>
