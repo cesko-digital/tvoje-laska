@@ -2,7 +2,7 @@
 
 import classNames from "helpers/classNames";
 import Button from "library/atoms/Button";
-import Card from "library/atoms/Card";
+import CardContainer from "library/atoms/CardContainer";
 import TextLink from "library/atoms/TextLink";
 import { AddFriendSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
 import { ShakingHandsSvg } from "library/icons/symbols";
@@ -39,7 +39,7 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }
   );
 
   return cardType === "default" ? (
-    <Card variant="bubble" padding="smaller" className="flex items-center gap-4 ">
+    <CardContainer variant="bubble" padding="smaller" className="flex items-center gap-4 ">
       <div className="flex-grow">
         <h5 className="mb-1">{name}</h5>
         <div className="text-gray-70 font-normal">
@@ -57,9 +57,9 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }
           <ShakingHandsSvg width={25} />
         </div>
       </div>
-    </Card>
+    </CardContainer>
   ) : cardType === "friendWaiting" ? (
-    <Card variant="bubble" padding="smaller" className="w-fit flex flex-col gap-4">
+    <CardContainer variant="bubble" padding="smaller" className="w-fit flex flex-col gap-4">
       <div className="flex items-center gap-3">
         {renderImage(80, 80)}
 
@@ -77,10 +77,10 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }
         <Button color="primary" buttonText="Přijmout" startIcon={<AddFriendSvg width={20} />} />
         <Button color="secondary" buttonText="Odmítnout" startIcon={<RemoveSvg width={20} />} />
       </div>
-    </Card>
+    </CardContainer>
   ) : (
     cardType === "friend" && (
-      <Card variant="bubble" padding="smaller" className="w-fit flex flex-col gap-4">
+      <CardContainer variant="bubble" padding="smaller" className="w-fit flex flex-col gap-4">
         <div className="flex items-center gap-3">
           {renderImage(60, 60)}
           <div>
@@ -92,7 +92,7 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }
           <TextLink as="button" color="primary" title="Poslat zprávu" startIcon={<SendMessageSvg width={20} />} />
           <TextLink as="button" color="primary" title="Odebrat z přátel" startIcon={<RemoveSvg width={15} />} />
         </div>
-      </Card>
+      </CardContainer>
     )
   );
 };

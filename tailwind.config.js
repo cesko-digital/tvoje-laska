@@ -16,6 +16,10 @@ module.exports = {
         body: ["Lato", "sans-serif"],
         heading: ["RocGrotesk", "sans-serif"],
       },
+      fontSize: {
+        base: "18px",
+        sm: "16px",
+      },
     },
     colors: {
       transparent: "transparent",

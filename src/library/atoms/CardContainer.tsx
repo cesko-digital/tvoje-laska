@@ -8,7 +8,7 @@ type Props = {
   padding?: "smaller" | "expanded";
 };
 
-const Card = ({ children, className, padding = "smaller", variant = "default" }: Props) => {
+const CardContainer = ({ children, className, padding = "smaller", variant = "default" }: Props) => {
   return (
     <div
       className={classNames(
@@ -23,4 +23,4 @@ const Card = ({ children, className, padding = "smaller", variant = "default" }:
   );
 };
 
-export default Card;
+export default CardContainer;

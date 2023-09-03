@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Card from "library/atoms/Card";
+import CardContainer from "library/atoms/CardContainer";
 import Image from "next/image";
 import { ArrowLeftSvg, ArrowRightSvg } from "library/icons/arrows";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,7 +59,7 @@ const Carousel = ({ testimonials, variant }: Props) => {
             {testimonials.map((testimonial, index) => {
               if (index === currentIndex) {
                 return (
-                  <Card
+                  <CardContainer
                     key={index}
                     className="max-w-[258px] flex flex-col justify-center items-center gap-2.5"
                     variant="default"
@@ -71,7 +71,7 @@ const Carousel = ({ testimonials, variant }: Props) => {
                       <p className="text-start">{testimonial.content}</p>
                       <p className="text-end text-gray-60">{testimonial.name}</p>
                     </div>
-                  </Card>
+                  </CardContainer>
                 );
               }
             })}

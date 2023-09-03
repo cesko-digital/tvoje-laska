@@ -2,7 +2,6 @@ import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";
 import Carousel from "library/molecules/Carousel";
 import Image from "next/image";
-import gradientImage from "../../public/assets/images/gradient.svg";
 
 //Zkušební data
 const testimonials = [
