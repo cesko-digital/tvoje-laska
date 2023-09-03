@@ -1,10 +1,13 @@
 "use client";
 
 import classNames from "helpers/classNames";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
   title: string;
   description?: string;
+  register: UseFormRegisterReturn<string>;
+  error?: FieldError | undefined;
   options: {
     id: string;
     optionName: string;
@@ -13,11 +16,14 @@ type Props = {
 };
 
 //TODO: Upravit, až bude hotový design pro RadioGroup
-const RadioGroup = ({ title, description, options, disabled = false }: Props) => {
+const RadioGroup = ({ title, description, options, register, error, disabled = false }: Props) => {
+  const hasError = error && error.message;
+  
   return (
     <div className="flex flex-col gap-2">
       <p className="text-base font-semibold text-gray-900">{title}</p>
-      <p className="text-sm text-gray-50">{description}</p>
+      {description && description !== '' ? <p className="text-sm text-gray-50">{description}</p> : <></>}
+      
       <fieldset className="mt-1 flex gap-5">
         <legend className="sr-only">{title}</legend>
         {options.map(option => {
@@ -26,8 +32,9 @@ const RadioGroup = ({ title, description, options, disabled = false }: Props) =>
               <label className="relative flex items-center" htmlFor={option.id}>
                 <input
                   id={option.id}
-                  name="type"
                   type="radio"
+                  {...register}
+
                   className={classNames(
                     "focus:[&:not(:focus-visible)]:ring-1 focus:ring-violet-70 checked:ring-1 checked:ring-violet-70 peer relative h-5 w-5  appearance-none rounded-full border  text-violet-10 transition-all focus:[&:not(:focus-visible)]:ring-offset-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-70",
                     disabled ? "border-gray-40 cursor-not-allowed" : "border-gray-100 cursor-pointer",
@@ -51,6 +58,11 @@ const RadioGroup = ({ title, description, options, disabled = false }: Props) =>
             </div>
           );
         })}
+        {hasError ? (
+          <p className="text-sm text-red-60">{error.message}</p>
+        ) : (
+          <></>
+        )}
       </fieldset>
     </div>
   );

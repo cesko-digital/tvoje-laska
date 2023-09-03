@@ -29,6 +29,10 @@ const nextConfig = {
             {
                 source: "/profil/lovereport",
                 destination: "/profile/lovereport"
+            },
+            {
+                source: "/profil/lovereport/vyplneni",
+                destination: "/profile/lovereport/create"
             }
         ];
     }

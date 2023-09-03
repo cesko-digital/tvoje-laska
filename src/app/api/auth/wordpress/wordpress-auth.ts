@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { LoggedUser, SimplifiedUser } from "models/user-models";
+import { LoggedUser, SimplifiedUser } from "app/api/auth/[...nextauth]/user-models";
 
 const http = axios.create({
   baseURL: process.env.WP_URL,

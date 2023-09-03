@@ -1,4 +1,3 @@
-import { getLoveReportFields } from "app/api/lovereport/lovereport";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,8 +5,6 @@ export const metadata: Metadata = {
 }
 
 const LoveReport = async () => {
-
-  var result = await getLoveReportFields();
 
     return <h1>Profile: Love Report page</h1>
 }
