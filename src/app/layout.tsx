@@ -6,8 +6,6 @@ import "./globals.css";
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import Footer from "library/molecules/Footer";
-import gradientImage from "../../public/assets/images/gradient.svg";
-import Image from "next/image";
 
 export const metadata = {
   title: "Create Next App",
@@ -23,13 +21,6 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           {/* Odstranit Header, až bude dořešeno přihlášení + zobrazení pro mobil */}
           {/* <Header /> */}
           <div className="flex flex-col mt-[54px]">
-            <Image
-              src={gradientImage}
-              width={300}
-              height={300}
-              alt="Mingly logo"
-              className="absolute top-0 right-0 z-10"
-            />
             <HeaderNew isBackButton={false} userLoggenIn={false} />
             {children}
             {/* TODO: Jak to bude s Footerem? Na jakých stránkách má být Footer a na jakých Navigační menu? Ad. design */}
