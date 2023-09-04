@@ -2,24 +2,29 @@
 
 import classNames from "helpers/classNames";
 import { CheckMarkSvg } from "library/icons/symbols";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
   id: string;
   title: string;
   disabled?: boolean;
+  register: UseFormRegisterReturn<string>;
+  error?: FieldError | undefined;
 };
 
 //TODO: Doladit!!!
 
-const Checkbox = ({ id, title, disabled = false }: Props) => {
+const Checkbox = ({ id, title, register, error, disabled = false }: Props) => {
+  const hasError = error && error.message;
+
   return (
     <div className="inline-flex items-center gap-2">
       <label className={classNames("relative flex items-center")} htmlFor={id}>
         <input
           id={id}
-          name="type"
           type="checkbox"
           disabled={disabled}
+          {...register}
           className={classNames(
             "relative rounded-[4px] h-5 w-5 focus:[&:not(:focus-visible)]:ring-1 focus:ring-violet-70 checked:ring-1 checked:ring-violet-70 peer   appearance-none border text-violet-10 transition-all focus:[&:not(:focus-visible)]:ring-offset-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-70 focus:border-violet-70",
             disabled ? "border-gray-40 cursor-not-allowed" : "border-gray-100 cursor-pointer",
@@ -38,6 +43,7 @@ const Checkbox = ({ id, title, disabled = false }: Props) => {
       >
         {title}
       </label>
+      {hasError ? <p className="text-sm text-red-60">{error.message}</p> : <></>}
     </div>
   );
 };

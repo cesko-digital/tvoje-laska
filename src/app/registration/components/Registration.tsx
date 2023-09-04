@@ -1,6 +1,6 @@
 "use client"
 
-import { RegistrationForm } from '../components/auth/registration-form'
+import { RegistrationForm } from './RegistrationForm'
 import React, { ComponentProps } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -8,7 +8,7 @@ type Props = {
   token?: string;
 }
 
-export const Registration = ({ token }: Props) => {
+export const RegistrationWizard = ({ token }: Props) => {
   const router = useRouter()
 
   const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = async () => {

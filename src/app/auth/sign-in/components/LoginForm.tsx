@@ -1,6 +1,6 @@
 "use client";
 import Input from "library/atoms/Input";
-import MobileLayout from "../../library/molecules/Header";
+import MobileLayout from "../../../../library/molecules/Header";
 import Link from "next/link";
 import Button from "library/atoms/Button";
 

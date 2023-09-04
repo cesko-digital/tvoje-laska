@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import toast from 'react-hot-toast'
-import { Spinner } from '../Spinner'
+import { Spinner } from '../../../library/atoms/Spinner'
 
 const formSchema =
   z.object({

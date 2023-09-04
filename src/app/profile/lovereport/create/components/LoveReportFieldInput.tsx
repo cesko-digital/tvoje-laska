@@ -2,6 +2,7 @@ import RadioGroup from "library/atoms/RadioGroup";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { LoveReportFieldWithGroup } from "./CreateLoveReportWizard";
 import Input from "library/atoms/Input";
+import Checkbox from "library/atoms/Checkbox";
 
 type FieldInputProps = {
   field: LoveReportFieldWithGroup;
@@ -25,7 +26,7 @@ const LoveReportFieldInput = ({ field, index, register, error }: FieldInputProps
   }
 
   if(field.type === 'checkbox') {
-    return (<></>);//Currently no checkbox added in form
+    return (<Checkbox register={register} error={error} id={field.id} title={label}  />);
   }
 
   const type = field.type === "number" ? "number" : "text";

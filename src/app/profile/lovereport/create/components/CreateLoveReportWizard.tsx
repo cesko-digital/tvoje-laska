@@ -21,9 +21,9 @@ const formSchema = z.object({
   fields: z
     .array(
       z.object({
-        value: z.string({ required_error: "Vyplňte odpověď" }).min(1, {
+        value: z.union([z.string({ required_error: "Vyplňte odpověď" }).min(1, {
           message: "Vyplňte odpověď",
-        }),
+        }), z.boolean()]),
         group: z.number(),
         type: z.string(),
       }),
@@ -35,7 +35,7 @@ const CreateLoveReportWizard = (props: Props) => {
   const [step, setStep] = useState(1);
   const inputFields = props.fields.filter(e => isInput(e.type));
   const maxStep = inputFields[inputFields.length - 1].group;
-  const steps: StepperStep[] = props.fields
+  const steps: StepperStep[] = inputFields
     .map(f => f.group)
     .filter((f, index, values) => values.indexOf(f) === index)
     .map(group => {
@@ -131,7 +131,7 @@ const CreateLoveReportWizard = (props: Props) => {
           }}
         ></Button>
       )}
-      {step + 1 < maxStep && (
+      {step + 1 <= maxStep && (
         <Button
           color={"primary"}
           buttonText="Další"
@@ -158,9 +158,13 @@ const isInput = (type: LoveReportFieldType) => {
   );
 };
 
-const getDefaultValue = (field: LoveReportFieldWithGroup): string => {
+const getDefaultValue = (field: LoveReportFieldWithGroup): string | boolean => {
   if (field.default_value && field.default_value.length > 0) {
     return field.default_value;
+  }
+
+  if(field.type === 'checkbox') {
+    return false;
   }
 
   if (field.choices && Object.values(field.choices).length === 1) {
