@@ -1,7 +1,5 @@
 "use client";
 import Input from "library/atoms/Input";
-import MobileLayout from "../../library/molecules/Header";
-import Link from "next/link";
 import Button from "library/atoms/Button";
 
 import * as z from "zod";
@@ -15,6 +13,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
 import Content from "library/atoms/Content";
+import TextLink from "library/atoms/TextLink";
+import Divider from "library/atoms/Divider";
+import { FacebookSvg, GoogleSvg } from "library/icons/social-media";
+import Checkbox from "library/atoms/Checkbox";
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
@@ -73,7 +75,7 @@ const LoginForm = ({ providers, token }: Props) => {
 
   return (
     <Content title="Přihlásit se">
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex flex-col justify-center mt-4">
           <Input
             type="email"
@@ -88,39 +90,56 @@ const LoginForm = ({ providers, token }: Props) => {
               label="Heslo"
               type="password"
               autoComplete="current-password"
-              placeholder="Zadejte heslo"
               error={errors["password"]}
               register={form.register("password")}
             />
-
-            <div className="text-sm">
-              <a href="/zapomenute-heslo" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Zapomněl/a jsem heslo
-              </a>
-            </div>
           </div>
 
-          <Button buttonText="Přihlásit se" className="w-full" color="primary" type="submit" disabled={form.formState.isSubmitting} />
+          {/* TODO: Doplnit funkcionalitu zapamatování si přihlášení */}
+          <Checkbox id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
 
-          {Object.entries(providers ?? {})
-            .filter(([key]) => key !== "credentials")
-            .map(([, provider]) => (
-              <div key={provider.name}>
-                <Button
-                  buttonText={`Přihlásit přes ${provider.name}`}
-                  className="w-full"
-                  type="button"
-                  color="secondary"
-                  onClick={() => signIn(provider.id)}
-                />
-              </div>
-            ))}
+          <div className="flex flex-col gap-5 mt-10">
+            <Button
+              buttonText="Přihlásit se"
+              className="w-full"
+              color="primary"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            />
+            <Divider label="nebo" type="withText" />
 
-          {error && <div className="p-2 text-red-70 font-bold">{error}</div>}
+            {Object.entries(providers ?? {})
+              .filter(([key]) => key !== "credentials")
+              .map(([, provider]) => (
+                <div key={provider.name}>
+                  <Button
+                    buttonText={`Přihlásit přes ${provider.name}`}
+                    className="w-full"
+                    type="button"
+                    color="secondary"
+                    onClick={() => signIn(provider.id)}
+                    startIcon={
+                      provider.id === "google" ? (
+                        <GoogleSvg width={20} />
+                      ) : provider.id === "facebook" ? (
+                        <FacebookSvg width={20} />
+                      ) : null
+                    }
+                  />
+                </div>
+              ))}
 
-          <p className="mt-5 text-center text-sm text-gray-500">
-            Nemáš účet? <Link href="/registrace">Registrovat se.</Link>
-          </p>
+            {error && <div className="p-2 text-red-70 font-bold">{error}</div>}
+
+            <div className="flex gap-2 justify-center">
+              <p>Nemáš účet?</p>
+              <TextLink title="Registrovat se" as="link" path="/registrace" color="primary" />
+            </div>
+            <div className="flex gap-2 justify-center">
+              <p>Zapomněl/a jsi heslo?</p>
+              <TextLink title="Obnovit heslo" as="link" path="/zapomenute-heslo" color="primary" />
+            </div>
+          </div>
         </div>
       </form>
     </Content>

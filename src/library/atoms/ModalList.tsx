@@ -9,8 +9,8 @@ type Props = {
   data: Item[];
 };
 
-// TODO: Upravit
-const List = ({ icon, data }: Props) => {
+// TODO: Upravit?
+const ModalList = ({ icon, data }: Props) => {
   return (
     <ul className="flex flex-col gap-6 mt-3 py-4">
       {data &&
@@ -28,4 +28,4 @@ const List = ({ icon, data }: Props) => {
     </ul>
   );
 };
-export default List;
+export default ModalList;

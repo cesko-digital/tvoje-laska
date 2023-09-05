@@ -22,6 +22,10 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "library/atoms/PhoneInput";
+import Divider from "library/atoms/Divider";
+import CardMobile from "library/molecules/cards/CardMobile";
+import RadioBigButtonGroup from "library/atoms/RadioBigButtonGroup";
+import InputDatePicker from "library/atoms/DatePicker";
 
 const steps: StepperStep[] = [
   {
@@ -102,24 +106,57 @@ const options = [
     optionName: "Možnost 3",
   },
 ];
+const options2 = [
+  {
+    id: "4",
+    optionName: "Možnost 1",
+  },
+  {
+    id: "5",
+    optionName: "Možnost 2",
+  },
+  {
+    id: "6",
+    optionName: "Možnost 3",
+  },
+];
+
+const friends = [
+  {
+    id: 1,
+    name: "Adam Klempíř",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    id: 2,
+    name: "Jana Nováková",
+    image:
+      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    id: 3,
+    name: "Lukáš Vávra",
+    image:
+      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+];
 
 const formSchema = z.object({
   email: z.string().nonempty("E-mail je povinný").email(),
-  phone: z.string().nonempty("Telefon je povinný").min(9, 'Minimální délka je 9 znaků')
+  phone: z.string().nonempty("Telefon je povinný").min(9, "Minimální délka je 9 znaků"),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
 
 export default async function ComponentsPreview() {
-
-  
-    const form = useForm<FormValues>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        email: "",
-        phone: ""
-      },
-    });
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      phone: "",
+    },
+  });
 
   return (
     <div className="w-fit flex flex-col gap-8 justify-start m-5">
@@ -132,6 +169,7 @@ export default async function ComponentsPreview() {
         color="primary"
         endIcon={<ArrowRightSvg width={10} />}
       />
+      <InputDatePicker />
       <UserCard
         cardType="default"
         name="Adam Klempíř"
@@ -142,6 +180,21 @@ export default async function ComponentsPreview() {
         userIsActive={false}
       />
       <Tabs />
+      <Divider label="nebo" type="withText" />
+      <CardMobile
+        title="Moji přátelé a oblíbení"
+        friends={friends}
+        //TODO: Nechat to takto nebo TextLink přidat rovnou do CardMobile?
+        textLink={
+          <TextLink
+            title="Přejít na přátelé a oblíbené"
+            as="link"
+            path="pratele"
+            color="primary"
+            endIcon={<ArrowRightSvg width={10} />}
+          />
+        }
+      />
       <Button
         // disabled
         color="secondary"
@@ -150,11 +203,15 @@ export default async function ComponentsPreview() {
         className="text-xl"
       />
       <Input label="E-mail" error={form.formState.errors["email"]} register={form.register("email")} />
-      <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")}/>
+      <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")} />
       <Tag title="Tag" />
       <Checkbox id="comments" title="Checkbox" />
-      <RadioGroup title="Možnosti" options={options} />
-      <Modal title="Jak na super fotku?" />
+      {/* <RadioGroup title="Možnosti" options={options}  /> */}
+      {/* <RadioBigButtonGroup title="Možnosti" options={options2} startIcon={<ShoppingBagSvg width={20} />} /> */}
+      <div>
+        <Modal title="Jak na super fotku?" />
+      </div>
+
       <StepperMenu steps={steps} />
       <Carousel testimonials={testimonials} variant="with-image" />
       <ImageUploader />

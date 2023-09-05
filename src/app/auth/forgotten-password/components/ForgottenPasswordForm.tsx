@@ -11,6 +11,7 @@ import { ForgottenPasswordResult } from "./ForgottenPasswordResult";
 import Content from "library/atoms/Content";
 import Header from "components/layout/header";
 import HeaderNew from "library/molecules/Header";
+import Divider from "library/atoms/Divider";
 
 const formSchema = z.object({
   email: z.string().nonempty("E-mail je povinný").email(),
@@ -61,32 +62,39 @@ export const ForgottenPasswordForm = () => {
       {isSend ? (
         <ForgottenPasswordResult email={email} />
       ) : (
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-          <p>Zadej níže svůj e-mail a my ti pošleme odkaz pro obnovení hesla ke tvému účtu.</p>
+        <>
+          {" "}
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
+            <p className="mb-4">Zadej níže svůj e-mail a my ti pošleme odkaz pro obnovení hesla ke tvému účtu.</p>
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="mb-8">
+                <Input
+                  label="E-mail"
+                  autoComplete="email"
+                  type="email"
+                  error={errors["email"]}
+                  register={form.register("email", {
+                    required: true,
+                  })}
+                />
+              </div>
 
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <div className="mb-2">
-              <Input
-                label="E-mail"
-                autoComplete="email"
-                type="email"
-                error={errors["email"]}
-                register={form.register("email", {
-                  required: true,
-                })}
+              <Button
+                type="submit"
+                className="w-full"
+                size="base"
+                buttonText="Odeslat"
+                color="primary"
+                disabled={form.formState.isSubmitting}
               />
+            </div>{" "}
+            <Divider label="nebo" type="withText" className="my-5" />
+            <div className="flex gap-2 justify-center">
+              <p>Nemáš účet?</p>
+              <TextLink title="Zaregistrovat se" as="link" path="/registration" color="primary" />
             </div>
-
-            <Button
-              type="submit"
-              className="w-full"
-              size="base"
-              buttonText="Odeslat"
-              color="primary"
-              disabled={form.formState.isSubmitting}
-            />
-          </div>
-        </form>
+          </form>
+        </>
       )}
     </Content>
   );

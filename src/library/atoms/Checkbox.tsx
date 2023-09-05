@@ -7,13 +7,14 @@ type Props = {
   id: string;
   title: string;
   disabled?: boolean;
+  className?: string;
 };
 
 //TODO: Doladit!!!
 
-const Checkbox = ({ id, title, disabled = false }: Props) => {
+const Checkbox = ({ id, title, disabled = false, className }: Props) => {
   return (
-    <div className="inline-flex items-center gap-2">
+    <div className={classNames("inline-flex items-center gap-2", className!)}>
       <label className={classNames("relative flex items-center")} htmlFor={id}>
         <input
           id={id}

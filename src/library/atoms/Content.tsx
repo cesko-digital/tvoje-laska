@@ -8,8 +8,8 @@ type Props = {
 
 const Content = ({ title, children, className }: Props) => {
   return (
-    <main className={classNames("py-10 px-4", className!)}>
-      <h1 className="leading-[120%]">{title}</h1>
+    <main className={classNames("py-8 px-4", className!)}>
+      <h1 className="leading-[120%] mb-4">{title}</h1>
       {children}
     </main>
   );
