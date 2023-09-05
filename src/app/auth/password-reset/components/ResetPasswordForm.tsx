@@ -68,41 +68,42 @@ export const ResetPasswordForm = ({ code, email }: { code: string; email: string
   return (
     <Content title="Vytvořit nové heslo">
       <p>
-        Zvol si nové heslo ke svému účtu. Zadej nové heslo do políčka níže. Ujisti se, že jsi heslo zadal/a správně a potvrď jej tlačítkem. 
+        Zvol si nové heslo ke svému účtu. Zadej nové heslo do políčka níže. Ujisti se, že jsi heslo zadal/a správně a
+        potvrď jej tlačítkem.
       </p>
-    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <Input
-            type="password"
-            label="Nové heslo"
-            description="Heslo musí být alespoň 8 znaků dlouhé"
-            register={form.register("password", {
-              required: true,
-            })}
-            error={errors["password"]}
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <Input
+              type="password"
+              label="Nové heslo"
+              description="Heslo musí být alespoň 8 znaků dlouhé"
+              register={form.register("password", {
+                required: true,
+              })}
+              error={errors["password"]}
             />
 
-          <Input
-            type="password"
-            label="Nové heslo znovu"
-            register={form.register("passwordRepeat", {
-              required: true,
-            })}
-            error={errors["passwordRepeat"]}
+            <Input
+              type="password"
+              label="Nové heslo znovu"
+              register={form.register("passwordRepeat", {
+                required: true,
+              })}
+              error={errors["passwordRepeat"]}
             />
 
-          <Button
-            buttonText="Změnit heslo a přihlásit se"
-            color="primary"
-            className="w-full"
-            size="base"
-            type="submit"
-            disabled={form.formState.isSubmitting}
+            <Button
+              buttonText="Změnit heslo a přihlásit se"
+              color="primary"
+              className="w-full"
+              size="base"
+              type="submit"
+              disabled={form.formState.isSubmitting}
             />
+          </div>
         </div>
-      </div>
-    </form>
-            </Content>
+      </form>
+    </Content>
   );
 };

@@ -206,7 +206,7 @@ export default async function ComponentsPreview() {
       <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")} />
       <Tag title="Tag" />
       <Checkbox id="comments" title="Checkbox" />
-      <RadioGroup title="Možnosti" options={options} />
+      {/* <RadioGroup title="Možnosti" options={options}  /> */}
       {/* <RadioBigButtonGroup title="Možnosti" options={options2} startIcon={<ShoppingBagSvg width={20} />} /> */}
       <div>
         <Modal title="Jak na super fotku?" />

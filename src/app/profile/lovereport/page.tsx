@@ -4,7 +4,8 @@ export const metadata: Metadata = {
   title: 'Love Report',
 }
 
-const LoveReport = () => {
+const LoveReport = async () => {
+
     return <h1>Profile: Love Report page</h1>
 }
 

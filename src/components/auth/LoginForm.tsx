@@ -133,11 +133,11 @@ const LoginForm = ({ providers, token }: Props) => {
 
             <div className="flex gap-2 justify-center">
               <p>Nemáš účet?</p>
-              <TextLink title="Registrovat se" as="link" path="/registration" color="primary" />
+              <TextLink title="Registrovat se" as="link" path="/registrace" color="primary" />
             </div>
             <div className="flex gap-2 justify-center">
               <p>Zapomněl/a jsi heslo?</p>
-              <TextLink title="Obnovit heslo" as="link" path="/auth/zapomenute-heslo" color="primary" />
+              <TextLink title="Obnovit heslo" as="link" path="/zapomenute-heslo" color="primary" />
             </div>
           </div>
         </div>

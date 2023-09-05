@@ -51,7 +51,6 @@ const ButtonBase = ({ children, color, size, className, disabled }: ButtonBasePr
 
   const style = styles[color][disabled ? "disabled" : "default"];
 
-  console.log(disabled);
   return (
     <div
       className={classNames(

@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { SessionProvider, signOut, useSession } from "next-auth/react";
-import { LoggedUser } from "models/user-models";
+import { LoggedUser } from "app/api/auth/[...nextauth]/user-models";
 
 const Header = () => {
   return (
@@ -37,7 +37,7 @@ const HeaderWithSession = () => {
             </a>
           </>
         ) : (
-          <Link href="/auth/sign-in">Přihlásit</Link>
+          <Link href="/prihlaseni">Přihlásit</Link>
         ))}
     </div>
   );

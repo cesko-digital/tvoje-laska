@@ -41,11 +41,15 @@ const Input = ({
           >
             {label}
           </label>
-          {informationText ? <>
-            <span className={classNames(register.disabled ? "text-gray-40" : "text-violet-70")}>
-              <InformationCircleIcon width={20} />
-            </span>
-          </> : <></>}
+          {informationText && informationText !== "" ? (
+            <>
+              <span className={classNames(register.disabled ? "text-gray-40" : "text-violet-70")}>
+                <InformationCircleIcon width={20} />
+              </span>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div>
           <input
@@ -61,12 +65,13 @@ const Input = ({
             {...register}
           />
         </div>
-        {hasError ? (
-          <p className="text-sm text-red-60">{error.message}</p>
-        ) : (
+        {hasError ? <p className="text-sm text-red-60">{error.message}</p> : <></>}
+        {description && description !== "" ? (
           <p className="text-sm text-gray-40" id={ariaDescribedBy}>
             {description}
           </p>
+        ) : (
+          <></>
         )}
       </div>
     </div>

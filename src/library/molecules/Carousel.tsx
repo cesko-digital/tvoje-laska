@@ -65,7 +65,16 @@ const Carousel = ({ testimonials, variant }: Props) => {
                     variant="default"
                   >
                     {variant === "with-image" && (
-                      <Image src={testimonial.image} width={145} height={180} alt="Carousel image" />
+                      <Image
+                        src={testimonial.image}
+                        width={145}
+                        height={180}
+                        alt="Carousel image"
+                        style={{
+                          width: "145px",
+                          height: "180px",
+                        }}
+                      />
                     )}
                     <div className="flex flex-col gap-2.5">
                       <p className="text-start">{testimonial.content}</p>

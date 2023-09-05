@@ -29,18 +29,37 @@ const testimonials = [
 export default async function Home() {
   return (
     <>
-      <Image src={gradientImage} width={300} height={300} alt="Mingly logo" className="absolute top-0 right-0 z-10" />
+      <Image
+        src={gradientImage}
+        width={300}
+        height={300}
+        alt="Mingly logo"
+        className="absolute top-0 right-0 z-10"
+        style={{
+          width: "300px",
+          height: "300px",
+        }}
+      />
       <Content title="Pro lásku bez nálepek" className="flex flex-col gap-8 z-50">
         <div className="flex flex-col items-center gap-3 ">
-          <Image src="/assets/images/homepage-image.svg" alt="Pro lásku bez nálepek" width={200} height={200} />
+          <Image
+            src="/assets/images/homepage-image.svg"
+            alt="Pro lásku bez nálepek"
+            width={200}
+            height={200}
+            style={{
+              width: "200px",
+              height: "200px",
+            }}
+          />
           <p>
             Přidej se k Mingly, jedinečné internetové seznamce, která pomáhá navazovat nová přátelství i známosti a
             budovat pevné romantické vztahy.
           </p>
 
           <div className="flex flex-col gap-5 w-full py-4">
-            <Button as="link" path="/registration" color="primary" buttonText="Registrovat se" />
-            <Button as="link" path="/auth/sign-in" color="secondary" buttonText="Přihlásit se" />
+            <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
+            <Button as="link" path="/prihlaseni" color="secondary" buttonText="Přihlásit se" />
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -65,7 +84,7 @@ export default async function Home() {
         </div>
         <div className="flex flex-col gap-3 py-8">
           <h2>Jdi za svým štěstím i ty, zkus to na Mingly</h2>
-          <Button as="link" path="/registration" color="primary" buttonText="Registrovat se" />
+          <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
         </div>
       </Content>
     </>

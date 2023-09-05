@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEventHandler, ReactNode, useState } from "react";
+import { MouseEventHandler, ReactNode, useEffect, useState } from "react";
 import classNames from "helpers/classNames";
 
 export type StepperStep = {
@@ -8,8 +8,9 @@ export type StepperStep = {
   description?: ReactNode;
   active?: boolean;
   complete?: boolean;
-  onClick?: MouseEventHandler;
-  path: string;
+  onClick?: () => void;
+  onBeforeNavigation?: () => boolean;
+  path?: string;
 };
 
 type StepIndicatorProps = {
@@ -51,17 +52,25 @@ export const StepperHorizontal = ({ children }: StepperHorizontalProps) => {
 // TODO: Potřeba upravit pro účely krokování ve formuláři (tzn. s routováním apod.)
 
 const StepperMenu = ({ steps, className }: StepperMenuProps) => {
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const defaultActiveIndex = steps.indexOf(steps.find(e => e.active === true) ?? steps[0]);
+  const [activeStepIndex, setActiveStepIndex] = useState(defaultActiveIndex);
   const [updatedSteps, setUpdatedSteps] = useState(steps);
 
-  const onStepClick = (clickedIndex: number) => {
+  useEffect(() => {
+    if (defaultActiveIndex !== activeStepIndex) {
+      setActiveStepIndex(defaultActiveIndex);
+      updateCopySteps(defaultActiveIndex);
+    }
+  }, [defaultActiveIndex]);
+
+  const updateCopySteps = (targetIndex: number) => {
     const updatedStepsCopy = [...updatedSteps];
 
     updatedStepsCopy.forEach((step, index) => {
-      if (index === clickedIndex) {
+      if (index === targetIndex) {
         step.active = true;
         step.complete = true;
-      } else if (index < clickedIndex) {
+      } else if (index < targetIndex) {
         step.active = false;
         step.complete = true;
       } else {
@@ -69,9 +78,24 @@ const StepperMenu = ({ steps, className }: StepperMenuProps) => {
         step.complete = false;
       }
     });
-
     setUpdatedSteps(updatedStepsCopy);
+    return updatedStepsCopy;
+  };
+
+  const onStepClick = (clickedIndex: number) => {
+    const onBeforeNavigation = steps[clickedIndex].onBeforeNavigation;
+    if (onBeforeNavigation && !onBeforeNavigation()) {
+      return;
+    }
+
     setActiveStepIndex(clickedIndex);
+    const updatedStepsCopy = updateCopySteps(clickedIndex);
+
+    const stepOnClick = updatedStepsCopy[clickedIndex].onClick;
+
+    if (stepOnClick && stepOnClick !== undefined) {
+      stepOnClick();
+    }
   };
 
   return (
