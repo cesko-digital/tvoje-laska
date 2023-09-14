@@ -37,7 +37,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["unsplash.com", "images.unsplash.com", "res.cloudinary.com"],
+    domains: ["unsplash.com", "images.unsplash.com", "res.cloudinary.com", "www.gravatar.com"],
   },
 };
 

@@ -13,10 +13,7 @@ import {
 // TODO: GET request fetch as ISR
 // TODO: Invalidate cache after PUT requests
 
-export const getMembers = async (
-  options: Record<string, unknown>,
-  _requestParams: IMembersRequestParams,
-) => {
+export const getMembers = async (options: Record<string, unknown>, _requestParams: IMembersRequestParams) => {
   const session = await getServerSession(authOptions);
   if (!session) return;
 
@@ -88,6 +85,8 @@ export const getCurrentMember = async (
 ) => {
   const session = await getServerSession(authOptions);
   if (!session) return;
+
+  console.log(session.wpJwtToken);
 
   try {
     const headers = { ...(options && options.headers ? options.headers : {}), Authorization: session.wpJwtToken };
