@@ -2,17 +2,13 @@ import * as z from "zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { Spinner } from "../Spinner";
 import Content from "library/atoms/Content";
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
 import Divider from "library/atoms/Divider";
 import TextLink from "library/atoms/TextLink";
-import { GoogleSvg } from "library/icons/social-media";
 
 const formSchema = z
   .object({
@@ -114,7 +110,6 @@ export const RegistrationForm = ({ onSuccess, csrf }: Props) => {
               color="secondary"
               type="button"
               onClick={() => signIn("google")}
-              startIcon={<GoogleSvg width={20} />}
             />
             {/* TODO: Přidat registraci přes Facebook */}{" "}
             <div className="text-sm">
@@ -131,7 +126,7 @@ export const RegistrationForm = ({ onSuccess, csrf }: Props) => {
             </div>
             <div className="flex gap-2 justify-center">
               <p>Už máš u nás účet?</p>
-              <TextLink title="Přihlásit se" as="link" path="/prihlaseni" color="primary" />
+              <TextLink title="Přihlásit se" as="link" path="/auth/sign-in" color="primary" />
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ import Button from "library/atoms/Button";
 import TextLink from "library/atoms/TextLink";
 import { ForgottenPasswordResult } from "./ForgottenPasswordResult";
 import Content from "library/atoms/Content";
-import Header from "components/layout/header";
+import Header from "library/molecules/HeaderOld";
 import HeaderNew from "library/molecules/Header";
 import Divider from "library/atoms/Divider";
 

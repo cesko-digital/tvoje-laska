@@ -1,5 +1,7 @@
 "use client";
 import Input from "library/atoms/Input";
+import MobileLayout from "../../../../library/molecules/Header";
+import Link from "next/link";
 import Button from "library/atoms/Button";
 
 import * as z from "zod";
@@ -21,6 +23,7 @@ import Checkbox from "library/atoms/Checkbox";
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
   password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+  rememberMe: z.boolean()
 });
 
 type Props = {
@@ -57,6 +60,7 @@ const LoginForm = ({ providers, token }: Props) => {
     defaultValues: {
       username: "",
       password: "",
+      rememberMe: false
     },
   });
 
@@ -96,7 +100,7 @@ const LoginForm = ({ providers, token }: Props) => {
           </div>
 
           {/* TODO: Doplnit funkcionalitu zapamatování si přihlášení */}
-          <Checkbox id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
+          <Checkbox register={form.register('rememberMe')} id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
 
           <div className="flex flex-col gap-5 mt-10">
             <Button
