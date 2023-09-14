@@ -9,6 +9,7 @@ import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
 import Divider from "library/atoms/Divider";
 import TextLink from "library/atoms/TextLink";
+import { GoogleSvg } from "library/icons/social-media";
 
 const formSchema = z
   .object({
@@ -110,6 +111,7 @@ export const RegistrationForm = ({ onSuccess, csrf }: Props) => {
               color="secondary"
               type="button"
               onClick={() => signIn("google")}
+              startIcon={<GoogleSvg width={20} />}
             />
             {/* TODO: Přidat registraci přes Facebook */}{" "}
             <div className="text-sm">
