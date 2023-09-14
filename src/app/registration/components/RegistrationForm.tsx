@@ -2,11 +2,8 @@ import * as z from "zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { Spinner } from "../Spinner";
 import Content from "library/atoms/Content";
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";

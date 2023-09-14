@@ -1,6 +1,5 @@
 import "./globals.css";
 import { Suspense } from "react";
-import Header from "components/layout/header";
 import HeaderNew from "library/molecules/Header";
 import "./globals.css";
 import React from "react";

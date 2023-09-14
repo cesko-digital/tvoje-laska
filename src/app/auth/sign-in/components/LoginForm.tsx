@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
 
@@ -10,7 +10,6 @@ import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
 import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
 import Content from "library/atoms/Content";
 import TextLink from "library/atoms/TextLink";
@@ -21,6 +20,7 @@ import Checkbox from "library/atoms/Checkbox";
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
   password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+  rememberMe: z.boolean()
 });
 
 type Props = {
@@ -57,6 +57,7 @@ const LoginForm = ({ providers, token }: Props) => {
     defaultValues: {
       username: "",
       password: "",
+      rememberMe: false
     },
   });
 
@@ -96,7 +97,7 @@ const LoginForm = ({ providers, token }: Props) => {
           </div>
 
           {/* TODO: Doplnit funkcionalitu zapamatování si přihlášení */}
-          <Checkbox id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
+          <Checkbox register={form.register('rememberMe')} id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
 
           <div className="flex flex-col gap-5 mt-10">
             <Button
