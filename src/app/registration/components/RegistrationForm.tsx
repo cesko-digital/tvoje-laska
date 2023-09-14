@@ -126,7 +126,7 @@ export const RegistrationForm = ({ onSuccess, csrf }: Props) => {
             </div>
             <div className="flex gap-2 justify-center">
               <p>Už máš u nás účet?</p>
-              <TextLink title="Přihlásit se" as="link" path="/auth/sign-in" color="primary" />
+              <TextLink title="Přihlásit se" as="link" path="/prihlaseni" color="primary" />
             </div>
           </div>
         </div>

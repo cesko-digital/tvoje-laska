@@ -1,7 +1,5 @@
-"use client";
+"use client";;
 import Input from "library/atoms/Input";
-import MobileLayout from "../../../../library/molecules/Header";
-import Link from "next/link";
 import Button from "library/atoms/Button";
 
 import * as z from "zod";
@@ -12,7 +10,6 @@ import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
 import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
 import Content from "library/atoms/Content";
 import TextLink from "library/atoms/TextLink";
