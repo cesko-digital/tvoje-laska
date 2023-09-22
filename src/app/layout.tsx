@@ -14,7 +14,7 @@ export const metadata = {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
+    <html lang="cs">
       <body>
         <NextAuthProvider>
           <Toaster toastOptions={{ duration: 5000 }} />
