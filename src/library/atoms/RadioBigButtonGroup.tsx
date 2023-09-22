@@ -1,5 +1,3 @@
-"use client";
-
 import classNames from "helpers/classNames";
 import { ReactNode } from "react";
 

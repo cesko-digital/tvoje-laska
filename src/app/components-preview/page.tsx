@@ -7,7 +7,7 @@ import Tag from "library/atoms/Tag";
 import Checkbox from "library/atoms/Checkbox";
 import Modal from "library/molecules/Modal";
 import Footer from "library/molecules/Footer";
-import HeaderNew from "library/molecules/Header";
+import Header from "components/layout/Header";
 import StepperMenu, { StepperStep } from "library/molecules/ProgressStepper";
 import Carousel from "library/molecules/Carousel";
 import { ShoppingBagSvg } from "library/icons/symbols";
@@ -15,7 +15,7 @@ import Tabs from "library/atoms/Tabs";
 import TextLink from "library/atoms/TextLink";
 import { ArrowRightSvg } from "library/icons/arrows";
 import UserCard from "library/molecules/cards/UserCard";
-import NavbarMobile from "library/molecules/MobileMenu";
+import NavbarMobile from "library/molecules/NavbarMobile";
 import ImageUploader from "library/molecules/ImageUploader";
 import RadioGroup from "library/atoms/RadioGroup";
 import * as z from "zod";
@@ -25,7 +25,10 @@ import PhoneInput from "library/atoms/PhoneInput";
 import Divider from "library/atoms/Divider";
 import CardMobile from "library/molecules/cards/CardMobile";
 import RadioBigButtonGroup from "library/atoms/RadioBigButtonGroup";
-import InputDatePicker from "library/atoms/DatePicker";
+import DateInput from "library/atoms/DateInput";
+import CoursesCardList from "library/molecules/cards/CoursesCard";
+import ProfileCard from "library/molecules/cards/ProfileCard";
+import Textarea from "library/atoms/Textarea";
 
 const steps: StepperStep[] = [
   {
@@ -149,7 +152,7 @@ const formSchema = z.object({
 
 export type FormValues = z.infer<typeof formSchema>;
 
-export default async function ComponentsPreview() {
+export default function ComponentsPreview() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -160,7 +163,7 @@ export default async function ComponentsPreview() {
 
   return (
     <div className="w-fit flex flex-col gap-8 justify-start m-5">
-      <HeaderNew />
+      <Header />
       <Toggle />
       <TextLink
         title="Zobrazit můj profil"
@@ -169,7 +172,7 @@ export default async function ComponentsPreview() {
         color="primary"
         endIcon={<ArrowRightSvg width={10} />}
       />
-      <InputDatePicker />
+      <DateInput />
       <UserCard
         cardType="default"
         name="Adam Klempíř"
@@ -178,6 +181,42 @@ export default async function ComponentsPreview() {
         location="Praha"
         photo="/assets/images/user-photo.png"
         userIsActive={false}
+      />
+      {/* ZKUŠEBNÍ DATA */}
+      <CoursesCardList
+        courses={[
+          {
+            title: "Kurz 1",
+            image: "/assets/images/phone-in-hand.svg",
+            path: "/kurz-1",
+            duration: "1 hodina",
+            active: true,
+          },
+          {
+            title: "Kurz 2",
+            image: "/assets/images/phone-in-hand.svg",
+            path: "/kurz-2",
+            duration: "2 hodiny",
+            active: false,
+          },
+          {
+            title: "Kurz 3",
+            image: "/assets/images/phone-in-hand.svg",
+            path: "/kurz-3",
+            duration: "30 minut",
+            active: true,
+          },
+        ]}
+      />
+
+      <ProfileCard
+        name="Anna Nováková"
+        nickname="@annie76"
+        gender="žena"
+        age={30}
+        location="Beroun, Středočeský kraj"
+        status="seznamuji se"
+        tags={["cestování", "cizí jazyky", "fotografie", "party a diskotéky", "architektura"]}
       />
       <Tabs />
       <Divider label="nebo" type="withText" />
@@ -203,6 +242,13 @@ export default async function ComponentsPreview() {
         className="text-xl"
       />
       <Input label="E-mail" error={form.formState.errors["email"]} register={form.register("email")} />
+      {/* TODO: Jaké budou hodnoty erroru a registrace u textarea? */}
+      <Textarea
+        label="Popiš svůj vzhled tak, aby si tě dovedl představit třeba i nevidomý."
+        error={form.formState.errors["email"]}
+        register={form.register("email")}
+        placeholder="Text"
+      />
       <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")} />
       <Tag title="Tag" />
       <Checkbox id="comments" title="Checkbox" />

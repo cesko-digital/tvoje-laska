@@ -9,8 +9,6 @@ import Button from "library/atoms/Button";
 import TextLink from "library/atoms/TextLink";
 import { ForgottenPasswordResult } from "./ForgottenPasswordResult";
 import Content from "library/atoms/Content";
-import Header from "components/layout/header";
-import HeaderNew from "library/molecules/Header";
 import Divider from "library/atoms/Divider";
 
 const formSchema = z.object({

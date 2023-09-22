@@ -1,8 +1,8 @@
-import Button from "library/atoms/Button";
-import Content from "library/atoms/Content";
-import Carousel from "library/molecules/Carousel";
-import Image from "next/image";
-import gradientImage from "../../public/assets/images/gradient.svg";
+"use client";
+
+import { useSession } from "next-auth/react";
+import HomeLoggedIn from "components/home/HomeLoggedIn";
+import HomeLoggedOut from "components/home/HomeLoggedOut";
 
 //Zkušební data
 const testimonials = [
@@ -26,67 +26,8 @@ const testimonials = [
   },
 ];
 
-export default async function Home() {
-  return (
-    <>
-      <Image
-        src={gradientImage}
-        width={300}
-        height={300}
-        alt="Mingly logo"
-        className="absolute top-0 right-0 z-10"
-        style={{
-          width: "300px",
-          height: "300px",
-        }}
-      />
-      <Content title="Pro lásku bez nálepek" className="flex flex-col gap-8 z-50">
-        <div className="flex flex-col items-center gap-3 ">
-          <Image
-            src="/assets/images/homepage-image.svg"
-            alt="Pro lásku bez nálepek"
-            width={200}
-            height={200}
-            style={{
-              width: "200px",
-              height: "200px",
-            }}
-          />
-          <p>
-            Přidej se k Mingly, jedinečné internetové seznamce, která pomáhá navazovat nová přátelství i známosti a
-            budovat pevné romantické vztahy.
-          </p>
+export default function Home() {
+  const session = useSession();
 
-          <div className="flex flex-col gap-5 w-full py-4">
-            <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
-            <Button as="link" path="/prihlaseni" color="secondary" buttonText="Přihlásit se" />
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <h2>Najdi si parťáka, nejlepšího kamaráda nebo lásku svého života</h2>
-          {/* TODO: Doplnit video */}
-          <div className="w-full h-72 rounded-md bg-violet-20"></div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <h2>Jsme jediná seznamka svého druhu</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis ante orci, molestie vitae vehicula venenatis,
-            tincidunt ac pede. Integer in sapien.
-          </p>
-          <p>
-            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Fusce
-            consectetuer risus a nunc.
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <h2>Hledali štěstí a u nás ho našli</h2>
-          <Carousel testimonials={testimonials} variant="with-image" />
-        </div>
-        <div className="flex flex-col gap-3 py-8">
-          <h2>Jdi za svým štěstím i ty, zkus to na Mingly</h2>
-          <Button as="link" path="/registrace" color="primary" buttonText="Registrovat se" />
-        </div>
-      </Content>
-    </>
-  );
+  return <>{session.data ? <HomeLoggedIn /> : <HomeLoggedOut />}</>;
 }
