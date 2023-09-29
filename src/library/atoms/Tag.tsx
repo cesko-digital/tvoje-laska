@@ -1,19 +1,37 @@
 import classNames from "helpers/classNames";
+import { ReactNode } from "react";
+import { SvgIconElement } from "./RadioInput";
 
 type Props = {
   title: string;
-  color?: string;
+  startIcon?: ReactNode | SvgIconElement;
+  endIcon?: ReactNode | SvgIconElement;
+  variant?: string;
+  className?: string;
 };
 
-const Tag = ({ title, color = "default" }: Props) => {
+const Tag = ({ title, variant = "neutral", startIcon = false, endIcon = false, className }: Props) => {
   return (
     <span
       className={classNames(
         "w-fit inline-flex items-center rounded-full px-4 py-2 cursor-pointer",
-        color === "default" ? "bg-gray-10 text-gray-100 hover:bg-green-20 active:bg-green-10 active:text-green-70" : "",
+        variant === "neutral"
+          ? "bg-gray-10 text-gray-100 hover:bg-violet-20 active:bg-violet-10 active:text-violet-70"
+          : variant === "dark"
+          ? "bg-violet-90 text-magenta-20"
+          : variant === "light"
+          ? "bg-violet-10 text-violet-90"
+          : variant === "disabled"
+          ? "bg-gray-40 text-white cursor-auto"
+          : "bg-white text-black",
+        className!,
       )}
     >
-      {title}
+      <div className="flex items-center gap-2">
+        {startIcon && startIcon}
+        {title}
+        {endIcon && endIcon}
+      </div>
     </span>
   );
 };

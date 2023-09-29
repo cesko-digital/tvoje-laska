@@ -1,9 +1,10 @@
+"use client";
+
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import classNames from "helpers/classNames";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
-  type?: "text" | "email" | "password" | "number";
   label?: string;
   placeholder?: string;
   id?: string;
@@ -15,8 +16,7 @@ type Props = {
   error?: FieldError | undefined;
 };
 
-const Input = ({
-  type,
+const Textarea = ({
   label = "",
   placeholder = "",
   id,
@@ -50,8 +50,7 @@ const Input = ({
           )}
         </div>
         <div>
-          <input
-            type={type || "text"}
+          <textarea
             id={id}
             className={classNames(
               "block w-full rounded-[0.4735rem] border-0 py-3 text-gray-100 shadow-sm ring-1 ring-inset ring-gray-40 placeholder:text-gray-40 focus:ring-2 focus:ring-inset focus:ring-violet-70",
@@ -76,4 +75,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default Textarea;

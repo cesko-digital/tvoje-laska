@@ -1,10 +1,11 @@
 import "./globals.css";
 import { Suspense } from "react";
-import HeaderNew from "library/molecules/Header";
+import Header from "components/layout/Header";
 import "./globals.css";
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import Footer from "library/molecules/Footer";
+import MobileMenu from "components/layout/MobileMenu";
+import { NextAuthProvider } from "helpers/AuthProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,19 +14,18 @@ export const metadata = {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
+    <html lang="cs">
       <body>
-        <Toaster toastOptions={{ duration: 5000 }} />
-        <Suspense fallback={<div>loading...</div>}>
-          {/* Odstranit Header, až bude dořešeno přihlášení + zobrazení pro mobil */}
-          {/* <Header /> */}
-          <div className="flex flex-col mt-[54px]">
-            <HeaderNew isBackButton={false} userLoggenIn={false} />
-            {children}
-            {/* TODO: Jak to bude s Footerem? Na jakých stránkách má být Footer a na jakých Navigační menu? Ad. design */}
-            <Footer />
-          </div>
-        </Suspense>
+        <NextAuthProvider>
+          <Toaster toastOptions={{ duration: 5000 }} />
+          <Suspense fallback={<div>loading...</div>}>
+            <div className="flex flex-col mt-[54px]">
+              <Header />
+              {children}
+              <MobileMenu />
+            </div>
+          </Suspense>
+        </NextAuthProvider>
       </body>
     </html>
   );

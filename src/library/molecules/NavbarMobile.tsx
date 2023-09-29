@@ -1,14 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import classNames from "helpers/classNames";
 import { usePathname } from "next/navigation";
-import { DatingSvg, HomeSvg, MessagesSvg, RoomsSvg } from "library/icons/menu-items";
+import {
+  DatingActiveSvg,
+  DatingInactiveSvg,
+  HomeActiveSvg,
+  HomeInactiveSvg,
+  MessagesActiveSvg,
+  MessagesInactiveSvg,
+  RoomsActiveSvg,
+  RoomsInactiveSvg,
+} from "library/icons/menu-items";
 
 type MenuItem = {
   title: string;
   icon: ReactNode;
+  activeIcon?: ReactNode;
   to: string;
 };
 
@@ -16,22 +26,26 @@ type MenuItem = {
 const menuItems: MenuItem[] = [
   {
     title: "Domů",
-    icon: <HomeSvg width={34} height={30} />,
+    icon: <HomeInactiveSvg width={34} height={30} />,
+    activeIcon: <HomeActiveSvg width={34} height={30} />,
     to: "/",
   },
   {
     title: "Seznamka",
-    icon: <DatingSvg width={30} height={30} />,
+    icon: <DatingInactiveSvg width={30} height={30} />,
+    activeIcon: <DatingActiveSvg width={30} height={30} />,
     to: "/seznamka",
   },
   {
     title: "Zprávy",
-    icon: <MessagesSvg width={38} height={30} />,
+    icon: <MessagesInactiveSvg width={38} height={30} />,
+    activeIcon: <MessagesActiveSvg width={38} height={30} />,
     to: "/zpravy",
   },
   {
     title: "Místnosti",
-    icon: <RoomsSvg width={30} height={30} />,
+    icon: <RoomsInactiveSvg width={30} height={30} />,
+    activeIcon: <RoomsActiveSvg width={30} height={30} />,
     to: "/mistnosti",
   },
 ];
@@ -39,31 +53,44 @@ const menuItems: MenuItem[] = [
 function NavLink({
   title,
   icon,
+  activeIcon,
   to,
   onClick,
   active,
 }: {
   icon: ReactNode;
+  activeIcon?: ReactNode;
   title: string;
   to: string;
   onClick?: () => void;
   active: boolean;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Link
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       href={to}
       onClick={onClick}
       className={classNames(
         "flex-1 flex flex-col items-center justify-center h-full text-xs gap-1 font-normal text-gray-900",
         "hover:text-gray-900",
         "focus:text-gray-900",
-        "data-[active]:text-primary-600 data-[active]:bg-primary-50",
-        active ? "text-violet-70" : "text-violet-20",
+        "data-[active]:text-primary-600 data-[active]:bg-primary-50 bg-violet-90",
+        active ? "text-violet-20" : "text-violet-40",
+        isHovered && !active ? "text-violet-50" : "",
       )}
     >
-      {icon}
+      {active ? activeIcon : icon}
 
-      <span className={classNames("block max-w-[16ch] truncate", active ? "text-violet-70" : "text-violet-20")}>
+      <span
+        className={classNames(
+          "block max-w-[16ch] truncate",
+          active ? "text-violet-20" : "text-violet-40 opacity-50",
+          isHovered && !active ? "text-violet-50" : "",
+        )}
+      >
         {title}
       </span>
     </Link>
@@ -92,6 +119,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
             key={menuItem.title}
             title={menuItem.title}
             icon={menuItem.icon}
+            activeIcon={menuItem.activeIcon}
             to={menuItem.to}
             active={isCurrentPage}
           />
