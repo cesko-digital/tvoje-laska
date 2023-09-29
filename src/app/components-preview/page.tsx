@@ -1,5 +1,4 @@
-"use client";
-
+"use client";;
 import Button from "library/atoms/Button";
 import Toggle from "library/atoms/Toggle";
 import Input from "library/atoms/Input";
@@ -17,14 +16,12 @@ import { ArrowRightSvg } from "library/icons/arrows";
 import UserCard from "library/molecules/cards/UserCard";
 import NavbarMobile from "library/molecules/NavbarMobile";
 import ImageUploader from "library/molecules/ImageUploader";
-import RadioGroup from "library/atoms/RadioGroup";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "library/atoms/PhoneInput";
 import Divider from "library/atoms/Divider";
 import CardMobile from "library/molecules/cards/CardMobile";
-import RadioBigButtonGroup from "library/atoms/RadioBigButtonGroup";
 import DateInput from "library/atoms/DateInput";
 import CoursesCardList from "library/molecules/cards/CoursesCard";
 import ProfileCard from "library/molecules/cards/ProfileCard";
@@ -148,6 +145,8 @@ const friends = [
 const formSchema = z.object({
   email: z.string().nonempty("E-mail je povinný").email(),
   phone: z.string().nonempty("Telefon je povinný").min(9, "Minimální délka je 9 znaků"),
+  date: z.date(),
+  isChecked: z.boolean()
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -158,6 +157,8 @@ export default function ComponentsPreview() {
     defaultValues: {
       email: "",
       phone: "",
+      date: new Date(),
+      isChecked: true
     },
   });
 
@@ -172,7 +173,7 @@ export default function ComponentsPreview() {
         color="primary"
         endIcon={<ArrowRightSvg width={10} />}
       />
-      <DateInput />
+      <DateInput register={form.register('date')} control={form.control} />
       <UserCard
         cardType="default"
         name="Adam Klempíř"
@@ -251,7 +252,7 @@ export default function ComponentsPreview() {
       />
       <PhoneInput label="Telefon" error={form.formState.errors["phone"]} register={form.register("phone")} />
       <Tag title="Tag" />
-      <Checkbox id="comments" title="Checkbox" />
+      <Checkbox register={form.register('isChecked')} id="comments" title="Checkbox" />
       {/* <RadioGroup title="Možnosti" options={options}  /> */}
       {/* <RadioBigButtonGroup title="Možnosti" options={options2} startIcon={<ShoppingBagSvg width={20} />} /> */}
       <div>

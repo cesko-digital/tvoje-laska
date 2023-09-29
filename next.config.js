@@ -27,12 +27,12 @@ const nextConfig = {
         destination: "/profile/friends",
       },
       {
-        source: "/profil/lovereport",
-        destination: "/profile/lovereport",
+        source: "/lovereport/vyplneni",
+        destination: "/lovereport/create",
       },
       {
-        source: "/profil/lovereport/vyplneni",
-        destination: "/profile/lovereport/create",
+        source: "/lovereport/shrnuti",
+        destination: "/lovereport/summary",
       },
     ];
   },

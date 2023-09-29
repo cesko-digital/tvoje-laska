@@ -41,7 +41,7 @@ function save_wp_forms_result(WP_REST_Request  $request  ) {
 		'user_id' => $data['user_id'],
 		'viewed' => $data['viewed'],
 		'starred' => $data['starred'],
-		'fields' => '',
+		'fields' => $data['fields_json'],
 		'meta' => $data['meta'],
 		'date' => $data['date'],
 		'date_modified' => $data['date_modified'],

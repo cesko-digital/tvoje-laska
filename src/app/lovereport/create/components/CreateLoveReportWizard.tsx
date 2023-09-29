@@ -1,12 +1,13 @@
-"use client";
+"use client";;
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import StepperMenu, { StepperStep } from "library/molecules/ProgressStepper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoveReportField, LoveReportFieldType } from "app/api/lovereport/lovereport.type";
 import LoveReportFieldInput from "./LoveReportFieldInput";
 import Button from "library/atoms/Button";
+import { useRouter } from 'next/navigation'
 
 export type LoveReportFieldWithGroup = LoveReportField & {
   group: number;
@@ -15,25 +16,36 @@ export type LoveReportFieldWithGroup = LoveReportField & {
 type Props = {
   fields: LoveReportFieldWithGroup[];
 };
+
+const required_error = "Vyplňte odpověď";
+
 export type FormValues = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
   fields: z
     .array(
       z.object({
-        value: z.union([z.string({ required_error: "Vyplňte odpověď" }).min(1, {
-          message: "Vyplňte odpověď",
-        }), z.boolean()]),
+        value: z.union([
+          z.string({ required_error: required_error }).min(1, {
+            message: required_error,
+          }),
+          z.boolean(),
+          z.date({ required_error: required_error }),
+        ]),
         group: z.number(),
         type: z.string(),
+        path: z.string(),
       }),
     )
     .nonempty(),
 });
 
 const CreateLoveReportWizard = (props: Props) => {
+  const router = useRouter()
   const [step, setStep] = useState(1);
+
   const inputFields = props.fields.filter(e => isInput(e.type));
+
   const maxStep = inputFields[inputFields.length - 1].group;
   const steps: StepperStep[] = inputFields
     .map(f => f.group)
@@ -51,21 +63,49 @@ const CreateLoveReportWizard = (props: Props) => {
   const pagebreaks = props.fields.filter(e => e.group === step && e.type === "pagebreak");
   const pageTitle = pagebreaks.length > 0 ? pagebreaks[0].description : "";
 
+  const saveToSession = (newValue: FormValues) => {
+    window.sessionStorage.setItem("LoveReport", JSON.stringify(newValue));
+  };
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    reValidateMode: "onBlur",
     defaultValues: {
-      fields: props.fields
-        .filter(f => isInput(f.type))
-        .map((f, index) => {
-          return {
-            value: getDefaultValue(f),
-            group: f.group,
-            type: f.type,
-            id: f.id,
-          };
-        }),
+      fields: inputFields.map((f, index) => {
+        return {
+          value: getDefaultValue(f),
+          group: f.group,
+          type: f.type,
+          id: f.id,
+          path: `fields.${index}.value`,
+        };
+      }),
     },
   });
+
+  useEffect(() => {
+    const sessionData = window.sessionStorage.getItem("LoveReport");
+
+    if (!sessionData) {
+      return;
+    }
+
+    const formValues = JSON.parse(sessionData) as FormValues;
+
+    formValues.fields.forEach(field => {
+
+      if(field.value === null || field.value === '') {
+        return;
+      }
+
+      if(field.type === 'date-time' && typeof field.value === 'string') {
+        console.log(Date.parse(field.value));
+        form.setValue(field.path as any, new Date(Date.parse(field.value)));
+      } else {
+        form.setValue(field.path as any, field.value);
+      }
+    });
+  }, []);
 
   const validateStep = (group: number): boolean => {
     form.clearErrors();
@@ -112,6 +152,7 @@ const CreateLoveReportWizard = (props: Props) => {
         .map(e => (
           <div key={e.field.id} className="mb-2 mt-2">
             <LoveReportFieldInput
+              control={form.control}
               field={e.field}
               index={e.originalIndex}
               error={form.formState.errors.fields?.[e.originalIndex]?.value}
@@ -127,6 +168,7 @@ const CreateLoveReportWizard = (props: Props) => {
           onClick={() => {
             if (validateStep(step - 1)) {
               setStep(step - 1);
+              saveToSession(form.getValues());
             }
           }}
         ></Button>
@@ -134,13 +176,27 @@ const CreateLoveReportWizard = (props: Props) => {
       {step + 1 <= maxStep && (
         <Button
           color={"primary"}
-          buttonText="Další"
+          buttonText="Pokračovat"
           onClick={() => {
             if (validateStep(step + 1)) {
               setStep(step + 1);
+              saveToSession(form.getValues());
             }
           }}
         ></Button>
+      )}
+
+      {step === maxStep ? (
+        <Button
+          color="primary"
+          buttonText="Pokračovat"
+          onClick={() => {
+            saveToSession(form.getValues());
+            router.push('/lovereport/shrnuti');
+          }}
+        ></Button>
+      ) : (
+        <></>
       )}
     </div>
   );
@@ -163,7 +219,7 @@ const getDefaultValue = (field: LoveReportFieldWithGroup): string | boolean => {
     return field.default_value;
   }
 
-  if(field.type === 'checkbox') {
+  if (field.type === "checkbox") {
     return false;
   }
 
