@@ -1,24 +1,29 @@
-import { useState } from "react";
+"use client";
+
+import { ReactNode, useState } from "react";
 import { Tab } from "@headlessui/react";
 import classNames from "helpers/classNames";
 
-const Tabs = () => {
+interface Props {
+  request?: React.ReactNode,
+  favourite?: React.ReactNode 
+}
+
+const Tabs = ({ request, favourite }: Props) => {
   //TODO: Budou se Tabs používat ještě na něco jiného? Zflexibilnit?
   let [categories] = useState({
     Přátelé: [
       {
         id: 1,
         title: "Čekající žádosti",
-        contents:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. Donec non semper quam. Sed vitae arcu in quam luctus elementum. Sed nec mag",
+        contents: request
       },
     ],
     Oblíbení: [
       {
-        id: 1,
+        id: 2,
         title: "Moji oblíbení",
-        contents:
-          "Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. Donec non semper quam. Sed vitae arcu in quam luctus elementum. Sed nec mag",
+        contents: favourite
       },
     ],
   });
@@ -51,7 +56,7 @@ const Tabs = () => {
                   <li key={post.id} className="flex flex-col gap-3 relative rounded-md p-3">
                     <h3 className="text-gray-100">{post.title}</h3>
 
-                    <p className="mt-1">{post.contents}</p>
+                    <div className="mt-1">{post.contents}</div>
                   </li>
                 ))}
               </ul>

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 type Props = {
   cardType: "default" | "friendWaiting" | "friend";
-  name: string;
+  name?: string;
   gender: string;
   age: number;
   location: string;
