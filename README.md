@@ -49,3 +49,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Wordpress notes
 
 Simple JWT plugin is currently hacked in PHP file so that autologin is working. We had to comment signature check. If autologin is not working, check plugin files
+
+### User data mapping
+
+Live google sheet can be found here https://docs.google.com/spreadsheets/d/1dURFDlwYYCAPCSDYyUes2tm2W9dI1fNbpjQv8vGASTc/edit?usp=sharing 
+This sheet contains information about data mapping because since we are using buddypress plugin it is not obvious what to get from where. 
