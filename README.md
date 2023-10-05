@@ -1,20 +1,15 @@
-# Mingly
+# Getting Started
 
-TODO: Add a project description. What is it all about?
+Here https://docs.google.com/document/d/1MxzFjsEiA7MWljbHhquHuU9NFj-JtOP0PJlG1nRocZI/edit you can find detailed technical documentation
 
-## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-TODO: Add some links. Slack (jira?)
-
-### Install dependencies
+## Install dependencies
 
 ```bash
 npm install
 ```
 
-### Run the development server:
+## Run the development server:
 
 ```bash
 npm run dev
@@ -22,7 +17,7 @@ npm run dev
 
 The portal will be running at http://localhost:3000.
 
-### Run the production server:
+## Run the production server:
 
 To test in the production environment you must build the project first:
 
@@ -49,8 +44,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Wordpress notes
 
 Simple JWT plugin is currently hacked in PHP file so that autologin is working. We had to comment signature check. If autologin is not working, check plugin files
-
-### User data mapping
-
-Live google sheet can be found here https://docs.google.com/spreadsheets/d/1dURFDlwYYCAPCSDYyUes2tm2W9dI1fNbpjQv8vGASTc/edit?usp=sharing 
-This sheet contains information about data mapping because since we are using buddypress plugin it is not obvious what to get from where. 

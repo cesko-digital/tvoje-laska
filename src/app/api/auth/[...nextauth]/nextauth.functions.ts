@@ -1,6 +1,6 @@
 import { SignOptions, sign } from "jsonwebtoken";
 import { LoggedUser, NotRegisteredUser } from "app/api/auth/[...nextauth]/user-models";
-import { getUserInfoFromToken } from "app/api/auth/wordpress/wordpress-auth";
+import { getUserInfoFromToken } from "app/api/auth/[...nextauth]/wordpress-auth";
 
 export const createToken = (email: string, username: string): string => {
   // payload data

@@ -10,7 +10,7 @@ import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { UserAuthError } from "app/api/auth/wordpress/wordpress-auth";
+import { UserAuthError } from "app/api/auth/[...nextauth]/wordpress-auth";
 import Content from "library/atoms/Content";
 import TextLink from "library/atoms/TextLink";
 import Divider from "library/atoms/Divider";
