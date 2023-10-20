@@ -1,14 +1,18 @@
 import { getLoveReportFields } from "app/api/lovereport/lovereport";
 import { Metadata } from "next";
+import React from "react";
+import LoveReportSummary from "./components/LoveReportSummary";
+import { getFieldsWithGroups } from "../common/functions/functions";
 
 export const metadata: Metadata = {
   title: 'Love Report - Shrnutí',
 }
 
-const LoveReportSummary = async () => {
+const LoveReportSummaryPage = async () => {
     const result = await getLoveReportFields();
 
-    return <h1>Shrnuti</h1>
+    return <LoveReportSummary fields={getFieldsWithGroups(result)}  />
 }
 
-export default LoveReportSummary;
+export default LoveReportSummaryPage;
+ 

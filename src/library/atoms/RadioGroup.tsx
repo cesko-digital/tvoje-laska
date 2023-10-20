@@ -34,6 +34,7 @@ const RadioGroup = ({ title, description, options, register, error, disabled = f
                   id={option.id}
                   type="radio"
                   {...register}
+                  value={option.id}
                   className={classNames(
                     "focus:[&:not(:focus-visible)]:ring-1 focus:ring-violet-70 checked:ring-1 checked:ring-violet-70 peer relative h-5 w-5  appearance-none rounded-full border  text-violet-10 transition-all focus:[&:not(:focus-visible)]:ring-offset-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-70",
                     disabled ? "border-gray-40 cursor-not-allowed" : "border-gray-100 cursor-pointer",

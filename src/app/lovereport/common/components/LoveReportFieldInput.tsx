@@ -1,6 +1,6 @@
 import RadioGroup from "library/atoms/RadioGroup";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import { LoveReportFieldWithGroup } from "./CreateLoveReportWizard";
+import { LoveReportFieldWithGroup } from "../../create/components/CreateLoveReportWizard";
 import Input from "library/atoms/Input";
 import Checkbox from "library/atoms/Checkbox";
 import DateInput from "library/atoms/DateInput";
