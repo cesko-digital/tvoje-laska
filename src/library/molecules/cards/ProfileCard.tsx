@@ -17,12 +17,17 @@ type Props = {
   location: string;
   status: "seznamuji se";
   tags: string[];
+  className?: string;
 };
 
-const ProfileCard = ({ name, nickname, gender, age, location, status, tags }: Props) => {
+const ProfileCard = ({ name, nickname, gender, age, location, status, tags, className }: Props) => {
   return (
     // TODO: Upravit max width
-    <CardContainer variant="default" padding="smaller" className="flex gap-4 flex-col justify-center max-w-sm">
+    <CardContainer
+      variant="default"
+      padding="smaller"
+      className={`flex gap-4 flex-col justify-center max-w-sm ${className}`}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* TODO: Upravit zarovnání na řádku (kvůli písma) */}
