@@ -4,9 +4,8 @@ import Tag from "library/atoms/Tag";
 import TextLink from "library/atoms/TextLink";
 import { ArrowRightSvg } from "library/icons/arrows";
 import CardMobile from "library/molecules/cards/CardMobile";
-import ProfileCard from "library/molecules/cards/ProfileCard";
 import Image from "next/image";
-import userPhoto from "/public/assets/images/user-photo_homepage2.png";
+import userPhoto from "/public/assets/images/user-photo_homepage.png";
 import { HeartSvg } from "library/icons/symbols";
 import { SignOutSvg } from "library/icons/actions";
 import { signOut } from "next-auth/react";
@@ -96,8 +95,8 @@ const HomeLoggedIn = () => {
   /* TODO: Ostranit header? */
   return (
     <>
-      <div className="w-full bg-violet-20 px-4 ">
-        <div className="flex items-center gap-4 rounded-b-[34px] pt-6">
+      <div className="w-full bg-violet-20 px-4 rounded-b-[34px]">
+        <div className="flex items-center gap-4  pt-6">
           <Image src={user.photo} alt="Uživatelská fotka" width={150} height={180} className="rounded-3xl" />
 
           <div className="flex flex-col gap-3 flex-grow">
