@@ -17,9 +17,13 @@ export const getProfileFields = async (args: GetProfileFieldsArgs) => {
   const response = await http.get<GetProfileFieldsArgs>(`${process.env.WP_API_URL}/xprofile/fields`, {
     data: JSON.stringify({
         user_id: args.userId,
+        fetch_field_data: true,
+        context: 'view'
       }),
       headers: { Authorization: session.wpJwtToken }
   })
 
   return response.data;
 };
+
+
