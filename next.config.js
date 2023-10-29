@@ -34,6 +34,10 @@ const nextConfig = {
         source: "/lovereport/shrnuti",
         destination: "/lovereport/summary",
       },
+      {
+        source: "/seznamka",
+        destination: "/dating-site"
+      }
     ];
   },
   images: {

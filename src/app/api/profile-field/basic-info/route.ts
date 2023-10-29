@@ -3,7 +3,7 @@ import { getMemberById } from "app/api/member/member";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { getProfileFields } from "../profileField";
-import { getCompletionPercents, getFieldValueFromArray } from "helpers/profileFieldHelpers";
+import { calculateAge, getCompletionPercents, getFieldValueFromArray, safeUrl } from "helpers/profileFieldHelpers";
 import { NextApiRequest } from "next";
 
 export async function GET(request: NextApiRequest): Promise<Response> {
@@ -42,19 +42,12 @@ export const getUserBasicInfo = async (userId: number): Promise<UserBasicInfo | 
     region: getFieldValueFromArray(profileFields, "Kraj"),
     status: getFieldValueFromArray(profileFields, "Status"),
     profileComplete: getCompletionPercents(profileFields),
-    photo: member?.avatar_urls?.full ?? ''
-    // photo: userPhoto,
+    photo: safeUrl(member?.avatar_urls?.full ?? '')
   };
 
   return user;
 };
 
-const calculateAge = (birthday: any) => {
-  // birthday is a date
-  var ageDifMs = Date.now() - birthday;
-  var ageDate = new Date(ageDifMs); // miliseconds from epoch
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-};
 
 export type UserBasicInfo = {
   nickname: string;

@@ -23,3 +23,25 @@ export const getCompletionPercents = (fields: ProfileFieldResponse[]): number =>
 export const getFieldValueFromArray = (array: ProfileFieldResponse[], name: string): string => {
   return getValueFromProfileField(getProfileFieldFromArray(array, name));
 };
+
+
+export const calculateAge = (birthday: any): number => {
+    // birthday is a date
+    let ageDifMs = Date.now() - birthday;
+    let ageDate = new Date(ageDifMs); // miliseconds from epoch
+    let result =  Math.abs(ageDate.getUTCFullYear() - 1970);
+  
+    if(isNaN(result)) {
+        return 0;
+    }
+
+    return result;
+};
+
+export const  safeUrl = (value: string) => {
+    if (value.startsWith("http")) {
+      return value;
+    }
+  
+    return "https://" + value;
+  }

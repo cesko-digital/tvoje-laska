@@ -11,6 +11,7 @@ import { SignOutSvg } from "library/icons/actions";
 import { signOut } from "next-auth/react";
 import { UserBasicInfo } from "app/api/profile-field/basic-info/route";
 import { IMemberResponse } from "app/api/member/member.type";
+import { safeUrl } from "helpers/profileFieldHelpers";
 
 //Zkušební data
 const getCards = (friends: { items: Friend[], pending: number}) => [
@@ -138,12 +139,6 @@ const HomeLoggedIn = (props: Props) => {
   );
 };
 
-function safeUrl(value: string) {
-  if (value.startsWith("http")) {
-    return value;
-  }
 
-  return "https://" + value;
-}
 
 export default HomeLoggedIn;

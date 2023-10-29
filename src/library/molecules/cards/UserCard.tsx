@@ -1,8 +1,10 @@
 "use client";
 
+import { stat } from "fs";
 import classNames from "helpers/classNames";
 import Button from "library/atoms/Button";
 import CardContainer from "library/atoms/CardContainer";
+import ProfileStatus from "library/atoms/ProfileStatus";
 import TextLink from "library/atoms/TextLink";
 import { AddFriendSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
 import { ShakingHandsSvg } from "library/icons/symbols";
@@ -16,9 +18,10 @@ type Props = {
   location: string;
   photo: string;
   userIsActive: boolean;
+  status?: string;
 };
 
-const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }: Props) => {
+const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive, status }: Props) => {
   const userActivity = (
     <>
       <div className="flex items-center gap-2 text-gray-70 font-normal">
@@ -41,13 +44,13 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive }
   return cardType === "default" ? (
     <CardContainer variant="bubble" padding="smaller" className="flex items-center gap-4 ">
       <div className="flex-grow">
-        <h5 className="mb-1">{name}</h5>
+        <h5 className="mb-1">@{name}</h5>
         <div className="text-gray-70 font-normal">
           <p>
             {gender}, {age} let
           </p>
           <p>{location}</p>
-          {userActivity}
+          <ProfileStatus status={status ?? ''}></ProfileStatus>
         </div>
       </div>
       <div className="relative">

@@ -3,6 +3,7 @@ import classNames from "helpers/classNames";
 import Button from "library/atoms/Button";
 import CardContainer from "library/atoms/CardContainer";
 import Divider from "library/atoms/Divider";
+import ProfileStatus from "library/atoms/ProfileStatus";
 import Tag from "library/atoms/Tag";
 import TextLink from "library/atoms/TextLink";
 import { AddFriendSvg, EditProfileSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
@@ -48,14 +49,7 @@ const ProfileCard = ({ name, nickname, gender, age, location, status, tags, clas
         <p>{gender}</p>
         <p>{age} let</p>
         <p>{location}</p>
-        <div className="flex gap-2 items-center">
-          {status === "seznamuji se" && (
-            <span className="text-magenta-40">
-              <HeartSvg width={20} />
-            </span>
-          )}
-          <p>{status}</p>
-        </div>
+     <ProfileStatus status={status}></ProfileStatus>
         <div className="flex flex-wrap gap-2 mt-3">
           {tags.map((tag, index) => {
             return <Tag key={index} title={tag} variant="light" className="col-span-1" />;
