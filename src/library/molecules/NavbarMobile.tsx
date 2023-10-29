@@ -13,6 +13,8 @@ import {
   MessagesInactiveSvg,
   RoomsActiveSvg,
   RoomsInactiveSvg,
+  SelfDevelopmentActiveSvg,
+  SelfDevelopmentInactiveSvg,
 } from "library/icons/menu-items";
 
 type MenuItem = {
@@ -47,6 +49,12 @@ const menuItems: MenuItem[] = [
     icon: <RoomsInactiveSvg width={30} height={30} />,
     activeIcon: <RoomsActiveSvg width={30} height={30} />,
     to: "/mistnosti",
+  },
+  {
+    title: "Seberozvoj",
+    icon: <SelfDevelopmentInactiveSvg width={30} height={30} />,
+    activeIcon: <SelfDevelopmentActiveSvg width={30} height={30} />,
+    to: "/seberozvoj",
   },
 ];
 

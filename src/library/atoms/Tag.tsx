@@ -23,6 +23,8 @@ const Tag = ({ title, variant = "neutral", startIcon = false, endIcon = false, c
           ? "bg-violet-10 text-violet-90"
           : variant === "disabled"
           ? "bg-gray-40 text-white cursor-auto"
+          : variant === "openToMeet"
+          ? "bg-magenta-20 text-magenta-80 py-0.5 px-3"
           : "bg-white text-black",
         className!,
       )}
