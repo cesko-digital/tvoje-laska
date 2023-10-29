@@ -4,7 +4,7 @@ import Image from "next/image";
 import { getCurrentMember } from "app/api/member/member";
 
 import { isValidURL } from "utils/isValidURL";
-import { getProfileFields } from "app/api/profile-field/profileField";
+import { getGroupsWithFields } from "app/api/profile-field/profileField";
 
 export const metadata: Metadata = {
   title: "Můj profil",
@@ -16,9 +16,11 @@ export default async function Profile() {
 
   if (!profile) return <div>Nebylo možné načíst data</div>;
 
-  const profileFields = await getProfileFields({
-    userId: profile?.id
+  const profileFields = await getGroupsWithFields({
+    userId: profile?.id,
   });
+
+  if (!profileFields) return <div>Nebylo možné načíst data</div>;
 
   return (
     <main className="w-full p-5">

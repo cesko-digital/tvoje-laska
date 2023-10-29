@@ -16,6 +16,16 @@ export type ProfileFieldResponse = {
     _links?:           Links;
 }
 
+export type ProfileGroupResponse = {
+    id:          number;
+    name:        string;
+    description: Description;
+    group_order: number;
+    can_delete:  boolean;
+    fields:      ProfileFieldResponse[];
+    _links:      Links;
+}
+
 export type Links = {
     self:       Collection[];
     collection: Collection[];
@@ -36,9 +46,6 @@ export type Data = {
     value: Value;
 }
 
-export type GetProfileFieldsParams = {
-    userId: number
-}
 
 export type FieldOption = {
     id:                number;
