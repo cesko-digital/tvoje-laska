@@ -16,7 +16,7 @@ type Props = {
   gender: string;
   age: number;
   location: string;
-  status: "seznamuji se";
+  status: string;
   tags: string[];
   className?: string;
 };

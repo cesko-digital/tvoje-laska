@@ -23,9 +23,8 @@ import {
 // TODO: Invalidate cache after PUT requests
 
 export const getMembers = async (options: Record<string, unknown>, _requestParams: IMembersRequestParams) => {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session) return;
+  const session = await getServerSession(authOptions);
+  if (!session) return;
 
     const response = await http.get<IMemberResponse[]>(`${process.env.WP_API_URL}/members`, {
       data: _requestParams,
@@ -55,6 +54,72 @@ export const getMemberById = async (
       headers,
     });
     return (await member.json()) as IMemberResponse;
+  } catch (error) {
+    // TODO: log error
+    return;
+  }
+};
+
+export const getMemberID = async (id: number) => {
+  // const session = await getServerSession(authOptions);
+  // if (!session) return;
+  try {
+    const member = await fetch(`${process.env.WP_API_URL}/members/${id}`);
+    return (await member.json()) as IMemberResponse;
+  } catch (error) {
+    // TODO: log error
+    return;
+  }
+};
+export const getProfile = async (id: number) => {};
+
+export const getProfileData = async (id: number) => {
+  const params = new URLSearchParams({
+    user_id: id.toString(),
+    context: "view",
+    fetch_field_data: "true",
+  });
+
+  const response = await fetch(`${process.env.WP_API_URL}/xprofile/fields?${params.toString()}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch profile data: ${response.statusText}`);
+  }
+
+  // Parse and return the JSON data
+  return await response.json();
+};
+
+export const getMemeberProfile = async (id: number) => {
+  console.log("id", id);
+  try {
+    const testResponse = await fetch(`${process.env.WP_API_URL}/xprofile/4/data/${id}`);
+    const sexResponse = await fetch(`${process.env.WP_API_URL}/xprofile/4/data/${id}`);
+    const ageResponse = await fetch(`${process.env.WP_API_URL}/xprofile/2/data/${id}`);
+    const regionResponse = await fetch(`${process.env.WP_API_URL}/xprofile/9/data/${id}`);
+    const cityResponse = await fetch(`${process.env.WP_API_URL}/xprofile/5/data/${id}`);
+    const hobbiesResponse = await fetch(`${process.env.WP_API_URL}/xprofile/182/data/${id}`);
+    const statusResponse = await fetch(`${process.env.WP_API_URL}/xprofile/45/data/${id}`);
+
+    const sex = await sexResponse.json();
+    const age = await ageResponse.json();
+    const region = await regionResponse.json();
+    const city = await cityResponse.json();
+    const hobbies = await hobbiesResponse.json();
+    const status = await statusResponse.json();
+
+    return {
+      sex,
+      age,
+      region,
+      city,
+      hobbies,
+      status,
+    };
   } catch (error) {
     // TODO: log error
     return;

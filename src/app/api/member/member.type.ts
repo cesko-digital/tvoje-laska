@@ -14,7 +14,7 @@ export interface IMemberResponse {
   roles?: unknown[]; // Roles assigned to the member.
   capabilities?: Record<string, unknown>; // All capabilities assigned to the member.
   extra_capabilities?: Record<string, unknown>; // All capabilities assigned to the member.
-  xprofile?: Xprofile; // Member xProfile groups and its fields.
+  xprofile?: any[]; // Member xProfile groups and its fields.
   friendship_status?: boolean; // Whether the logged in user has a friendship relationship with the fetched user.
   friendship_status_slug?: "is_friend" | "not_friends" | "pending" | "awaiting_response"; // Slug of the friendship relationship status the logged in user has with the fetched user.
   last_activity?: Record<string, unknown>; // Last date the member was active on the site (object properties: timediff, date and date_gmt).
@@ -27,23 +27,23 @@ export interface IMemberResponse {
 }
 export type Xprofile = {
   groups: { [key: string]: Group };
-}
+};
 
 export type Group = {
-  name:   string;
+  name: string;
   fields: { [key: string]: Field };
-}
+};
 
 export type Field = {
-  name:  string;
+  name: string;
   value: Value;
-}
+};
 
 export type Value = {
-  raw:          string;
+  raw: string;
   unserialized: string[];
-  rendered:     string;
-}
+  rendered: string;
+};
 /**
  * GET /buddypress/v1/members
  * https://developer.buddypress.org/bp-rest-api/reference/members/#list-members

@@ -41,7 +41,15 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["unsplash.com", "images.unsplash.com", "res.cloudinary.com"],
+    domains: [
+      "unsplash.com",
+      "images.unsplash.com",
+      "res.cloudinary.com",
+      "mingly.cz",
+      "wikipedia.org",
+      "gravatar.com",
+      "www.gravatar.com",
+    ],
   },
   images: {
     remotePatterns: [
