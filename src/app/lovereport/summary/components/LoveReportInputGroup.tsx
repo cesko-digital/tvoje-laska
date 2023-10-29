@@ -91,7 +91,7 @@ const EditView = ({ inputFields, groupIndex, form, onSave, onCancelEdit }: EditV
         .map((e, index) => ({ field: e, originalIndex: index }))
         .filter(e => e.field.group === groupIndex)
         .map(e => (
-          <div key={e.field.id} className="mb-2 mt-2">
+          <div key={e.field.id} className="mb-2 mt-2 flex flex-col gap-4">
             <LoveReportFieldInput
               control={form.control}
               field={e.field}
@@ -102,8 +102,10 @@ const EditView = ({ inputFields, groupIndex, form, onSave, onCancelEdit }: EditV
             <span>{e.field.placeholder}</span>
           </div>
         ))}
-      <span onClick={onCancelEdit}>Zrušit</span>
-      <span onClick={onSave}>Uložit</span>
+      <div className="flex gap-8 mt-4">
+        <span onClick={onCancelEdit}>Zrušit</span>
+        <span onClick={onSave}>Uložit</span>
+      </div>
     </div>
   );
 };

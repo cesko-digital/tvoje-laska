@@ -60,7 +60,7 @@ const LoveReportIntro = () => {
                     width: "200px",
                     height: "200px",
                   }}
-                  className="my-4"
+                  className="my-4 mx-auto"
                 />
               )}
             </div>
