@@ -18,28 +18,27 @@ const LoveReportFieldInput = ({ field, control, register, error }: FieldInputPro
   if (field.type === "radio") {
     const options = field.choices
       ? Object.values(field.choices).map(e => {
+          //TODO: Upravit TS chyby - doplnit typ pro "e"
           return {
-            id: e.value !== '' ? e.value : e.label,
+            id: e.value !== "" ? e.value : e.label,
             optionName: e.label,
           };
         })
       : [];
-    return <RadioGroup error={error} title={label} register={register} options={options} />;
+    return <RadioGroup error={error} title={label} register={register} options={options} direction="column" />;
   }
 
-  if(field.type === 'date-time') {
-    return (<DateInput control={control} label={label} register={register} error={error}></DateInput>)
+  if (field.type === "date-time") {
+    return <DateInput control={control} label={label} register={register} error={error} />;
   }
 
-  if(field.type === 'checkbox') {
-    return (<Checkbox register={register} error={error} id={field.id} title={label}  />);
+  if (field.type === "checkbox") {
+    return <Checkbox register={register} error={error} id={field.id} title={label} />;
   }
 
   const type = field.type === "number" ? "number" : "text";
 
-  return (
-      <Input label={label} error={error} type={type} register={register} />
-  );
+  return <Input label={label} error={error} type={type} register={register} />;
 };
 
 export default LoveReportFieldInput;

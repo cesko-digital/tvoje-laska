@@ -19,7 +19,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <NextAuthProvider>
           <Toaster toastOptions={{ duration: 5000 }} />
           <Suspense fallback={<div>loading...</div>}>
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-brand-light-beige">
               <Header />
               {children}
               <MobileMenu />

@@ -37,10 +37,11 @@ module.exports = {
         violet: "#6D28D9",
         magenta_light: "#F0ABFC",
         red_salmon: "#FF4467",
-        orange_beige: "FFE4D9",
+        orange_beige: "#FFE4D9",
         mustard_honey: "#FEC845",
         green_forest: "#0A9473",
         white: "#FFFFFF",
+        "light-beige": "#FFFCFB",
       },
       gray: {
         10: "#F4F4F4",

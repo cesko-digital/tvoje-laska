@@ -12,7 +12,6 @@ const CreateLoveReport = async () => {
 
   return (
     <>
-      <h1>Profile: Create Love Report page</h1>
       <CreateLoveReportWizard fields={getFieldsWithGroups(result)}></CreateLoveReportWizard>
     </>
   );

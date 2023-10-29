@@ -13,10 +13,11 @@ type Props = {
     optionName: string;
   }[];
   disabled?: boolean;
+  direction?: "row" | "column";
 };
 
 //TODO: Upravit, až bude hotový design pro RadioGroup
-const RadioGroup = ({ title, description, options, register, error, disabled = false }: Props) => {
+const RadioGroup = ({ title, description, options, register, error, disabled = false, direction = "row" }: Props) => {
   const hasError = error && error.message;
 
   return (
@@ -24,11 +25,11 @@ const RadioGroup = ({ title, description, options, register, error, disabled = f
       <p className="text-base font-semibold text-gray-900">{title}</p>
       {description && description !== "" ? <p className="text-sm text-gray-50">{description}</p> : <></>}
 
-      <fieldset className="mt-1 flex gap-5">
+      <fieldset className={classNames("mt-1 flex gap-5", direction === "column" && "flex-col")}>
         <legend className="sr-only">{title}</legend>
         {options.map(option => {
           return (
-            <div key={option.id} className="inline-flex items-center gap-2">
+            <div key={option.id} className="inline-flex items-center gap-2 text-gray-60">
               <label className="relative flex items-center" htmlFor={option.id}>
                 <input
                   id={option.id}

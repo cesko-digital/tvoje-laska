@@ -175,7 +175,7 @@ export default function ComponentsPreview() {
       />
       <DateInput register={form.register("date")} control={form.control} />
       <UserCard
-        cardType="default"
+        cardType="friend"
         name="Adam Klempíř"
         gender="muž"
         age={24}

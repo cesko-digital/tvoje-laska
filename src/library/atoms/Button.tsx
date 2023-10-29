@@ -52,7 +52,7 @@ const ButtonBase = ({ children, color, size, className, disabled }: ButtonBasePr
   return (
     <div
       className={classNames(
-        "rounded-full shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 ",
+        "rounded-full shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2",
         style,
         disabled ? "cursor-not-allowed" : "cursor-pointer",
         size === "base" ? "py-3" : "text-[1.125rem] py-1",
