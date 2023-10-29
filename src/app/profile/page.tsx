@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getCurrentMember } from "app/api/member/member";
 
 import { isValidURL } from "utils/isValidURL";
+import { getProfileFields } from "app/api/profile-field/profileField";
 
 export const metadata: Metadata = {
   title: "Můj profil",
@@ -11,8 +12,13 @@ export const metadata: Metadata = {
 
 export default async function Profile() {
   const profile = await getCurrentMember();
+ 
 
   if (!profile) return <div>Nebylo možné načíst data</div>;
+
+  const profileFields = await getProfileFields({
+    userId: profile?.id
+  });
 
   return (
     <main className="w-full p-5">
@@ -21,6 +27,7 @@ export default async function Profile() {
       )}
       <p className="text-lg">{profile.name}</p>
       <p>{profile.user_login}</p>
+      {JSON.stringify(profileFields)}
     </main>
   );
 }

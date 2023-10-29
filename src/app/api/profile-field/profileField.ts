@@ -1,26 +1,25 @@
 import { getServerSession } from "next-auth";
 import { GetProfileFieldsParams as GetProfileFieldsArgs } from "./profileField.type";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
+import axios from "axios";
+const http = axios.create({
+    baseURL: process.env.WP_API_URL,
+    headers: {
+      "Content-type": "application/json",
+    },
+    validateStatus: status => status >= 200 && status < 500,
+  });
 
-export const getProfileFields = async (
-    args: GetProfileFieldsArgs,
-  ) => {
-    const session = await getServerSession(authOptions);
-    if (!session) return;
+export const getProfileFields = async (args: GetProfileFieldsArgs) => {
+  const session = await getServerSession(authOptions);
+  if (!session) return;
 
-    try {
-      const headers = { Authorization: session.wpJwtToken };
-      const response = await fetch(`${process.env.WP_API_URL}/xprofile/fields`, {
-        method: "GET",
-        headers,
-        body: JSON.stringify({
-            user_id: args.userId
-        }),
-      });
-      
-      return (await response.json()) as GetProfileFieldsArgs;
-    } catch (error) {
-      // TODO: log error
-      return;
-    }
-  };
+  const response = await http.get<GetProfileFieldsArgs>(`${process.env.WP_API_URL}/xprofile/fields`, {
+    data: JSON.stringify({
+        user_id: args.userId,
+      }),
+      headers: { Authorization: session.wpJwtToken }
+  })
+
+  return response.data;
+};
