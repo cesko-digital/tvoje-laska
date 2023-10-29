@@ -39,6 +39,14 @@ const nextConfig = {
   images: {
     domains: ["unsplash.com", "images.unsplash.com", "res.cloudinary.com"],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
