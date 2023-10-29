@@ -89,6 +89,7 @@ export const authOptions: NextAuthOptions = {
         session.roles = token.roles;
         session.nickname = token.nickname;
         session.displayName = token.displayName;
+        session.user.id = token.id;
       }
       return session;
     },

@@ -1,3 +1,4 @@
+"use client";
 import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";
 import Tag from "library/atoms/Tag";
@@ -8,7 +9,9 @@ import Image from "next/image";
 import userPhoto from "/public/assets/images/user-photo_homepage.png";
 import { HeartSvg } from "library/icons/symbols";
 import { SignOutSvg } from "library/icons/actions";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { UserBasicInfo } from "app/api/profile-field/basic-info/route";
+import { useEffect, useState } from "react";
 
 //Zkušební data
 const friends = [
@@ -82,47 +85,51 @@ const cards = [
 ];
 
 //Zkušební data
-const user = {
-  nickname: "@annie76",
-  age: 30,
-  location: "Beroun, Středočeský kraj",
-  status: "seznamuji se",
-  profileComplete: 30,
-  photo: userPhoto,
-};
 
-const HomeLoggedIn = () => {
+const HomeLoggedIn = (props: { userId: string }) => {
   /* TODO: Ostranit header? */
+
+  const [user, setUser] = useState<UserBasicInfo | null>(null);
+
+  useEffect(() => {
+     fetch(`/api/profile-field/basic-info?userId=${props.userId}`).then(response => {
+      response.json().then(result => setUser(result));
+    });
+  }, []);
+
   return (
     <>
       <div className="w-full bg-violet-20 px-4 rounded-b-[34px]">
-        <div className="flex items-center gap-4  pt-6">
-          <Image src={user.photo} alt="Uživatelská fotka" width={150} height={180} className="rounded-3xl" />
+        {user && (
+          <div className="flex items-center gap-4  pt-6">
+            <Image src={user.photo} alt="Uživatelská fotka" width={150} height={180} className="rounded-3xl" />
 
-          <div className="flex flex-col gap-3 flex-grow">
-            <h5 className="font-medium">{user.nickname}</h5>
-            <Tag
-              title={user.status}
-              variant="openToMeet"
-              className="col-span-1"
-              startIcon={
-                <span className="text-magenta-50">
-                  <HeartSvg width={20} />
-                </span>
-              }
-            />
-            <div className="rounded-full w-full h-4 bg-white border border-white mt-2">
-              <div
-                className={`rounded-full bg-violet-70 h-full`}
-                style={{
-                  width: `${user.profileComplete}%`,
-                }}
+            <div className="flex flex-col gap-3 flex-grow">
+              <h5 className="font-medium">@{user.nickname}</h5>
+              <Tag
+                title={user.status}
+                variant="openToMeet"
+                className="col-span-1"
+                startIcon={
+                  <span className="text-magenta-50">
+                    <HeartSvg width={20} />
+                  </span>
+                }
               />
-            </div>
+              <div className="rounded-full w-full h-4 bg-white border border-white mt-2">
+                <div
+                  className={`rounded-full bg-violet-70 h-full`}
+                  style={{
+                    width: `${user.profileComplete}%`,
+                  }}
+                />
+              </div>
 
-            <p className="text-violet-70 text-sm">Profil vyplněný na {user.profileComplete} %</p>
+              <p className="text-violet-70 text-sm">Profil vyplněný na {user.profileComplete} %</p>
+            </div>
           </div>
-        </div>
+        )}
+
         <Button
           buttonText="Zobrazit můj profil"
           color="secondary"

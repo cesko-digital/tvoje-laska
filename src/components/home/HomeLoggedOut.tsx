@@ -1,3 +1,4 @@
+'use client'
 import Carousel from "library/molecules/Carousel";
 import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";

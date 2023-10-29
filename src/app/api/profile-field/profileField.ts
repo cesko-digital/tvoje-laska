@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { ProfileFieldResponse, ProfileGroupResponse } from "./profileField.type";
+import { ProfileFieldResponse, ProfileGroupResponse, VisibilityLevel } from "./profileField.type";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 import axios from "axios";
 const http = axios.create({
@@ -29,7 +29,11 @@ export const getGroupsWithFields = async (args: { userId: number; groupId?: numb
   return response.data;
 };
 
-export const getProfileFields = async (args: { userId: number; groupId?: number }) => {
+export const getProfileFields = async (args: {
+  userId: number;
+  groupId?: number;
+  visibilityLevel?: VisibilityLevel;
+}) => {
   const session = await getServerSession(authOptions);
   if (!session) return;
 

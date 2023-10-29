@@ -1,8 +1,7 @@
-"use client";
-
-import { useSession } from "next-auth/react";
 import HomeLoggedIn from "components/home/HomeLoggedIn";
 import HomeLoggedOut from "components/home/HomeLoggedOut";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 //Zkušební data
 const testimonials = [
@@ -26,8 +25,8 @@ const testimonials = [
   },
 ];
 
-export default function Home() {
-  const session = useSession();
+export default async function Home() {
+  const session = await getServerSession(authOptions);
 
-  return <>{session.data ? <HomeLoggedIn /> : <HomeLoggedOut />}</>;
+  return <>{session ? <HomeLoggedIn userId={session.id} /> : <HomeLoggedOut />}</>;
 }
