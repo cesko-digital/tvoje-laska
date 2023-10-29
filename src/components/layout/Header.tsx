@@ -13,12 +13,18 @@ const Header = () => {
   const session = useSession();
 
   // TODO: Co dělat v případě loading stavu? Co zobrazovat?
-  return session.data ? <HeaderLoggedIn /> : <HeaderLoggedOut />;
+  return session.data ? (
+    <div />
+  ) : (
+    // <HeaderLoggedIn />
+    <HeaderLoggedOut />
+  );
 };
 
+//TODO: Bude nám ještě k něčemu tento Header?
 const HeaderLoggedIn = () => {
   return (
-    <header className="flex items-center justify-between py-2.5 px-4 relative h-12 z-50">
+    <header className="flex items-center justify-between py-2.5 px-4 relative h-12 z-50 mt-[54px]">
       {/* TODO: Upravit cestu k tlačítku Zpět na dynamickou */}
 
       <Link href="/">
@@ -34,11 +40,6 @@ const HeaderLoggedIn = () => {
 
       <div className="text-violet-70">
         <BellSvg width={20} height={22} />
-
-        {/* TODO: Jen prozatím, aby se dalo testovat odhlášení */}
-        <a href="#" onClick={e => signOut()}>
-          Odhlásit
-        </a>
       </div>
     </header>
   );
@@ -46,7 +47,7 @@ const HeaderLoggedIn = () => {
 
 const HeaderLoggedOut = () => {
   return (
-    <header className="flex items-center justify-between py-2.5 px-4 relative h-12 z-50">
+    <header className="flex items-center justify-between py-2.5 px-4 relative h-12 z-50 mt-[54px]">
       <Link href="/" className={classNames("absolute left-1/2  transform -translate-x-1/2")}>
         <Image src={logo} width={70} height={20} alt="Mingly logo" />
       </Link>
