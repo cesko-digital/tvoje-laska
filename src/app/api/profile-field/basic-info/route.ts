@@ -42,7 +42,7 @@ export const getUserBasicInfo = async (userId: number): Promise<UserBasicInfo | 
     region: getFieldValueFromArray(profileFields, "Kraj"),
     status: getFieldValueFromArray(profileFields, "Status"),
     profileComplete: getCompletionPercents(profileFields),
-    photo: ''
+    photo: member?.avatar_urls?.full ?? ''
     // photo: userPhoto,
   };
 
