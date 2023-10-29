@@ -1,11 +1,14 @@
 import CardContainer from "library/atoms/CardContainer";
 import { BellSvg } from "library/icons/symbols";
 import Image from "next/image";
-import { type } from "os";
 import { ReactNode } from "react";
 
-//TODO: Jak bude vypadat objekt pro přátele? A bude vždy jen v této podobě?
-type Friend = {
+export type FriendContent = {
+  items: Friend[],
+  pending: number
+}
+
+export type Friend = {
   id: number;
   name: string;
   image: string;
@@ -15,8 +18,9 @@ type Props = {
   title?: string;
   //TODO: Upravit typy (ideálně odstranit string)
   contentType: "description" | "friends" | "notification" | string;
-  content: Friend[] | string;
+  content: FriendContent | string;
   textLink: ReactNode;
+  additionalData?: {  }
 };
 
 const CardMobile = ({ title, textLink, contentType, content }: Props) => {
@@ -25,16 +29,22 @@ const CardMobile = ({ title, textLink, contentType, content }: Props) => {
       <h5>{title && title}</h5>
       {contentType === "description" && typeof content === "string" && <p className="text-gray-60">{content}</p>}
 
-      {/* TODO: Doplnit "čekající žádosti"? */}
       {contentType === "friends" && (
         <div className="flex flex-row gap-2">
-          {Array.isArray(content) &&
-            content?.map(friend => (
+          {typeof content === 'object' && 'items' in content &&
+            <>{
+            content.items?.map(friend => (
               <div key={friend.id} className="relative w-10 h-10">
                 {/* TODO: Mrknout na legacy layout prop */}
                 <Image src={friend.image} alt={friend.name} layout="fill" className="rounded-full" />
               </div>
             ))}
+            
+             <br></br>
+              <p>Čekající na žádost: {content.pending}</p>
+            </>
+            }
+
         </div>
       )}
       {contentType === "notification" && typeof content === "string" && (

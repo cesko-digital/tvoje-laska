@@ -1,6 +1,15 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 
+import axios from "axios";
+const http = axios.create({
+  baseURL: process.env.WP_API_URL,
+  headers: {
+    "Content-type": "application/json",
+  },
+  validateStatus: status => status >= 200 && status < 500,
+});
+
 import {
   IGetCurrentMemberRequestParams,
   IGetMemberRequestParams,
@@ -13,24 +22,19 @@ import {
 // TODO: GET request fetch as ISR
 // TODO: Invalidate cache after PUT requests
 
-export const getMembers = async (
-  options: Record<string, unknown>,
-  _requestParams: IMembersRequestParams,
-) => {
-  const session = await getServerSession(authOptions);
-  if (!session) return;
-
+export const getMembers = async (options: Record<string, unknown>, _requestParams: IMembersRequestParams) => {
   try {
-    const headers = {
-      ...(options && options.headers ? options.headers : {}),
-      Authorization: session.wpJwtToken,
-    };
-    const me = await fetch(`${process.env.WP_API_URL}/members`, {
-      ...options,
-      headers,
+    const session = await getServerSession(authOptions);
+    if (!session) return;
+
+    const response = await http.get<IMemberResponse[]>(`${process.env.WP_API_URL}/members`, {
+      data: _requestParams,
+      headers: { Authorization: session.wpJwtToken },
     });
-    return (await me.json()) as IMemberResponse[];
+
+    return response.data;
   } catch (error) {
+    console.log(error);
     // TODO: log error
     return;
   }

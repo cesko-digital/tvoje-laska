@@ -2,31 +2,53 @@ import HomeLoggedIn from "components/home/HomeLoggedIn";
 import HomeLoggedOut from "components/home/HomeLoggedOut";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-
-//Zkušební data
-const testimonials = [
-  {
-    image: "/assets/images/testimonial.svg",
-    content:
-      "Na seznamce jsem poznala úžasného sympaťáka. První rande sice skončilo fiaskem, ale zkusili jsme to ještě jednou a padli si do oka. Po roce vztahu plného humoru i pochopení mě požádal o ruku. Nyní jsme dva měsíce manželé.",
-    name: "Iveta S.",
-  },
-  {
-    image: "/assets/images/testimonial.svg",
-    content:
-      "Podařilo se mi najít na seznamce ženu svých snů. Po pár měsících se nám narodil syn a za další dva roky dcera. Jsme šťastná rodina a děkujeme za to seznamce.",
-    name: "Jan N.",
-  },
-  {
-    image: "/assets/images/testimonial.svg",
-    content:
-      "Našel jsem si na seznamce ženu, která se mnou sdílí společné zájmy. Po pár měsících jsme se vzali a nyní čekáme miminko. Děkujeme seznamce za šanci najít si spřízněnou duši.",
-    name: "Lukáš P.",
-  },
-];
+import { getMembers } from "./api/member/member";
+import { getUserBasicInfo } from "./api/profile-field/basic-info/route";
+import { getFriends } from "./api/friends/friends";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  return <>{session ? <HomeLoggedIn userId={session.id} /> : <HomeLoggedOut />}</>;
+  if (session) {
+    const friends = await getFriends(
+      {},
+      {
+        user_id: parseInt(session.user.id),
+      },
+    );
+    const confirmedFriends = friends?.filter(f => f.is_confirmed).map(f => f.friend_id);
+
+    const members =
+      confirmedFriends && confirmedFriends?.length > 0
+        ? await getMembers(
+            {},
+            {
+              user_ids: confirmedFriends,
+            },
+          )
+        : [];
+
+    let userBasicInfo = await getUserBasicInfo(parseInt(session.user.id));
+
+    if (!userBasicInfo) {
+      userBasicInfo = {
+        age: 0,
+        city: "",
+        nickname: "",
+        photo: "",
+        profileComplete: 0,
+        region: "",
+        status: "",
+      };
+    }
+
+    return (
+      <HomeLoggedIn
+        userInfo={userBasicInfo}
+        friends={{ items: members ?? [], pending: friends?.filter(f => !f.is_confirmed).length ?? 0 }}
+      />
+    );
+  }
+
+  return <HomeLoggedOut />;
 }

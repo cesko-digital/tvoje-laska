@@ -1,42 +1,19 @@
-"use client";
+"use client";;
 import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";
 import Tag from "library/atoms/Tag";
 import TextLink from "library/atoms/TextLink";
 import { ArrowRightSvg } from "library/icons/arrows";
-import CardMobile from "library/molecules/cards/CardMobile";
+import CardMobile, { Friend } from "library/molecules/cards/CardMobile";
 import Image from "next/image";
-import userPhoto from "/public/assets/images/user-photo_homepage.png";
 import { HeartSvg } from "library/icons/symbols";
 import { SignOutSvg } from "library/icons/actions";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { UserBasicInfo } from "app/api/profile-field/basic-info/route";
-import { useEffect, useState } from "react";
+import { IMemberResponse } from "app/api/member/member.type";
 
 //Zkušební data
-const friends = [
-  {
-    id: 1,
-    name: "Adam Klempíř",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 2,
-    name: "Jana Nováková",
-    image:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 3,
-    name: "Lukáš Vávra",
-    image:
-      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
-
-//Zkušební data
-const cards = [
+const getCards = (friends: { items: Friend[], pending: number}) => [
   {
     contentType: "notification",
     content: "Máš 3 nová upozornění.",
@@ -53,7 +30,7 @@ const cards = [
         title="Přejít na přátele a oblíbené"
         color="primary"
         as="link"
-        path="/"
+        path="/profil/pratele"
         endIcon={<ArrowRightSvg width={10} />}
       />
     ),
@@ -85,18 +62,11 @@ const cards = [
 ];
 
 //Zkušební data
+type Props = { userInfo: UserBasicInfo; friends: { items: IMemberResponse[]; pending: number } };
 
-const HomeLoggedIn = (props: { userId: string }) => {
+const HomeLoggedIn = (props: Props) => {
   /* TODO: Ostranit header? */
-
-  const [user, setUser] = useState<UserBasicInfo | null>(null);
-
-  useEffect(() => {
-     fetch(`/api/profile-field/basic-info?userId=${props.userId}`).then(response => {
-      response.json().then(result => setUser(result));
-    });
-  }, []);
-
+  const user = props.userInfo;
   return (
     <>
       <div className="w-full bg-violet-20 px-4 rounded-b-[34px]">
@@ -141,7 +111,12 @@ const HomeLoggedIn = (props: { userId: string }) => {
 
       <Content title="" className="z-50">
         <div className="flex flex-col gap-8 -mt-4">
-          {cards.map((card, index) => (
+          {getCards({ items: props.friends.items.map(e => ({
+              id: e.id,
+              image: safeUrl(e.avatar_urls?.full ?? ""),
+              name: e.name ?? "",
+            })), pending: props.friends.pending},
+          ).map((card, index) => (
             <CardMobile
               content={card.content}
               contentType={card.contentType}
@@ -162,5 +137,13 @@ const HomeLoggedIn = (props: { userId: string }) => {
     </>
   );
 };
+
+function safeUrl(value: string) {
+  if (value.startsWith("http")) {
+    return value;
+  }
+
+  return "https://" + value;
+}
 
 export default HomeLoggedIn;
