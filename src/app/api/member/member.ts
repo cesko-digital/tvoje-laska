@@ -71,7 +71,6 @@ export const getMemberID = async (id: number) => {
     return;
   }
 };
-export const getProfile = async (id: number) => {};
 
 export const getProfileData = async (id: number) => {
   const params = new URLSearchParams({
@@ -126,6 +125,7 @@ export const getMemeberProfile = async (id: number) => {
   }
 };
 
+export const getProfileDataById = async (id: number) => {};
 // FIXME: The updateMember() does not seem to be working. Postman can change data, but this request not (but still the received status code is 200).
 // TODO: Is the updateMember() function needed? Fix or remove.
 export const updateMember = async (

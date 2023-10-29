@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 
 const CreateLoveReport = async () => {
   const result = await getLoveReportFields();
-
   return (
     <>
       <CreateLoveReportWizard fields={getFieldsWithGroups(result)}></CreateLoveReportWizard>

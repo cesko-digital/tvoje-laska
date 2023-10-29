@@ -1,30 +1,22 @@
 import { getMemberID, getMemeberProfile, getProfileData } from "../../app/api/member/member";
-import MemberProfile from "../../app/member-profile/page";
+import MemberProfile from "../../app/user-profile/components/MemberProfile";
 import "../../app/globals.css";
-import { MemberDetailsProps } from "../../app/member-profile/page";
+import { MemberDetailsProps } from "../../app/user-profile/components/MemberProfile";
+import { getProfileFields, getProfileField } from "../../app/api/profile-field/profileField";
 
-function FriendDetails({
-  name,
-  profilePhoto,
-  state,
-  gender,
-  age,
-  location,
-  hobby,
-  memberData,
-  test,
-}: MemberDetailsProps) {
+function FriendDetails({ memberData }: MemberDetailsProps) {
   return (
     <main className="w-full p-5">
       <MemberProfile
-        name={name}
-        profilePhoto={profilePhoto}
-        state={state}
-        gender={gender}
-        age={age}
-        location={location}
-        hobby={hobby}
-        test={test}
+        memberData={memberData}
+        // name={name}
+        // profilePhoto={profilePhoto}
+        // state={state}
+        // gender={gender}
+        // age={age}
+        // location={location}
+        // hobby={hobby}
+        // test={test}
       />
     </main>
   );
@@ -34,14 +26,13 @@ export async function getServerSideProps(context: any) {
   const memberId = Number(context.params?.id);
 
   try {
+    // const test2 = await getProfileField({ userId: memberId, fieldId: 182 });
+    // console.log("test2", test2);
+
     const test = (await getProfileData(memberId)) as any;
-    console.log("test", test);
 
     const memberData = (await getMemberID(memberId)) as any;
     if (!memberData) return { notFound: true };
-
-    const medialonek = test.find(item => item.name === "Medailonek").description.rendered;
-    console.log("here", medialonek);
 
     const getFieldByName = (groupName: string, fieldName: string, xprofile: any) => {
       let foundField = "";
@@ -72,7 +63,7 @@ export async function getServerSideProps(context: any) {
       });
       return foundArray;
     };
-
+    console.log("memberData", memberData.xprofile);
     const state = getFieldByName("Ostatní", "Status", memberData.xprofile);
     const gender = getFieldByName("Základní", "Pohlaví", memberData.xprofile);
 
@@ -88,20 +79,19 @@ export async function getServerSideProps(context: any) {
     const name = memberData.user_login;
     const profilePhoto = memberData.avatar_urls?.full || "";
 
-    console.log("medailonek");
     // const medailonek
 
     return {
       props: {
         test,
         memberData,
-        name,
-        profilePhoto,
-        state,
-        gender,
-        age,
-        location,
-        hobby,
+        // name,
+        // profilePhoto,
+        // state,
+        // gender,
+        // age,
+        // location,
+        // hobby,
       },
     };
   } catch (error) {
