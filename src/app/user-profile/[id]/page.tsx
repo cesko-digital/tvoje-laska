@@ -1,5 +1,5 @@
-import { getProfileData, getMemberID, getMemberById } from "app/api/member/member";
-import MemberProfile from "app/user-profile/components/MemberProfile";
+import { getMemberById } from "app/api/member/member";
+import MemberProfile from "app/user-profile/components/UserProfile";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = Number(params?.id);

@@ -18,7 +18,6 @@ type Props = {
 const CreateLoveReportWizard = (props: Props) => {
   const router = useRouter();
   const [currentStep, setStep] = useState(1);
-  console.log("props", props);
   const inputFields = props.fields.filter(e => isInput(e.type));
 
   const maxStep = inputFields[inputFields.length - 1].group;
