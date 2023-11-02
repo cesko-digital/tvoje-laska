@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { getProfileFieldValue, getAllFieldsByGroupName } from "../utils";
 import ContentBox from "./ContentBox";
+import InterestsBox from "./InterestsBox";
 
 export type UserDetailsProps = {
   memberData?: any;
@@ -67,6 +68,8 @@ export default function UserProfile({ memberData }: UserDetailsProps) {
         <button>Oznacit jako oblibeny</button>
         <div>Fotky...</div>
         <div>
+          <ContentBox fields={hobbies.fields} groupName={"Moje záliby"} />
+          <ContentBox fields={sports.fields} groupName={"Sporty"} />
           <ContentBox fields={appearence.fields} groupName={appearence.groupName} />
           <ContentBox fields={relationship.fields} groupName={relationship.groupName} />
           <ContentBox fields={education.fields} groupName={education.groupName} />
