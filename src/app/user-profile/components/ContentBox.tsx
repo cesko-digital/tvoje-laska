@@ -12,7 +12,6 @@ type ArrayProps = {
 };
 
 const ContentBox = ({ fields, groupName }: Props) => {
-  console.log("fields", fields);
   return (
     // <main className="w-full pt-2">
     <CardContainer variant="default" className="flex flex-col items-start gap-4">

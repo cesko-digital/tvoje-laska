@@ -1,14 +1,29 @@
 "use client";
 
-import React from "react";
 import { useState } from "react";
 import Image from "next/image";
-import { getProfileFieldValue, getAllFieldsByGroupName } from "../utils";
+import { getProfileFieldValue, getAllFieldsByGroupName, calculateAge } from "../utils";
 import ContentBox from "./ContentBox";
-import InterestsBox from "./InterestsBox";
 
 export type UserDetailsProps = {
   memberData?: any;
+};
+
+const FIELD_NAMES = {
+  GENDER: "Pohlaví",
+  AGE: "Věk",
+  CITY: "Město",
+  REGION: "Kraj",
+  DESCRIPTION: "Medailonek",
+  FAMILY_STATE: "Status",
+  HOBBIES: "Moje záliby",
+  SPORTS: "Sporty",
+  APPEARENCE: "Jak vypadám",
+  RELATIONSHIP: "Vztah a rodina",
+  EDUCATION: "Vzdělání a práce",
+  INVALIDITY: "Hendikep",
+  LIFESTYLE: "Životní styl",
+  PREFERENCES: "Koho hledám",
 };
 
 export default function UserProfile({ memberData }: UserDetailsProps) {
@@ -21,27 +36,26 @@ export default function UserProfile({ memberData }: UserDetailsProps) {
       : `https:${memberData.avatar_urls?.full}`;
 
   const mainInfo = getAllFieldsByGroupName("Základní", memberData.xprofile);
-  const gender = getProfileFieldValue(mainInfo.fields, "Pohlaví");
-  const memberAge = getProfileFieldValue(mainInfo.fields, "Věk");
-  const age = new Date().getFullYear() - new Date(memberAge).getFullYear();
-  const city = getProfileFieldValue(mainInfo.fields, "Město");
-  const region = getProfileFieldValue(mainInfo.fields, "Kraj");
+  const gender = getProfileFieldValue(mainInfo.fields, FIELD_NAMES.GENDER);
+  const memberAge = getProfileFieldValue(mainInfo.fields, FIELD_NAMES.AGE);
+  const age = calculateAge(memberAge);
+
+  const city = getProfileFieldValue(mainInfo.fields, FIELD_NAMES.CITY);
+  const region = getProfileFieldValue(mainInfo.fields, FIELD_NAMES.REGION);
   const location = `${city}, ${region} kraj`;
-  const description = getProfileFieldValue(mainInfo.fields, "Medailonek");
+  const description = getProfileFieldValue(mainInfo.fields, FIELD_NAMES.DESCRIPTION);
 
-  console.log("memberData", memberData);
+  const hobbies = getAllFieldsByGroupName(FIELD_NAMES.HOBBIES, memberData.xprofile);
+  const sports = getAllFieldsByGroupName(FIELD_NAMES.SPORTS, memberData.xprofile);
+  const appearence = getAllFieldsByGroupName(FIELD_NAMES.APPEARENCE, memberData.xprofile);
+  const relationship = getAllFieldsByGroupName(FIELD_NAMES.RELATIONSHIP, memberData.xprofile);
 
-  const hobbies = getAllFieldsByGroupName("Moje záliby", memberData.xprofile);
-  const sports = getAllFieldsByGroupName("Sporty", memberData.xprofile);
-  const appearence = getAllFieldsByGroupName("Jak vypadám", memberData.xprofile);
-  const relationship = getAllFieldsByGroupName("Vztah a rodina", memberData.xprofile);
+  const familyState = getProfileFieldValue(relationship.fields, FIELD_NAMES.FAMILY_STATE);
 
-  const familyState = getProfileFieldValue(relationship.fields, "Status");
-
-  const education = getAllFieldsByGroupName("Vzdělání a práce", memberData.xprofile);
-  const invalidity = getAllFieldsByGroupName("Hendikep", memberData.xprofile);
-  const lifestyle = getAllFieldsByGroupName("Životní styl", memberData.xprofile);
-  const preferences = getAllFieldsByGroupName("Koho hledám", memberData.xprofile);
+  const education = getAllFieldsByGroupName(FIELD_NAMES.EDUCATION, memberData.xprofile);
+  const invalidity = getAllFieldsByGroupName(FIELD_NAMES.INVALIDITY, memberData.xprofile);
+  const lifestyle = getAllFieldsByGroupName(FIELD_NAMES.LIFESTYLE, memberData.xprofile);
+  const preferences = getAllFieldsByGroupName(FIELD_NAMES.PREFERENCES, memberData.xprofile);
 
   return (
     <main className="w-full pt-2">

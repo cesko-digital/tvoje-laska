@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   if (!memberData) return <div>Nebylo možné načíst data</div>;
 
-  console.log("memberData", memberData);
+  console.log(memberData);
 
   return (
     <main className="w-full p-5">
