@@ -100,7 +100,7 @@ const StepperMenu = ({ steps, className }: StepperMenuProps) => {
 
   return (
     <>
-      <div className={classNames("bg-white p-4 flex items-center flex-col gap-1", className!)}>
+      <div className={classNames("p-4 flex items-center flex-col gap-1", className!)}>
         <StepperHorizontal>
           {updatedSteps.map((step, i) => (
             <StepIndicator key={i} active={step.active} complete={step.complete} onClick={() => onStepClick(i)} />

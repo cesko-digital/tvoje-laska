@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import CardContainer from "../../../../library/atoms/CardContainer";
 import { getPageTitle, isInput } from "../../common/functions/functions";
@@ -7,6 +7,10 @@ import { EditProfileSvg } from "library/icons/actions";
 import LoveReportFieldInput from "app/lovereport/common/components/LoveReportFieldInput";
 import { FormValues, saveToSession, validateStep } from "app/lovereport/common/functions/form";
 import { UseFormReturn } from "react-hook-form";
+import TextLink from "library/atoms/TextLink";
+import { ArrowDownSvg, ArrowUpSvg } from "library/icons/arrows";
+import Divider from "library/atoms/Divider";
+import { format } from "date-fns";
 
 type Props = {
   groupIndex: number;
@@ -21,24 +25,24 @@ const LoveReportInputGroup = (props: Props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <div>
-      <CardContainer variant="default" padding="smaller" className="flex gap-4 flex-col justify-center max-w-sm">
+    <>
+      <CardContainer variant="default" padding="smaller" className="flex flex-col justify-center max-w-sm">
         <div className="flex items-center justify-between">
-              <h5>{pageTitle}</h5>
-          <div className="flex items-center gap-3">
-            <span className="text-violet-70">
-              <span onClick={() => {
-                  setOpened(!isOpened);
-                }}
-              >{isOpened ? 'Zavřít' : 'Otevřít'}</span>
-              
-            </span>
-          </div>
+          <h5 className="font-medium">{pageTitle}</h5>
+          <TextLink
+            as="button"
+            title={isOpened ? "Skrýt" : "Zobrazit"}
+            color="primary"
+            onClick={() => {
+              setOpened(!isOpened);
+            }}
+            endIcon={isOpened ? <ArrowUpSvg width={16} /> : <ArrowDownSvg width={16} />}
+          />
         </div>
-        <div>
+        {isOpened && <Divider type="default" borderColor="text-violet-20" />}
+        <div className="text-gray-70">
           {isOpened ? (
             <>
-              {" "}
               {isEditing ? (
                 <EditView
                   inputFields={inputFields}
@@ -48,8 +52,7 @@ const LoveReportInputGroup = (props: Props) => {
                     setIsEditing(false);
                   }}
                   onSave={() => {
-                    if(validateStep(props.form, props.groupIndex, props.groupIndex))
-                    {
+                    if (validateStep(props.form, props.groupIndex, props.groupIndex)) {
                       saveToSession(props.form.getValues());
                       setIsEditing(false);
                     }
@@ -71,7 +74,7 @@ const LoveReportInputGroup = (props: Props) => {
           )}
         </div>
       </CardContainer>
-    </div>
+    </>
   );
 };
 
@@ -80,6 +83,7 @@ type EditViewProps = {
   onCancelEdit: () => void;
 } & ReadViewProps;
 
+//TODO: Upravit EditView, až bude design ve Figmě
 const EditView = ({ inputFields, groupIndex, form, onSave, onCancelEdit }: EditViewProps) => {
   return (
     <div>
@@ -87,7 +91,7 @@ const EditView = ({ inputFields, groupIndex, form, onSave, onCancelEdit }: EditV
         .map((e, index) => ({ field: e, originalIndex: index }))
         .filter(e => e.field.group === groupIndex)
         .map(e => (
-          <div key={e.field.id} className="mb-2 mt-2">
+          <div key={e.field.id} className="mb-2 mt-2 flex flex-col gap-4">
             <LoveReportFieldInput
               control={form.control}
               field={e.field}
@@ -98,9 +102,10 @@ const EditView = ({ inputFields, groupIndex, form, onSave, onCancelEdit }: EditV
             <span>{e.field.placeholder}</span>
           </div>
         ))}
-
-      <span onClick={onCancelEdit}>Zrušit</span>
-      <span onClick={onSave}>Uložit</span>
+      <div className="flex gap-8 mt-4">
+        <span onClick={onCancelEdit}>Zrušit</span>
+        <span onClick={onSave}>Uložit</span>
+      </div>
     </div>
   );
 };
@@ -113,24 +118,51 @@ type ReadViewProps = {
 
 const ReadView = (props: ReadViewProps & { onStartEditing: () => void }) => {
   const values = props.form.getValues();
-  
+
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      {/* {props.inputFields
+        .filter(e => e.group === props.groupIndex)
+        .map(e => {
+          const date = values.fields.filter(f => f.type === "date-time");
+          const formattedDate = format(date[0].value, "dd.MM.yyyy");
+          console.log(formattedDate);
+          return (
+            <div className="flex flex-col gap-0.5" key={e.id}>
+              <p className="text-base">{e.label}</p>
+              <p className="text-sm">{values.fields.filter(f => f.id === e.id)[0].value.toString()}</p>
+            </div>
+          );
+        })} */}
       {props.inputFields
         .filter(e => e.group === props.groupIndex)
-        .map(e => (
-          <div>
-            <b>{e.label}</b> 
-            <br></br>
-            <span>
-              {(values.fields.filter(f => f.id === e.id)[0].value.toString())}
-            </span>
-          </div>
-        ))}
+        .map(e => {
+          const field = values.fields.find(f => f.id === e.id);
 
-      <span onClick={props.onStartEditing}>
-        Upravit <EditProfileSvg width={20}></EditProfileSvg>
-      </span>
+          if (field) {
+            return (
+              <div className="flex flex-col gap-0.5" key={e.id}>
+                <p className="text-base">{e.label}</p>
+                <p className="text-sm">
+                  {field.type === "date-time" && field.value instanceof Date
+                    ? format(field.value, "dd.MM.yyyy")
+                    : field.value.toString()}
+                </p>
+              </div>
+            );
+          }
+
+          return null;
+        })}
+
+      <TextLink
+        as="button"
+        title="Upravit"
+        color="primary"
+        onClick={props.onStartEditing}
+        startIcon={<EditProfileSvg width={18} />}
+        className="self-end"
+      />
     </div>
   );
 };

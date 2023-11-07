@@ -2,7 +2,7 @@ import classNames from "helpers/classNames";
 
 type Props = {
   label?: string;
-  type: "default" | "withText";
+  type?: "default" | "withText";
   borderColor?: string;
   textColor?: string;
   background?: string;
@@ -12,7 +12,7 @@ type Props = {
 
 const Divider = ({
   label,
-  type,
+  type = "default",
   borderColor = "border-violet-70",
   textColor = "text-violet-70",
   background = "bg-white",

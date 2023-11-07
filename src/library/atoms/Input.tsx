@@ -30,12 +30,12 @@ const Input = ({
   const hasError = error && error.message;
 
   return (
-    <div>
+    <>
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <label
             htmlFor={id ?? register.name}
-            className={classNames("block text-sm font-medium ", register.disabled ? "text-gray-40" : "text-gray-100")}
+            className={classNames("block text-base font-medium ", register.disabled ? "text-gray-40" : "text-gray-100")}
           >
             {label}
           </label>
@@ -72,7 +72,7 @@ const Input = ({
           <></>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
