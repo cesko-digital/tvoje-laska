@@ -27,23 +27,23 @@ export interface IMemberResponse {
 }
 export type Xprofile = {
   groups: { [key: string]: Group };
-}
+};
 
 export type Group = {
-  name:   string;
+  name: string;
   fields: { [key: string]: Field };
-}
+};
 
 export type Field = {
-  name:  string;
+  name: string;
   value: Value;
-}
+};
 
 export type Value = {
-  raw:          string;
+  raw: string;
   unserialized: string[];
-  rendered:     string;
-}
+  rendered: string;
+};
 /**
  * GET /buddypress/v1/members
  * https://developer.buddypress.org/bp-rest-api/reference/members/#list-members

@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import StepperMenu, { StepperStep } from "library/molecules/ProgressStepper";
 import { useState } from "react";
 import LoveReportFieldInput from "../../common/components/LoveReportFieldInput";
@@ -17,7 +18,6 @@ type Props = {
 const CreateLoveReportWizard = (props: Props) => {
   const router = useRouter();
   const [currentStep, setStep] = useState(1);
-
   const inputFields = props.fields.filter(e => isInput(e.type));
 
   const maxStep = inputFields[inputFields.length - 1].group;
@@ -111,59 +111,43 @@ const CreateLoveReportWizard = (props: Props) => {
             <span>{e.field.placeholder}</span>
           </div>
         ))}
-      <div className="flex gap-5 mt-8">
-        {currentStep > 1 ? (
-          <Button
-            className="w-1/2"
-            color="secondary"
-            buttonText="Zpět"
-            onClick={() => {
-              if (validateStep(form, currentStep - 1, currentStep)) {
-                setStep(currentStep - 1);
-                saveToSession(form.getValues());
-              }
-            }}
-          />
-        ) : (
-          <Button
-            className="w-1/2"
-            color="secondary"
-            buttonText="Zrušit"
-            //TODO: Doplnit funkcionalitu pro odchod z formuláře
-            /*  onClick={() => {
-              if (validateStep(form, currentStep - 1, currentStep)) {
-                setStep(currentStep - 1);
-                saveToSession(form.getValues());
-              }
-            }} */
-          />
-        )}
-        {currentStep + 1 <= maxStep ? (
-          <Button
-            className="w-1/2"
-            color="primary"
-            buttonText="Pokračovat"
-            onClick={() => {
-              if (validateStep(form, currentStep + 1, currentStep)) {
-                setStep(currentStep + 1);
-                saveToSession(form.getValues());
-              }
-            }}
-          />
-        ) : (
-          currentStep === maxStep && (
-            <Button
-              className="w-1/2"
-              color="primary"
-              buttonText="Pokračovat"
-              onClick={() => {
-                saveToSession(form.getValues());
-                router.push("/lovereport/shrnuti");
-              }}
-            />
-          )
-        )}
-      </div>
+      {currentStep > 1 && (
+        <Button
+          color={"secondary"}
+          buttonText="Zpět"
+          onClick={() => {
+            if (validateStep(form, currentStep - 1, currentStep)) {
+              setStep(currentStep - 1);
+              saveToSession(form.getValues());
+            }
+          }}
+        ></Button>
+      )}
+      {currentStep + 1 <= maxStep && (
+        <Button
+          color={"primary"}
+          buttonText="Pokračovat"
+          onClick={() => {
+            if (validateStep(form, currentStep + 1, currentStep)) {
+              setStep(currentStep + 1);
+              saveToSession(form.getValues());
+            }
+          }}
+        ></Button>
+      )}
+
+      {currentStep === maxStep ? (
+        <Button
+          color="primary"
+          buttonText="Pokračovat"
+          onClick={() => {
+            saveToSession(form.getValues());
+            router.push("/lovereport/shrnuti");
+          }}
+        ></Button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

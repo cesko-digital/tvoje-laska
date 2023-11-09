@@ -23,10 +23,10 @@ import {
 // TODO: Invalidate cache after PUT requests
 
 export const getMembers = async (options: Record<string, unknown>, _requestParams: IMembersRequestParams) => {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session) return;
+  const session = await getServerSession(authOptions);
+  if (!session) return;
 
+  try {
     const response = await http.get<IMemberResponse[]>(`${process.env.WP_API_URL}/members`, {
       data: _requestParams,
       headers: { Authorization: session.wpJwtToken },
@@ -61,6 +61,7 @@ export const getMemberById = async (
   }
 };
 
+export const getProfileDataById = async (id: number) => {};
 // FIXME: The updateMember() does not seem to be working. Postman can change data, but this request not (but still the received status code is 200).
 // TODO: Is the updateMember() function needed? Fix or remove.
 export const updateMember = async (

@@ -61,7 +61,6 @@ export const getProfileField = async (args: { userId: number; fieldId: number })
     }),
     headers: { Authorization: session.wpJwtToken },
   });
-
   return response.data;
 };
 

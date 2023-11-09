@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 export default async function Profile() {
   const profile = await getCurrentMember();
- 
 
   if (!profile) return <div>Nebylo možné načíst data</div>;
 
