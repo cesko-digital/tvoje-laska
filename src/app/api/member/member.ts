@@ -26,6 +26,7 @@ export const getMembers = async (options: Record<string, unknown>, _requestParam
   const session = await getServerSession(authOptions);
   if (!session) return;
 
+  try {
     const response = await http.get<IMemberResponse[]>(`${process.env.WP_API_URL}/members`, {
       data: _requestParams,
       headers: { Authorization: session.wpJwtToken },

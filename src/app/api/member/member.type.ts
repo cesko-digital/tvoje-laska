@@ -14,7 +14,7 @@ export interface IMemberResponse {
   roles?: unknown[]; // Roles assigned to the member.
   capabilities?: Record<string, unknown>; // All capabilities assigned to the member.
   extra_capabilities?: Record<string, unknown>; // All capabilities assigned to the member.
-  xprofile?: any[]; // Member xProfile groups and its fields.
+  xprofile?: Xprofile; // Member xProfile groups and its fields.
   friendship_status?: boolean; // Whether the logged in user has a friendship relationship with the fetched user.
   friendship_status_slug?: "is_friend" | "not_friends" | "pending" | "awaiting_response"; // Slug of the friendship relationship status the logged in user has with the fetched user.
   last_activity?: Record<string, unknown>; // Last date the member was active on the site (object properties: timediff, date and date_gmt).

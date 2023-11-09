@@ -29,7 +29,7 @@ const FIELD_NAMES = {
 export default function UserProfile({ memberData }: UserDetailsProps) {
   const [showMore, setShowMore] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
+  console.log(memberData);
   const profilePhotoUrl =
     memberData.avatar_urls?.full.slice(0, 4) === "http"
       ? memberData.avatar_urls?.full
