@@ -4,6 +4,7 @@ import { calculateAge, safeUrl } from "helpers/profileFieldHelpers";
 import Content from "library/atoms/Content";
 import UserCard from "library/molecules/cards/UserCard";
 import { createContext, useContext, useState } from "react";
+import { useTranslation } from "next-i18next";
 
 type DatingSiteState = {
   gender: string | null;
@@ -16,6 +17,8 @@ type Props = { state: DatingSiteState; setState: (state: DatingSiteState) => voi
 const DatingSiteContext = createContext<Props>({} as Props);
 
 const DatingSiteContainer = (props: { members: IMemberResponse[] }) => {
+  const { t } = useTranslation("dating-site");
+
   const [state, setState] = useState<DatingSiteState>({
     gender: null,
     useMyPreferences: true,
@@ -24,9 +27,9 @@ const DatingSiteContainer = (props: { members: IMemberResponse[] }) => {
 
   return (
     <DatingSiteContext.Provider value={{ state, setState }}>
-      <Content title="Seznamka">
+      <Content title={ t("content.title") }>
         <DatingSiteFilter></DatingSiteFilter>
-        <h4>Našli jsme pro tebe</h4>
+        <h4>{ t("content.found-message")}</h4>
         <DatingSiteResult></DatingSiteResult>
       </Content>
     </DatingSiteContext.Provider>
