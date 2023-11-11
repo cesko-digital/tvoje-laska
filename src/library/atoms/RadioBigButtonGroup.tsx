@@ -2,25 +2,42 @@ import classNames from "helpers/classNames";
 import { ReactNode } from "react";
 
 import RadioInput, { SvgIconElement, Option } from "./RadioInput";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
-  title: string;
+  title?: string;
   description?: string;
   options: Option[];
   disabled?: boolean;
   startIcon?: ReactNode | SvgIconElement;
+  error?: FieldError | undefined;
+  register: UseFormRegisterReturn<string>;
+  name: string;
 };
 
 //TODO: Upravit, až bude hotový design pro RadioGroup
 //TODO: Propojit ještě více s RadioGroup (konsolidace kódu)
 //TODO: Dořešit checked stav (pozadí buttonu)!
-const RadioBigButtonGroup = ({ title, description, options, disabled = false, startIcon }: Props) => {
+const RadioBigButtonGroup = ({
+  title,
+  description,
+  options,
+  disabled = false,
+  startIcon,
+  error,
+  register,
+  name,
+}: Props) => {
+  const hasError = error && error.message;
+
   return (
     <div className="flex flex-col gap-2 ">
-      <p className="text-base font-semibold text-gray-900">{title}</p>
+      {title && <p className="text-base font-semibold text-gray-900">{title}</p>}
+
       <p className="text-sm text-gray-50">{description}</p>
       <fieldset className="mt-1 flex gap-5 ">
-        <legend className="sr-only">{title}</legend>
+        {title && <legend className="sr-only">{title}</legend>}
+
         {options.map(option => {
           return (
             <label
@@ -39,13 +56,15 @@ const RadioBigButtonGroup = ({ title, description, options, disabled = false, st
                 htmlFor={option.id}
               >
                 {option.optionName}
+                <div>{option.optionDescription}</div>
               </label>
               <div className="relative flex items-center">
-                <RadioInput option={option} disabled={disabled} />
+                <RadioInput name={name} option={option} disabled={disabled} register={register} />
               </div>
             </label>
           );
         })}
+        {hasError ? <p className="text-sm text-red-60">{error.message}</p> : <></>}
       </fieldset>
     </div>
   );

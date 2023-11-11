@@ -14,7 +14,6 @@ export const RegistrationWizard = ({ token }: Props) => {
   const handleRegistrationSuccess: ComponentProps<typeof RegistrationForm>['onSuccess'] = async () => {
     return router.push('/registration/location')
   }
-  console.log('test')
 
   return (
     <RegistrationForm onSuccess={handleRegistrationSuccess} csrf={token} />

@@ -19,6 +19,10 @@ const nextConfig = {
         destination: "/registration",
       },
       {
+        source: "/registrace/vitej",
+        destination: "/registration/welcome",
+      }
+      {
         source: "/profil",
         destination: "/profile",
       },
