@@ -36,6 +36,8 @@ export const getUserBasicInfo = async (userId: number): Promise<UserBasicInfo | 
   const birthdate = getFieldValueFromArray(profileFields, "Věk");
 
   const user: UserBasicInfo = {
+    name: getFieldValueFromArray(profileFields, "Jméno"),
+    gender: getFieldValueFromArray(profileFields, "Pohlaví"),
     nickname: member?.name ?? "",
     age: birthdate !== "" ? calculateAge(new Date(birthdate)) : 0,
     city: getFieldValueFromArray(profileFields, "Město"),
@@ -50,11 +52,14 @@ export const getUserBasicInfo = async (userId: number): Promise<UserBasicInfo | 
 
 
 export type UserBasicInfo = {
+  name?: string;
+  gender?: string;
   nickname: string;
   age: number;
   region: string;
   city: string;
   status: string;
   profileComplete: number;
-  photo: string
+  photo: string;
+  className?:string;
 };

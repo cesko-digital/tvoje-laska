@@ -1,4 +1,5 @@
 import { UserIcon } from "@heroicons/react/24/outline";
+import { UserBasicInfo } from "app/api/profile-field/basic-info/route";
 import classNames from "helpers/classNames";
 import Button from "library/atoms/Button";
 import CardContainer from "library/atoms/CardContainer";
@@ -6,28 +7,20 @@ import Divider from "library/atoms/Divider";
 import ProfileStatus from "library/atoms/ProfileStatus";
 import Tag from "library/atoms/Tag";
 import TextLink from "library/atoms/TextLink";
-import { AddFriendSvg, EditProfileSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
-import { HeartSvg, ShakingHandsSvg, UserSvg } from "library/icons/symbols";
+import { EditProfileSvg } from "library/icons/actions";
+import { UserSvg } from "library/icons/symbols";
 import Image from "next/image";
 
-type Props = {
-  name: string;
-  nickname: string;
-  gender: string;
-  age: number;
-  location: string;
-  status: "seznamuji se";
-  tags: string[];
-  className?: string;
-};
+type Props = { userInfo: UserBasicInfo};
 
-const ProfileCard = ({ name, nickname, gender, age, location, status, tags, className }: Props) => {
+const ProfileCard = (props: Props) => {
+  const user = props.userInfo;
   return (
     // TODO: Upravit max width
     <CardContainer
       variant="default"
       padding="smaller"
-      className={`flex gap-4 flex-col justify-center max-w-sm ${className}`}
+      className={`flex gap-4 flex-col justify-center max-w-sm ${user.className}`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -44,17 +37,12 @@ const ProfileCard = ({ name, nickname, gender, age, location, status, tags, clas
       {/* TODO: Upravit paddingy a marginy, aby to vypadalo co nejlépe */}
       <Divider type="default" borderColor="border-violet-20" marginY="my-1" />
       <div className="text-gray-70 flex flex-col gap-1">
-        <p>{name}</p>
-        <p>{nickname}</p>
-        <p>{gender}</p>
-        <p>{age} let</p>
-        <p>{location}</p>
-     <ProfileStatus status={status}></ProfileStatus>
-        <div className="flex flex-wrap gap-2 mt-3">
-          {tags.map((tag, index) => {
-            return <Tag key={index} title={tag} variant="light" className="col-span-1" />;
-          })}
-        </div>
+        <p>{user.name}</p>
+        <p>{user.nickname}</p>
+        <p>{user.gender}</p>
+        <p>{user.age} let</p>
+        <p>{user.city}, {user.region}</p>
+        <ProfileStatus status={user.status}></ProfileStatus>
       </div>
     </CardContainer>
   );
