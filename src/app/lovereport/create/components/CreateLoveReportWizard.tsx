@@ -6,8 +6,8 @@ import LoveReportFieldInput from "../../common/components/LoveReportFieldInput";
 import Button from "library/atoms/Button";
 import { useRouter } from "next/navigation";
 import { LoveReportFieldWithGroup } from "../../common/types";
-import { getPageTitle, isInput } from "../../common/functions/functions";
-import { FormValues, createForm, saveToSession, validateStep } from "../../common/functions/form";
+import { getInputFields, getPageTitle } from "../../common/functions/functions";
+import { createForm, saveToSession, validateStep } from "../../common/functions/form";
 import useLoveReportSessionStorage from "app/lovereport/common/hooks/useLoveReportSessionStorage";
 import classNames from "helpers/classNames";
 
@@ -18,7 +18,7 @@ type Props = {
 const CreateLoveReportWizard = (props: Props) => {
   const router = useRouter();
   const [currentStep, setStep] = useState(1);
-  const inputFields = props.fields.filter(e => isInput(e.type));
+  const inputFields = getInputFields(props.fields);
 
   const maxStep = inputFields[inputFields.length - 1].group;
   const steps: StepperStep[] = inputFields

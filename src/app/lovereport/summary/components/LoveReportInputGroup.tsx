@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import CardContainer from "../../../../library/atoms/CardContainer";
-import { getPageTitle, isInput } from "../../common/functions/functions";
+import { getInputFields, getPageTitle } from "../../common/functions/functions";
 import { LoveReportFieldWithGroup } from "../../common/types";
 import { EditProfileSvg } from "library/icons/actions";
 import LoveReportFieldInput from "app/lovereport/common/components/LoveReportFieldInput";
@@ -20,7 +20,7 @@ type Props = {
 
 const LoveReportInputGroup = (props: Props) => {
   const pageTitle = getPageTitle(props.fields, props.groupIndex);
-  const inputFields = props.fields.filter(e => isInput(e.type));
+  const inputFields = getInputFields(props.fields);
   const [isOpened, setOpened] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -121,19 +121,6 @@ const ReadView = (props: ReadViewProps & { onStartEditing: () => void }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* {props.inputFields
-        .filter(e => e.group === props.groupIndex)
-        .map(e => {
-          const date = values.fields.filter(f => f.type === "date-time");
-          const formattedDate = format(date[0].value, "dd.MM.yyyy");
-          console.log(formattedDate);
-          return (
-            <div className="flex flex-col gap-0.5" key={e.id}>
-              <p className="text-base">{e.label}</p>
-              <p className="text-sm">{values.fields.filter(f => f.id === e.id)[0].value.toString()}</p>
-            </div>
-          );
-        })} */}
       {props.inputFields
         .filter(e => e.group === props.groupIndex)
         .map(e => {

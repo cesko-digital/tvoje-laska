@@ -39,6 +39,7 @@ export default async function Home() {
         profileComplete: 0,
         region: "",
         status: "",
+        gender: 'Muž'
       };
     }
 

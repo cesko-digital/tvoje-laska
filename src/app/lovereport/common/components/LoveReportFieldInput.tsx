@@ -20,8 +20,9 @@ const LoveReportFieldInput = ({ field, control, register, error }: FieldInputPro
       ? Object.values(field.choices).map(e => {
           //TODO: Upravit TS chyby - doplnit typ pro "e"
           return {
-            id: e.value !== "" ? e.value : e.label,
+            id: `${field.id}_${(e.value !== "" ? e.value : e.label)}`,
             optionName: e.label,
+            value: e.value !== "" ? e.value : e.label
           };
         })
       : [];

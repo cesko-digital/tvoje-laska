@@ -37,6 +37,10 @@ const nextConfig = {
       {
         source: "/seznamka",
         destination: "/dating-site"
+      },
+      {
+        source: '/lovereport/vysledek',
+        destination: '/lovereport/result'
       }
     ];
   },

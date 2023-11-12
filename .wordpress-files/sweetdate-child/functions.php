@@ -43,8 +43,8 @@ function save_wp_forms_result(WP_REST_Request  $request  ) {
 		'starred' => $data['starred'],
 		'fields' => $data['fields_json'],
 		'meta' => $data['meta'],
-		'date' => $data['date'],
-		'date_modified' => $data['date_modified'],
+		'date' => date("Y-m-d",strtotime($data['date'])),
+		'date_modified' => date("Y-m-d",strtotime($data['date_modified'])),
 		'ip_address' => $data['ip_address'],
 		'user_agent' => $data['user_agent'],
 		'user_uuid' => $data['user_uuid']
@@ -55,7 +55,7 @@ function save_wp_forms_result(WP_REST_Request  $request  ) {
 
 	if($inserted_id == 0)
 	{
-		return 'FAIL';
+		return $wpdb->last_error;
 	}
 
 	foreach ($fields as &$field) 
@@ -65,7 +65,7 @@ function save_wp_forms_result(WP_REST_Request  $request  ) {
 			'form_id' => $field['form_id'],
 			'field_id' => $field['field_id'],
 			'value' => $field['value'],
-			'date' => $field['date']));
+			'date' => date_parse($field['date'])));
 	}
 
 	return $inserted_id;

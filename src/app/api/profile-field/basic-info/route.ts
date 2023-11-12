@@ -42,7 +42,8 @@ export const getUserBasicInfo = async (userId: number): Promise<UserBasicInfo | 
     region: getFieldValueFromArray(profileFields, "Kraj"),
     status: getFieldValueFromArray(profileFields, "Status"),
     profileComplete: getCompletionPercents(profileFields),
-    photo: safeUrl(member?.avatar_urls?.full ?? '')
+    photo: safeUrl(member?.avatar_urls?.full ?? ''),
+    gender: getFieldValueFromArray(profileFields, "Pohlaví")
   };
 
   return user;
@@ -55,6 +56,7 @@ export type UserBasicInfo = {
   region: string;
   city: string;
   status: string;
+  gender: string;
   profileComplete: number;
   photo: string
 };

@@ -60,12 +60,8 @@ export type SaveLoveReportRequest = {
   user_id: number
   viewed: number
   starred: number
-  fields: Array<{
-    form_id: number
-    value: string
-    field_id: number
-    date: string
-  }>
+  fields: Array<ValueField>
+  fields_json: string
   meta: string
   date: string
   date_modified: string
@@ -76,4 +72,11 @@ export type SaveLoveReportRequest = {
 
 export type SaveLoveReportData = {
   entryId: number;
+};
+
+export type ValueField = {
+  value: string,
+  form_id: number,
+  field_id: number,
+  date?: string | undefined
 };

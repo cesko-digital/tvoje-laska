@@ -1,3 +1,4 @@
+import { getUserBasicInfo } from "app/api/profile-field/basic-info/route";
 import { LoveReportFieldWithGroup } from "../types";
 import { LoveReportField, LoveReportFieldType } from "app/api/lovereport/lovereport.type";
 
@@ -22,7 +23,14 @@ export const getPageTitle = (fields: LoveReportFieldWithGroup[], step: number) =
   return pageTitle;
 }
 
+export const getInputFields = (fields: LoveReportFieldWithGroup[]) => {
+  const inputFields = fields.filter(e => isInput(e.type));
+
+  return inputFields;
+}
+
 export const isInput = (type: LoveReportFieldType) => {
+
   return (
     type === "checkbox" ||
     type === "date-time" ||
@@ -51,3 +59,10 @@ export const getDefaultValue = (field: LoveReportFieldWithGroup): string | boole
   return "";
 };
 
+
+export const getFormIdFromUserId = async (userId: number): Promise<string> => {
+  //https://mingly.cz/wp-admin/admin.php?page=wpforms-overview
+  const userInfo = await getUserBasicInfo(userId);
+  const formId = userInfo?.gender === 'Žena' ? 1643 : 1638;
+  return formId.toString();
+}

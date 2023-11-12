@@ -7,10 +7,15 @@ import {
 } from "./lovereport.type";
 import { ApiResponse } from "../common/ApiResponse";
 
-export const getLoveReportFields = async (): Promise<LoveReportField[]> => {
+export const getLoveReportFields = async (id: string): Promise<LoveReportField[]> => {
   const response = await fetch(`${process.env.WP_URL}wp-json/api/wpforms`, {});
   const data = (await response.json()) as LoveReportResult[];
-  const item = data[0].post_content;
+  
+  const item = data.find(e => e.ID === id)?.post_content;
+
+  if(!item) {
+    return [];
+  }
 
   const result = parseFields(item);
   return result;
@@ -25,7 +30,10 @@ const http = axios.create({
 });
 
 export const postLoveReport = async (request: SaveLoveReportRequest): Promise<ApiResponse<SaveLoveReportData>> => {
-  const response = await http.post("/wp-json/bdpwr/v1/reset-password", request);
+
+  const response = await http.post("/wp-json/api/wpforms", {
+    data: request,
+  });
 
   const data = response.data;
 
