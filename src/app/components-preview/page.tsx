@@ -262,7 +262,7 @@ export default function ComponentsPreview() {
 
       <StepperMenu steps={steps} />
       <Carousel testimonials={testimonials} variant="with-image" />
-      <ImageUploader />
+      <ImageUploader name="upload-image" />
       <Footer />
       <NavbarMobile />
     </div>

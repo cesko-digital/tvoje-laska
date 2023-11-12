@@ -1,18 +1,25 @@
 "use client";
 
 import Button from "library/atoms/Button";
+import Input from "library/atoms/Input";
 import TextLink from "library/atoms/TextLink";
 import { ImagePlaceholderSvg } from "library/icons/symbols";
 import Image from "next/image";
 import { useState } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-const ImageUploader = () => {
+type Props = {
+  register?: UseFormRegisterReturn<string>;
+  name: string;
+};
+
+const ImageUploader = ({ register, name }: Props) => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const fileInputKey = uploadedImage ? "existing" : "new"; // Unikátní klíč pro vstupní pole pro soubory (nový vs. existující obrázek)
 
   const handleUploadImage = () => {
-    const uploadFile = document.getElementById("upload-file");
+    const uploadFile = document.getElementById(name);
     if (uploadFile) {
       uploadFile.click();
     }
@@ -70,14 +77,28 @@ const ImageUploader = () => {
           buttonText={uploadedImage ? "Změnit fotografii" : "Vybrat fotografii"}
         />
       </div>
+
       <input
+        className="hidden"
+        {...register}
         key={fileInputKey}
-        id="upload-file"
+        type="file"
+        id={name}
+        name={name}
+        // accept=".png, .jpg, .jpeg"
+        // onChange={handleFileChange}
+      />
+
+      {/*<input
+        key={fileInputKey}
+        {...register}
+        id={name}
+        name={name}
         type="file"
         accept=".png, .jpg, .jpeg"
         className="hidden"
         onChange={handleFileChange}
-      />
+      />*/}
     </div>
   );
 };

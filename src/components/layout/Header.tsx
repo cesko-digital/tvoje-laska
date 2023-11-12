@@ -12,6 +12,13 @@ import { SessionProvider, signOut, useSession } from "next-auth/react";
 const Header = () => {
   const session = useSession();
 
+
+  // TODO: need check Z
+  if (session.status === "unauthenticated") {
+    return null;
+  }
+
+
   // TODO: Co dělat v případě loading stavu? Co zobrazovat?
   return session.data ? (
     <div />
