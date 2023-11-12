@@ -16,6 +16,7 @@ import TextLink from "library/atoms/TextLink";
 import Divider from "library/atoms/Divider";
 import { FacebookSvg, GoogleSvg } from "library/icons/social-media";
 import Checkbox from "library/atoms/Checkbox";
+import { useTranslation } from "next-i18next";
 
 const formSchema = z.object({
   username: z.string().nonempty("E-mail je povinný").email(),
@@ -46,6 +47,7 @@ const getMessageFromErrorCode = (errorCode: UserAuthError | null): string => {
 
 //TODO: Dodělat kompletně celý formulář!!!
 const LoginForm = ({ providers, token }: Props) => {
+  const { t } = useTranslation("sign-in");
   const searchParams = useSearchParams();
   const errorCode = searchParams.get("errorCode") as UserAuthError | null;
 
@@ -75,7 +77,7 @@ const LoginForm = ({ providers, token }: Props) => {
   const errors = form.formState.errors;
 
   return (
-    <Content title="Přihlásit se">
+    <Content title={ t("content.title") }>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex flex-col justify-center mt-4">
           <Input

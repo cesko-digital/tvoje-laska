@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const { i18n } = require("./next-i18next.config");
+
 const nextConfig = {
+  i18n,
   rewrites() {
     return [
       {
@@ -18,6 +22,10 @@ const nextConfig = {
         source: "/registrace",
         destination: "/registration",
       },
+      {
+        source: "/registrace/vitej",
+        destination: "/registration/welcome",
+      }
       {
         source: "/profil",
         destination: "/profile",
