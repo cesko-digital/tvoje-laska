@@ -25,7 +25,7 @@ const nextConfig = {
       {
         source: "/registrace/vitej",
         destination: "/registration/welcome",
-      }
+      },
       {
         source: "/profil",
         destination: "/profile",
