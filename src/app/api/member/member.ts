@@ -40,6 +40,22 @@ export const getMembers = async (options: Record<string, unknown>, _requestParam
   }
 };
 
+export const getFriends = async () => {
+  const session = (await getServerSession(authOptions)) as any;
+  if (!session) return;
+  const userID = Number(session?.id);
+
+  const response = await http.get(`${process.env.WP_API_URL}/friends`, {
+    data: JSON.stringify({
+      user_id: userID,
+      context: "view",
+    }),
+    headers: { Authorization: session.wpJwtToken },
+  });
+
+  return response.data;
+};
+
 export const getMemberById = async (
   id: number,
   options?: Record<string, unknown>,
