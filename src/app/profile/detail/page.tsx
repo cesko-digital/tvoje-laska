@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import { useEffect, useState } from "react";
-import ProfileGroup from "../ProfileGroup";
+import ProfileGroup from "../groups/ProfileGroup";
 import { ProfileFieldResponse } from "app/api/profile-field/profileField.type";
 import ProfileCard from "library/molecules/cards/ProfileCard";
 import { UserBasicInfo, getUserBasicInfo } from "app/api/profile-field/basic-info/route";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 import { getProfileFields } from "app/api/profile-field/profileField";
-import ProfileField from "../ProfileField";
+import ProfileField from "../groups/ProfileField";
 
 export const metadata: Metadata = {
   title: 'O mně',
@@ -38,7 +38,8 @@ export default async function ProfileAbout() {
         <ProfileCard userInfo={userBasicInfo} />
         {Array.isArray(profileFields) && profileFields.length > 0 && (
           <>
-            {/* TODO: Pass an icon id to get the right icon */}
+            {/* TODO: Pass an icon id to get the right icon */} 
+            {/* TODO: Pass field ids to be able to work with one component only and get rid of ProfileField */}
             <ProfileField name={'Medailonek'} fieldId={1035} fieldData={profileFields} />
             <ProfileGroup name={'Jak Vypadám'} groupId={5} fieldData={profileFields} />
             <ProfileGroup name={'Moje záliby'} groupId={6} fieldData={profileFields} />

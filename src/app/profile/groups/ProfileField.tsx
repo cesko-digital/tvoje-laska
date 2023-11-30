@@ -30,9 +30,6 @@ const ProfileField: React.FC<ProfileFieldProps> = ({ name, fieldId, fieldData })
   const handleSaveClick = async () => {
     if (editable) {
       try {
-        console.log('fieldId:', fieldId);
-        console.log('value:', editedText);
-  
         const response = await fetch('/api/profile-field/update-field', {
           method: 'POST',
           headers: {
@@ -92,7 +89,7 @@ const ProfileField: React.FC<ProfileFieldProps> = ({ name, fieldId, fieldData })
             {editable ? (
               <input
                 type="text"
-                value={editedText}  // Initialize the input with editedText
+                value={editedText} 
                 onChange={handleInputChange}
               />
             ) : (

@@ -4,27 +4,30 @@ import { NextResponse } from "next/server";
 import { NextApiRequest } from "next";
 import { updateProfileField } from "../profileField";
 
-export async function POST(request: NextApiRequest): Promise<Response> {
+
+export async function POST(request: Request): Promise<Response> {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({}, { status: 401 });
   }
 
-  const userId = (request as any).nextUrl.searchParams.get('userId');
-  const { fieldId, value } = request.body;
+  const userId = parseInt(session.user.id);
+  const { fieldId, value } = (await request.json()) as any ;
 
-  console.log('Received fieldId:', fieldId);
-  console.log('Received value:', value);
+  if (userId === null) {
+    return NextResponse.json({}, { status: 404 });
+  }
  
   try {
-    await updateProfileField({
+    
+    const response = await updateProfileField({
       fieldId: fieldId,
-      userId: parseInt(userId),
+      userId: userId,
       value: value,
     });
 
     // Change to Czech
-    return NextResponse.json({ message: "Profile field updated successfully" }, { status: 200 });
+    return NextResponse.json({response}, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to update profile field" }, { status: 500 });
   }

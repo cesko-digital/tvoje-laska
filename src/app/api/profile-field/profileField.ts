@@ -72,9 +72,11 @@ export const updateProfileField = async (args: {
   //The value(s) (comma separated list of values needs to be used in case of multiple values) for the field data.
   value: string;
 }) => {
-  const session = await getServerSession(authOptions);
-  if (!session) return;
 
+  const session = await getServerSession(authOptions);
+  if (!session) 
+    return;
+  
   const response = await http.post<ProfileFieldResponse>(
     `${process.env.WP_API_URL}/xprofile/${args.fieldId}/data/${args.userId}`,
     {
@@ -85,6 +87,5 @@ export const updateProfileField = async (args: {
       headers: { Authorization: session.wpJwtToken },
     },
   );
-
   return response.data;
 };
