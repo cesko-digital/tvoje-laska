@@ -7,7 +7,6 @@ import { UserBasicInfo, getUserBasicInfo } from "app/api/profile-field/basic-inf
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 import { getProfileFields } from "app/api/profile-field/profileField";
-import ProfileField from "../groups/ProfileField";
 
 export const metadata: Metadata = {
   title: 'O mně',
@@ -17,7 +16,7 @@ export default async function ProfileAbout() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    const userId = parseInt(session.user.id);
+    const userId = 3;
     let userBasicInfo = await getUserBasicInfo(userId);
     let profileFields = await getProfileFields({ userId });
 
@@ -38,17 +37,15 @@ export default async function ProfileAbout() {
         <ProfileCard userInfo={userBasicInfo} />
         {Array.isArray(profileFields) && profileFields.length > 0 && (
           <>
-            {/* TODO: Pass an icon id to get the right icon */} 
-            {/* TODO: Pass field ids to be able to work with one component only and get rid of ProfileField */}
-            <ProfileField name={'Medailonek'} fieldId={1035} fieldData={profileFields} />
-            <ProfileGroup name={'Jak Vypadám'} groupId={5} fieldData={profileFields} />
-            <ProfileGroup name={'Moje záliby'} groupId={6} fieldData={profileFields} />
-            <ProfileGroup name={'Sporty'} groupId={15} fieldData={profileFields} />
-            <ProfileGroup name={'Vztah a rodina'} groupId={2} fieldData={profileFields} />
-            <ProfileGroup name={'Vzdělání a práce'} groupId={14} fieldData={profileFields} />
-            <ProfileGroup name={'Hendikep'} groupId={3} fieldData={profileFields} />
-            <ProfileGroup name={'Životní styl'} groupId={4} fieldData={profileFields} />
-            <ProfileGroup name={'Koho hledám'} groupId={11} fieldData={profileFields} />
+            <ProfileGroup name={'Medailonek'} fieldId={1035} groupId={1} fieldData={profileFields} />
+            <ProfileGroup name={'Jak Vypadám'} fieldId={[1042, 1033, 102]} groupId={5} fieldData={profileFields} />
+            <ProfileGroup name={'Moje záliby'} fieldId={[182, 175]} groupId={6} fieldData={profileFields} />
+            <ProfileGroup name={'Sporty'} fieldId={252} groupId={15} fieldData={profileFields} />
+            <ProfileGroup name={'Vztah a rodina'} fieldId={[38, 45, 61, 68, 360]} groupId={2} fieldData={profileFields} />
+            <ProfileGroup name={'Vzdělání a práce'} fieldId={[52, 675]} groupId={14} fieldData={profileFields} />
+            <ProfileGroup name={'Hendikep'} fieldId={[1054, 116, 133, 144, 111]} groupId={3} fieldData={profileFields} />
+            <ProfileGroup name={'Životní styl'} fieldId={[295, 158, 302, 309]} groupId={4} fieldData={profileFields} />
+            <ProfileGroup name={'Koho hledám'} fieldId={[1130, 1131, 1132, 1135]} groupId={11} fieldData={profileFields} />
           </>
         )}
       </>

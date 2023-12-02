@@ -11,11 +11,19 @@ import ProfileGroupFieldInput from './ProfileGroupFieldInput';
 type ProfileGroupProps = {
   name: string;
   groupId: number;
+  fieldId: number | number[];
   fieldData: ProfileFieldResponse[];
 };
 
-const ProfileGroup: React.FC<ProfileGroupProps> = ({ name, groupId, fieldData }) => {
-  let groupFields = fieldData.filter((field) => field.group_id === groupId);
+const ProfileGroup: React.FC<ProfileGroupProps> = ({ name, groupId, fieldId, fieldData }) => {
+  
+  let groupFields = fieldData.filter((field) => {
+    if (Array.isArray(fieldId)) {
+      return field.group_id === groupId && fieldId.includes(field.id);
+    } else {
+      return field.group_id === groupId && field.id === fieldId;
+    }
+  });
 
   const [editable, setEditable] = useState(false);
   const [editedText, setEditedText] = useState('');
@@ -37,6 +45,7 @@ const ProfileGroup: React.FC<ProfileGroupProps> = ({ name, groupId, fieldData })
 
   return (
     <CardContainer variant="default" padding="smaller" className="flex gap-4 flex-col justify-center max-w-sm">
+       {/* TODO: Pass an icon id to get the right icon */} 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-violet-70">
