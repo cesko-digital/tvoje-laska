@@ -25,7 +25,7 @@ const nextConfig = {
       {
         source: "/registrace/vitej",
         destination: "/registration/welcome",
-      }
+      },
       {
         source: "/profil",
         destination: "/profile",
@@ -44,12 +44,12 @@ const nextConfig = {
       },
       {
         source: "/seznamka",
-        destination: "/dating-site"
+        destination: "/dating-site",
       },
       {
-        source: '/lovereport/vysledek',
-        destination: '/lovereport/result'
-      }
+        source: "/lovereport/vysledek",
+        destination: "/lovereport/result",
+      },
     ];
   },
   images: {
@@ -66,8 +66,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**',
+        protocol: "https",
+        hostname: "**",
       },
     ],
   },

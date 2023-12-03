@@ -42,7 +42,8 @@ const ButtonBase = ({ children, color, size, className, disabled }: ButtonBasePr
       disabled: "bg-gray-40 text-white",
     },
     secondary: {
-      default: "bg-white text-violet-70 hover:bg-violet-70 hover:text-white focus-visible:outline-white",
+      default:
+        "bg-white text-violet-70 hover:bg-violet-70 hover:text-white hover:border-transparent focus-visible:outline-white",
       disabled: "bg-white text-gray-40",
     },
   };

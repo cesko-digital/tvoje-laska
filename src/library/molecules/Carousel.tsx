@@ -78,7 +78,9 @@ const Carousel = ({ testimonials, variant }: Props) => {
                     )}
                     <div className="flex flex-col gap-2.5">
                       <p className="text-start">{testimonial.content}</p>
-                      <p className="text-end text-gray-60">{testimonial.name}</p>
+                      <p className="text-end text-gray-60">
+                        {testimonial.name} ({testimonial.age} let)
+                      </p>
                     </div>
                   </CardContainer>
                 );

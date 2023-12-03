@@ -4,9 +4,9 @@ import Image from "next/image";
 import { ReactNode } from "react";
 
 export type FriendContent = {
-  items: Friend[],
-  pending: number
-}
+  items: Friend[];
+  pending: number;
+};
 
 export type Friend = {
   id: number;
@@ -18,9 +18,9 @@ type Props = {
   title?: string;
   //TODO: Upravit typy (ideálně odstranit string)
   contentType: "description" | "friends" | "notification" | string;
-  content: FriendContent | string;
+  content: FriendContent | string | any; //TODO: Upravit TS typy
   textLink: ReactNode;
-  additionalData?: {  }
+  additionalData?: {};
 };
 
 const CardMobile = ({ title, textLink, contentType, content }: Props) => {
@@ -31,20 +31,19 @@ const CardMobile = ({ title, textLink, contentType, content }: Props) => {
 
       {contentType === "friends" && (
         <div className="flex flex-row gap-2">
-          {typeof content === 'object' && 'items' in content &&
-            <>{
-            content.items?.map(friend => (
-              <div key={friend.id} className="relative w-10 h-10">
-                {/* TODO: Mrknout na legacy layout prop */}
-                <Image src={friend.image} alt={friend.name} layout="fill" className="rounded-full" />
-              </div>
-            ))}
-            
-             <br></br>
+          {typeof content === "object" && "items" in content && (
+            <>
+              {content.items?.map((friend: Friend) => (
+                <div key={friend.id} className="relative w-10 h-10">
+                  {/* TODO: Mrknout na legacy layout prop */}
+                  <Image src={friend.image} alt={friend.name} layout="fill" className="rounded-full" />
+                </div>
+              ))}
+
+              <br></br>
               <p>Čekající na žádost: {content.pending}</p>
             </>
-            }
-
+          )}
         </div>
       )}
       {contentType === "notification" && typeof content === "string" && (

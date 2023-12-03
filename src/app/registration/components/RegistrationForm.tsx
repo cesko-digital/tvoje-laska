@@ -13,9 +13,9 @@ import { GoogleSvg } from "library/icons/social-media";
 
 const formSchema = z
   .object({
-    email: z.string().nonempty("E-mail je povinný").email("Neplatný email"),
-    password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
-    repeatPassword: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+    email: z.string().min(1, "E-mail je povinný").email("Neplatný email"),
+    password: z.string().min(1, "Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+    repeatPassword: z.string().min(1, "Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
   })
   .refine(data => data.password === data.repeatPassword, {
     path: ["repeatPassword"],

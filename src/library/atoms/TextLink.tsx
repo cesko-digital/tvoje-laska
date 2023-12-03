@@ -6,7 +6,7 @@ type SvgIconElement = React.ReactElement<React.SVGProps<SVGSVGElement>>;
 
 type Props = {
   title: string;
-  as: "link" | "button";
+  as?: "link" | "button";
   color: "primary" | "secondary";
   path?: string;
   buttonType?: "button" | "submit" | "reset";
@@ -24,7 +24,7 @@ const getColorClass = (color: "primary" | "secondary"): string => {
 const TextLink = ({
   title,
   path,
-  as,
+  as = "link",
   startIcon = false,
   endIcon = false,
   color,
@@ -32,7 +32,10 @@ const TextLink = ({
   onClick,
   className,
 }: Props) => {
-  const commonClasses = classNames("flex items-center gap-3 underline underline-offset-4 w-fit", getColorClass(color));
+  const commonClasses = classNames(
+    "flex items-center gap-3 underline underline-offset-4 w-fit whitespace-nowrap",
+    getColorClass(color),
+  );
 
   return as === "link" ? (
     <Link href={path!} onClick={onClick} className={classNames(commonClasses, className!)}>

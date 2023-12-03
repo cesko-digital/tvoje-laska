@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "library/atoms/Button";
 
 const formSchema = z.object({
-  nickname: z.string().nonempty("Přezdívka je povinné"),
+  nickname: z.string().min(1, "Přezdívka je povinné"),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

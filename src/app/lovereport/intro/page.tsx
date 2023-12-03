@@ -2,6 +2,7 @@
 
 import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";
+import ListItem from "library/atoms/ListItem";
 import { HuggingEmojiSvg } from "library/icons/symbols";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -35,21 +36,13 @@ const LoveReportIntro = () => {
 
   return (
     <Content title="Můžeme začít?" className="flex flex-col">
-      <div className="flex flex-col items-center gap-3 ">
+      <div className="flex flex-col gap-3 ">
         {/* TODO: Překlopit do samostatné komponenty? */}
 
         {info.map((item, index) => {
           return (
             <div key={item.title}>
-              <div className="flex justify-between gap-3">
-                <div className="bg-violet-10 text-violet-70 w-[52px] h-[52px] aspect-square rounded-md flex justify-center items-center">
-                  <HuggingEmojiSvg width={30} height={30} />
-                </div>
-                <div className="flex flex-col">
-                  <h4 className="text-gray-80 font-medium">{item.title}</h4>
-                  <p>{item.content}</p>
-                </div>
-              </div>
+              <ListItem item={item} />
               {index === 1 && (
                 <Image
                   src="/assets/images/lovereport_woman-secondary-image.svg"

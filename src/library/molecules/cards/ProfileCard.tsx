@@ -1,14 +1,10 @@
-import { UserIcon } from "@heroicons/react/24/outline";
-import classNames from "helpers/classNames";
-import Button from "library/atoms/Button";
 import CardContainer from "library/atoms/CardContainer";
 import Divider from "library/atoms/Divider";
-import ProfileStatus from "library/atoms/ProfileStatus";
+import MembershipMode from "library/atoms/MembershipMode";
 import Tag from "library/atoms/Tag";
 import TextLink from "library/atoms/TextLink";
-import { AddFriendSvg, EditProfileSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
-import { HeartSvg, ShakingHandsSvg, UserSvg } from "library/icons/symbols";
-import Image from "next/image";
+import { EditProfileSvg } from "library/icons/actions";
+import { UserSvg } from "library/icons/symbols";
 
 type Props = {
   name: string;
@@ -49,7 +45,7 @@ const ProfileCard = ({ name, nickname, gender, age, location, status, tags, clas
         <p>{gender}</p>
         <p>{age} let</p>
         <p>{location}</p>
-     <ProfileStatus status={status}></ProfileStatus>
+        <MembershipMode variant={status} />
         <div className="flex flex-wrap gap-2 mt-3">
           {tags.map((tag, index) => {
             return <Tag key={index} title={tag} variant="light" className="col-span-1" />;

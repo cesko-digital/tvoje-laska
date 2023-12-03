@@ -4,6 +4,7 @@ import Image from "next/image";
 import gradientImage from "../../../public/assets/images/lovereport_gradient.svg";
 import Button from "library/atoms/Button";
 import { HuggingEmojiSvg } from "library/icons/symbols";
+import ListItem from "library/atoms/ListItem";
 
 export const metadata: Metadata = {
   title: "Love Report",
@@ -98,17 +99,7 @@ const LoveReport = async () => {
         <div className="flex flex-col gap-4">
           <h2>Jak to funguje?</h2>
           {functions.map(item => {
-            return (
-              <div className="flex justify-between gap-3">
-                <div className="bg-violet-10 text-violet-70 w-[52px] h-[52px] aspect-square rounded-md flex justify-center items-center">
-                  <HuggingEmojiSvg width={30} height={30} />
-                </div>
-                <div className="flex flex-col">
-                  <h4 className="text-gray-80 font-medium">{item.title}</h4>
-                  <p>{item.content}</p>
-                </div>
-              </div>
-            );
+            return <ListItem key={item.title} item={item} />;
           })}
         </div>
         <Button

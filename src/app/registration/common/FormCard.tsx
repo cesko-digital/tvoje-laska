@@ -43,8 +43,8 @@ export const StepIndicator = ({ numberOfSteps, currentStep }: StepIndicatorProps
 };
 
 const formSchema = z.object({
-  name: z.string().nonempty("Jméno je povinné"),
-  lastname: z.string().nonempty("Příjmení je povinné"),
+  name: z.string().min(1, "Jméno je povinné"),
+  lastname: z.string().min(1, "Příjmení je povinné"),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
