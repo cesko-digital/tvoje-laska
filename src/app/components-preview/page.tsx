@@ -26,6 +26,14 @@ import DateInput from "library/atoms/DateInput";
 import CoursesCardList from "library/molecules/cards/CoursesCard";
 import ProfileCard from "library/molecules/cards/ProfileCard";
 import Textarea from "library/atoms/Textarea";
+import QuestionCard from "library/molecules/cards/QuestionCard";
+import ChatCard from "library/molecules/cards/ChatCard";
+import RoomCard from "library/molecules/cards/RoomCard";
+import Pagination from "library/molecules/Pagination";
+import { useEffect, useState } from "react";
+import DonutChart from "library/molecules/charts/DonutChart";
+import VerticalBarChart from "library/molecules/charts/VerticalBarChart";
+import MembershipMode from "library/atoms/MembershipMode";
 
 const steps: StepperStep[] = [
   {
@@ -73,25 +81,26 @@ const steps: StepperStep[] = [
 
 const testimonials = [
   {
-    image: "/assets/images/testimonial.svg",
+    image: "/assets/images/testimonial-1.svg",
     content:
-      "Na seznamce jsem poznala úžasného sympaťáka. První rande sice skončilo fiaskem, ale zkusili jsme to ještě jednou a padli si do oka. Po roce vztahu plného humoru i pochopení mě požádal o ruku. Nyní jsme dva měsíce manželé.",
-    name: "Iveta S.",
+      "Díky radám od vztahové koučky jsem si upravila profil a konečně se mi začali ozývat ti správní lidé. Taky mi poradila, podle čeho vybírat, a vypadá to, že jsem konečně potkala někoho, kdo mi vyhovuje po všech stránkách a mohlo by to vyjít.",
+    name: "Eva",
+    age: 29,
   },
   {
-    image: "/assets/images/testimonial.svg",
-    content:
-      "Podařilo se mi najít na seznamce ženu svých snů. Po pár měsících se nám narodil syn a za další dva roky dcera. Jsme šťastná rodina a děkujeme za to seznamce.",
-    name: "Jan N.",
+    image: "/assets/images/testimonial-2.svg",
+    content: "Jsem vděčný, že díky vám teď prožívám úžasnou lásku, kterou můžu nazvat životním příběhem plným štěstí.",
+    name: "Vlastík",
+    age: 53,
   },
   {
-    image: "/assets/images/testimonial.svg",
+    image: "/assets/images/testimonial-3.svg",
     content:
-      "Našel jsem si na seznamce ženu, která se mnou sdílí společné zájmy. Po pár měsících jsme se vzali a nyní čekáme miminko. Děkujeme seznamce za šanci najít si spřízněnou duši.",
-    name: "Lukáš P.",
+      "Děkuji. Bez vás by nebylo nás. Neodmyslitelně a navždy budete součástí našeho příběhu. Jsem vám a vašemu týmu nesmírně vděčná za trpělivost a profesionální práci.",
+    name: "Jana",
+    age: 58,
   },
 ];
-
 const options = [
   {
     id: "1",
@@ -143,8 +152,8 @@ const friends = [
 ];
 
 const formSchema = z.object({
-  email: z.string().nonempty("E-mail je povinný").email(),
-  phone: z.string().nonempty("Telefon je povinný").min(9, "Minimální délka je 9 znaků"),
+  email: z.string().min(1, "E-mail je povinný").email(),
+  phone: z.string().min(1, "Telefon je povinný").min(9, "Minimální délka je 9 znaků"),
   date: z.date(),
   isChecked: z.boolean(),
 });
@@ -162,6 +171,26 @@ export default function ComponentsPreview() {
     },
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [items, setItems] = useState([]);
+  const maxPage = 8;
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  //TODO: Zkušební data pro stránkování
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+      const data = await res.json();
+
+      setItems(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="w-fit flex flex-col gap-8 justify-start m-5">
       <Header />
@@ -175,7 +204,8 @@ export default function ComponentsPreview() {
       />
       <DateInput register={form.register("date")} control={form.control} />
       <UserCard
-        cardType="friend"
+        status="admin"
+        cardType="default"
         name="Adam Klempíř"
         gender="muž"
         age={24}
@@ -216,7 +246,7 @@ export default function ComponentsPreview() {
         gender="žena"
         age={30}
         location="Beroun, Středočeský kraj"
-        status="seznamuji se"
+        status="meet"
         tags={["cestování", "cizí jazyky", "fotografie", "party a diskotéky", "architektura"]}
       />
       <Tabs />
@@ -236,6 +266,7 @@ export default function ComponentsPreview() {
           />
         }
       />
+
       <Button
         // disabled
         color="secondary"
@@ -263,6 +294,26 @@ export default function ComponentsPreview() {
       <StepperMenu steps={steps} />
       <Carousel testimonials={testimonials} variant="with-image" />
       <ImageUploader name="upload-image" />
+      <ChatCard
+        username="honzicek123"
+        photo="/assets/images/user-photo.png"
+        userIsActive={true}
+        message="Tak kdy se uvidíme?"
+        time="21:50"
+      />
+      <RoomCard title="Trapasy z rande" photo="/assets/images/room-photo.png" members={3446} path="#" />
+
+      <QuestionCard />
+      <MembershipMode variant="community" />
+      <MembershipMode variant="meet" />
+      <MembershipMode variant="couch" />
+      <MembershipMode variant="admin" />
+
+      <Pagination maxPage={maxPage} data={items} currentPage={currentPage} onPageChange={onPageChange} />
+
+      <DonutChart />
+      <VerticalBarChart />
+
       <Footer />
       <NavbarMobile />
     </div>

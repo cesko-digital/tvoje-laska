@@ -20,10 +20,10 @@ export const formSchema = z.object({
         group: z.number(),
         type: z.string(),
         path: z.string(),
-        id: z.string()
+        id: z.string(),
       }),
     )
-    .nonempty(),
+    .min(1),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

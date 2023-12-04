@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import Input from "library/atoms/Input";
 import Button from "library/atoms/Button";
 
@@ -19,9 +19,9 @@ import Checkbox from "library/atoms/Checkbox";
 import { useTranslation } from "next-i18next";
 
 const formSchema = z.object({
-  username: z.string().nonempty("E-mail je povinný").email(),
-  password: z.string().nonempty("Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
-  rememberMe: z.boolean()
+  username: z.string().min(1, "E-mail je povinný").email(),
+  password: z.string().min(1, "Heslo je povinné").min(6, "Heslo musí být dlouhé alespoň 6 znaků"),
+  rememberMe: z.boolean(),
 });
 
 type Props = {
@@ -59,7 +59,7 @@ const LoginForm = ({ providers, token }: Props) => {
     defaultValues: {
       username: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
     },
   });
 
@@ -77,7 +77,7 @@ const LoginForm = ({ providers, token }: Props) => {
   const errors = form.formState.errors;
 
   return (
-    <Content title={ t("content.title") }>
+    <Content title={t("content.title")}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex flex-col justify-center mt-4">
           <Input
@@ -99,7 +99,12 @@ const LoginForm = ({ providers, token }: Props) => {
           </div>
 
           {/* TODO: Doplnit funkcionalitu zapamatování si přihlášení */}
-          <Checkbox register={form.register('rememberMe')} id="rememberMe" title="Pamatovat si mé přihlášení" className="text-gray-60" />
+          <Checkbox
+            register={form.register("rememberMe")}
+            id="rememberMe"
+            title="Pamatovat si mé přihlášení"
+            className="text-gray-60"
+          />
 
           <div className="flex flex-col gap-5 mt-10">
             <Button

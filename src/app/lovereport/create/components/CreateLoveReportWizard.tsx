@@ -121,7 +121,7 @@ const CreateLoveReportWizard = (props: Props) => {
               saveToSession(form.getValues());
             }
           }}
-        ></Button>
+        />
       )}
       {currentStep + 1 <= maxStep && (
         <Button
@@ -133,7 +133,7 @@ const CreateLoveReportWizard = (props: Props) => {
               saveToSession(form.getValues());
             }
           }}
-        ></Button>
+        />
       )}
 
       {currentStep === maxStep ? (
@@ -144,7 +144,7 @@ const CreateLoveReportWizard = (props: Props) => {
             saveToSession(form.getValues());
             router.push("/lovereport/shrnuti");
           }}
-        ></Button>
+        />
       ) : (
         <></>
       )}

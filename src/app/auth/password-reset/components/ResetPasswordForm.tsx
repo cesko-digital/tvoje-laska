@@ -12,8 +12,8 @@ import Content from "library/atoms/Content";
 
 const formSchema = z
   .object({
-    password: z.string().nonempty("Heslo musí být minimálně 6 znáků dlouhé").min(6),
-    passwordRepeat: z.string().nonempty("Heslo musí být minimálně 6 znáků dlouhé").min(6),
+    password: z.string().min(1, "Heslo musí být minimálně 6 znáků dlouhé").min(6),
+    passwordRepeat: z.string().min(1, "Heslo musí být minimálně 6 znáků dlouhé").min(6),
   })
   .refine(data => data.password === data.passwordRepeat, {
     message: "Hesla musí být stejná",

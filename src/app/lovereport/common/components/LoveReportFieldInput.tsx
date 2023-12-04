@@ -1,6 +1,6 @@
 import RadioGroup from "library/atoms/RadioGroup";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import { LoveReportFieldWithGroup } from "../../create/components/CreateLoveReportWizard";
+import { LoveReportFieldWithGroup } from "../types";
 import Input from "library/atoms/Input";
 import Checkbox from "library/atoms/Checkbox";
 import DateInput from "library/atoms/DateInput";
@@ -20,9 +20,9 @@ const LoveReportFieldInput = ({ field, control, register, error }: FieldInputPro
       ? Object.values(field.choices).map(e => {
           //TODO: Upravit TS chyby - doplnit typ pro "e"
           return {
-            id: `${field.id}_${(e.value !== "" ? e.value : e.label)}`,
+            id: `${field.id}_${e.value !== "" ? e.value : e.label}`,
             optionName: e.label,
-            value: e.value !== "" ? e.value : e.label
+            value: e.value !== "" ? e.value : e.label,
           };
         })
       : [];

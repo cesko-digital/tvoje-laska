@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import Button from "library/atoms/Button";
 import Content from "library/atoms/Content";
 import Tag from "library/atoms/Tag";
@@ -6,7 +6,7 @@ import TextLink from "library/atoms/TextLink";
 import { ArrowRightSvg } from "library/icons/arrows";
 import CardMobile, { Friend } from "library/molecules/cards/CardMobile";
 import Image from "next/image";
-import { HeartSvg } from "library/icons/symbols";
+import { HeartSolidSvg } from "library/icons/symbols";
 import { SignOutSvg } from "library/icons/actions";
 import { signOut } from "next-auth/react";
 import { UserBasicInfo } from "app/api/profile-field/basic-info/route";
@@ -14,7 +14,7 @@ import { IMemberResponse } from "app/api/member/member.type";
 import { safeUrl } from "helpers/profileFieldHelpers";
 
 //Zkušební data
-const getCards = (friends: { items: Friend[], pending: number}) => [
+const getCards = (friends: { items: Friend[]; pending: number }) => [
   {
     contentType: "notification",
     content: "Máš 3 nová upozornění.",
@@ -83,7 +83,7 @@ const HomeLoggedIn = (props: Props) => {
                 className="col-span-1"
                 startIcon={
                   <span className="text-magenta-50">
-                    <HeartSvg width={20} />
+                    <HeartSolidSvg width={20} />
                   </span>
                 }
               />
@@ -112,12 +112,14 @@ const HomeLoggedIn = (props: Props) => {
 
       <Content title="" className="z-50">
         <div className="flex flex-col gap-8 -mt-4">
-          {getCards({ items: props.friends.items.map(e => ({
+          {getCards({
+            items: props.friends.items.map(e => ({
               id: e.id,
               image: safeUrl(e.avatar_urls?.full ?? ""),
               name: e.name ?? "",
-            })), pending: props.friends.pending},
-          ).map((card, index) => (
+            })),
+            pending: props.friends.pending,
+          }).map((card, index) => (
             <CardMobile
               content={card.content}
               contentType={card.contentType}
@@ -138,7 +140,5 @@ const HomeLoggedIn = (props: Props) => {
     </>
   );
 };
-
-
 
 export default HomeLoggedIn;

@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import * as z from "zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ import Content from "library/atoms/Content";
 import Divider from "library/atoms/Divider";
 
 const formSchema = z.object({
-  email: z.string().nonempty("E-mail je povinný").email(),
+  email: z.string().min(1, "E-mail je povinný").email(),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

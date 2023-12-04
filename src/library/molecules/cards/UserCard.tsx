@@ -1,10 +1,9 @@
 "use client";
 
-import { stat } from "fs";
 import classNames from "helpers/classNames";
 import Button from "library/atoms/Button";
 import CardContainer from "library/atoms/CardContainer";
-import ProfileStatus from "library/atoms/ProfileStatus";
+import MembershipMode from "library/atoms/MembershipMode";
 import TextLink from "library/atoms/TextLink";
 import { AddFriendSvg, RemoveSvg, SendMessageSvg } from "library/icons/actions";
 import { ShakingHandsSvg } from "library/icons/symbols";
@@ -50,7 +49,7 @@ const UserCard = ({ cardType, name, gender, age, location, photo, userIsActive, 
             {gender}, {age} let
           </p>
           <p>{location}</p>
-          <ProfileStatus status={status ?? ''}></ProfileStatus>
+          <MembershipMode variant={status} />
         </div>
       </div>
       <div className="relative">
