@@ -5,6 +5,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getMembers } from "./api/member/member";
 import { getUserBasicInfo } from "./api/profile-field/basic-info/route";
 import { getFriends } from "./api/friends/friends";
+import ProfileAbout from "./profile/detail/page";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -44,10 +45,13 @@ export default async function Home() {
     }
 
     return (
+      <>
       <HomeLoggedIn
         userInfo={userBasicInfo}
         friends={{ items: members ?? [], pending: friends?.filter(f => !f.is_confirmed).length ?? 0 }}
       />
+      </>
+      
     );
   }
 

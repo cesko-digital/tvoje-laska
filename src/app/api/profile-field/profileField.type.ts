@@ -81,4 +81,4 @@ export type Rendered = "" | "Základní představení uživatele" | "cm";
 
 export type OrderBy = "" | "CUSTOM" | "ASC";
 
-export type Type = "textbox" | "selectbox" | "datebox" | "textarea" | "number" | "checkbox" | "option";
+export type Type = "textbox" | "selectbox" | "datebox" | "textarea" | "number" | "checkbox" | "option" | "radio";
