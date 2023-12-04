@@ -1,9 +1,7 @@
 import { Metadata } from "next";
-import { useEffect, useState } from "react";
 import ProfileGroup from "../groups/ProfileGroup";
-import { ProfileFieldResponse } from "app/api/profile-field/profileField.type";
 import ProfileCard from "library/molecules/cards/ProfileCard";
-import { UserBasicInfo, getUserBasicInfo } from "app/api/profile-field/basic-info/route";
+import { getUserBasicInfo } from "app/api/profile-field/basic-info/route";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 import { getProfileFields } from "app/api/profile-field/profileField";

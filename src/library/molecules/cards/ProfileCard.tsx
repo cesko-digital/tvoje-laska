@@ -42,7 +42,7 @@ const ProfileCard = (props: Props) => {
         <p>{user.gender}</p>
         <p>{user.age} let</p>
         <p>{user.city}, {user.region}</p>
-        <ProfileStatus status={user.status}></ProfileStatus>
+        {/* <ProfileStatus status={user.status}></ProfileStatus> */}
            <MembershipMode variant={user.status} />
       </div>
     </CardContainer>
