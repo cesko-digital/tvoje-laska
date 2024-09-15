@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEventHandler, ReactNode, useEffect, useState } from "react";
+import { MouseEventHandler, ReactNode, useCallback, useEffect, useState } from "react";
 import classNames from "helpers/classNames";
 
 export type StepperStep = {
@@ -56,31 +56,34 @@ const StepperMenu = ({ steps, className }: StepperMenuProps) => {
   const [activeStepIndex, setActiveStepIndex] = useState(defaultActiveIndex);
   const [updatedSteps, setUpdatedSteps] = useState(steps);
 
+  const updateCopySteps = useCallback(
+    (targetIndex: number) => {
+      const updatedStepsCopy = [...updatedSteps];
+
+      updatedStepsCopy.forEach((step, index) => {
+        if (index === targetIndex) {
+          step.active = true;
+          step.complete = true;
+        } else if (index < targetIndex) {
+          step.active = false;
+          step.complete = true;
+        } else {
+          step.active = false;
+          step.complete = false;
+        }
+      });
+      setUpdatedSteps(updatedStepsCopy);
+      return updatedStepsCopy;
+    },
+    [updatedSteps],
+  );
+
   useEffect(() => {
     if (defaultActiveIndex !== activeStepIndex) {
       setActiveStepIndex(defaultActiveIndex);
       updateCopySteps(defaultActiveIndex);
     }
-  }, [defaultActiveIndex]);
-
-  const updateCopySteps = (targetIndex: number) => {
-    const updatedStepsCopy = [...updatedSteps];
-
-    updatedStepsCopy.forEach((step, index) => {
-      if (index === targetIndex) {
-        step.active = true;
-        step.complete = true;
-      } else if (index < targetIndex) {
-        step.active = false;
-        step.complete = true;
-      } else {
-        step.active = false;
-        step.complete = false;
-      }
-    });
-    setUpdatedSteps(updatedStepsCopy);
-    return updatedStepsCopy;
-  };
+  }, [defaultActiveIndex, activeStepIndex, updateCopySteps]);
 
   const onStepClick = (clickedIndex: number) => {
     const onBeforeNavigation = steps[clickedIndex].onBeforeNavigation;
